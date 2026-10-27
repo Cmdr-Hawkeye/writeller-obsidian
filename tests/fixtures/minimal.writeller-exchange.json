@@ -1,0 +1,79 @@
+{
+  "format": "writeller.exchange",
+  "version": "1.0.0",
+  "packageId": "package-minimal-001",
+  "exportedAt": "2026-10-26T10:00:00.000000Z",
+  "producer": {
+    "system": "synthetic",
+    "version": "1.0.0",
+    "instanceId": "fixture-origin"
+  },
+  "scope": {
+    "projectId": "project-hafen",
+    "mode": "snapshot"
+  },
+  "project": {
+    "id": "project-hafen",
+    "origin": {
+      "system": "synthetic",
+      "instanceId": "fixture-origin",
+      "objectId": "project-hafen"
+    },
+    "baseHash": null,
+    "createdAt": "2026-10-26T09:00:00.000000Z",
+    "updatedAt": "2026-10-26T09:00:00.000000Z",
+    "metadata": {},
+    "extensions": {},
+    "title": "Der stille Hafen",
+    "description": "Synthetischer Kurzroman.",
+    "projectType": "novel",
+    "genreOrTopic": "Abenteuer",
+    "languageCode": "de",
+    "status": "planned",
+    "wordTarget": 50000
+  },
+  "chapters": [],
+  "scenes": [
+    {
+      "id": "scene-ankunft",
+      "projectId": "project-hafen",
+      "origin": {
+        "system": "synthetic",
+        "instanceId": "fixture-origin",
+        "objectId": "scene-ankunft"
+      },
+      "baseHash": null,
+      "createdAt": "2026-10-26T09:00:00.000000Z",
+      "updatedAt": "2026-10-26T09:00:00.000000Z",
+      "metadata": {},
+      "extensions": {},
+      "chapterId": null,
+      "parentSceneId": null,
+      "title": "Ankunft",
+      "summary": "Lina erreicht den Hafen.",
+      "content": {
+        "format": "plain",
+        "text": "Der Nebel lag über dem Wasser.\n\nLina wartete."
+      },
+      "authorIntent": "Eine offene Frage etablieren.",
+      "povCharacterId": null,
+      "sceneType": "scene",
+      "status": "drafting",
+      "orderIndex": 0,
+      "storyDateStart": null,
+      "storyDateEnd": null,
+      "estimatedWordTarget": 800,
+      "tensionLevel": 35,
+      "emotionalTone": "gespannt",
+      "goal": "Ankommen",
+      "conflict": "Das Boot fehlt.",
+      "outcome": null
+    }
+  ],
+  "catalogItems": [],
+  "relationships": [],
+  "notes": [],
+  "researchItems": [],
+  "attachments": [],
+  "extensions": {}
+}

@@ -1,0 +1,5 @@
+* text=auto eol=lf
+# Public input artifacts must retain their original bytes on every checkout.
+docs/WRITELLER-EXCHANGE-SPEC.md -text
+src/exchange/writeller-exchange.schema.json -text
+tests/fixtures/** -text

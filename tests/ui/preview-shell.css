@@ -1,0 +1,24 @@
+/* Test host theme, not part of the shipped plugin stylesheet. */
+:root { color-scheme: dark; --background-primary: #202020; --background-secondary: #262626; --text-normal: #dedede; --text-muted: #a1a1a1; --text-faint: #818181; --text-error: #ff8585; --interactive-accent: #a183dd; --background-modifier-border: #393939; --background-modifier-hover: #2b2b2b; --radius-s: 5px; --font-ui-small: 13px; --font-ui-smaller: 11px; --font-ui-medium: 15px; --font-monospace: Consolas, monospace; }
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--text-normal); background: var(--background-primary); font: 14px/1.45 'Segoe UI', sans-serif; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button, select { border: 1px solid #444; background: #303030; border-radius: 5px; padding: 6px 12px; cursor: pointer; }
+button:hover { background: #393939; } button.mod-cta { color: #1b1424; background: var(--interactive-accent); border-color: var(--interactive-accent); }
+.clickable-icon { border: 0; box-shadow: none; background: transparent; font-size: 18px; line-height: 1; min-width: 28px; height: 28px; padding: 3px 7px; }
+input, textarea { padding: 8px 10px; border: 1px solid #515151; background: #171717; border-radius: 4px; }
+input:focus-visible, button:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible { outline: 2px solid var(--interactive-accent); outline-offset: 2px; }
+.preview-shell { display: grid; grid-template-columns: 245px minmax(0, 1fr); min-height: 100vh; }
+.preview-tree { background: var(--background-secondary); border-inline-end: 1px solid #383838; padding: 25px 13px; overflow: hidden; }
+.preview-tree-heading { color: #a1a1a1; font-size: 12px; margin-bottom: 20px; }
+.nav-folder-title { font-size: 12px; padding: 6px 0; overflow-wrap: anywhere; }
+.nav-folder-title::before { content: '⌄ '; color: var(--text-faint); }
+.nav-folder-children { padding-inline-start: 13px; }
+.preview-file { font-size: 12px; padding: 6px 0; overflow-wrap: anywhere; }
+.modal { position: fixed; inset: 50% auto auto 50%; transform: translate(-50%, -50%); z-index: 20; padding: 24px; max-height: 92vh; overflow: auto; background: #272727; border: 1px solid #555; border-radius: 10px; box-shadow: 0 0 0 200vmax #0009; }
+.modal h2 { font-size: 20px; line-height: 1.3; margin-top: 0; }
+.setting-item-control { display: flex; gap: 8px; }
+.setting-item-description { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+.menu { position: fixed; top: 180px; right: 30px; z-index: 20; display: grid; padding: 8px; background: #303030; border: 1px solid #555; border-radius: 6px; }
+.menu button { text-align: start; border: 0; }
+@media (max-width: 760px) { .preview-shell { grid-template-columns: 1fr; } .preview-tree { display: none; } .modal { padding: 20px; } }

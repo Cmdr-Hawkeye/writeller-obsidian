@@ -1,0 +1,47 @@
+name: Release manuell vorbereiten oder veröffentlichen
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Ausdrücklich als GitHub-Release veröffentlichen (Tag ohne v)'
+        required: true
+        default: false
+        type: boolean
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.13.1'
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm audit
+      - run: npm run licenses
+      - run: node scripts/reproducible.mjs
+      - run: node scripts/release.mjs
+        env:
+          RELEASE_AUTHOR: ${{ vars.RELEASE_AUTHOR }}
+          RELEASE_AUTHOR_URL: ${{ vars.RELEASE_AUTHOR_URL }}
+          RELEASE_COPYRIGHT_HOLDER: ${{ vars.RELEASE_COPYRIGHT_HOLDER }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: writeller-release
+          path: release/
+      - if: ${{ inputs.publish }}
+        run: node scripts/release.mjs --publish-ready
+        env:
+          RELEASE_AUTHOR: ${{ vars.RELEASE_AUTHOR }}
+          RELEASE_AUTHOR_URL: ${{ vars.RELEASE_AUTHOR_URL }}
+          RELEASE_COPYRIGHT_HOLDER: ${{ vars.RELEASE_COPYRIGHT_HOLDER }}
+      - if: ${{ inputs.publish }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION=$(node -p "require('./manifest.json').version")
+          gh release create "$VERSION" "release/$VERSION/main.js" "release/$VERSION/manifest.json" "release/$VERSION/styles.css" "release/$VERSION/writeller-$VERSION.zip" "release/$VERSION/SHA256SUMS.txt" "release/$VERSION/THIRD-PARTY-NOTICES.md" --title "$VERSION – Vorschau" --notes-file docs/RELEASE-NOTES.md --prerelease

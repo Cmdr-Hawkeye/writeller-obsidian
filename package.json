@@ -1,0 +1,44 @@
+{
+  "name": "writeller-obsidian",
+  "version": "0.2.2",
+  "private": true,
+  "description": "Lokale Schreibprojekte und manueller Writeller Exchange für Obsidian.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "node esbuild.config.mjs --watch",
+    "build": "node esbuild.config.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src tests scripts *.mjs && node scripts/structure.mjs && node scripts/verify-handoff.mjs && node scripts/verify-docs.mjs",
+    "docs:check": "node scripts/verify-docs.mjs",
+    "test": "vitest run",
+    "test:ui": "node scripts/ui-smoke.mjs",
+    "check": "npm run typecheck && npm run lint && npm test && npm run build",
+    "release:prepare": "npm run check && npm audit && npm run licenses && node scripts/reproducible.mjs && node scripts/release.mjs && node scripts/verify-release.mjs",
+    "licenses": "node scripts/licenses.mjs",
+    "audit:dependencies": "npm audit --omit=dev"
+  },
+  "dependencies": {
+    "ajv": "8.20.0",
+    "canonicalize": "2.1.0",
+    "fast-png": "6.4.0",
+    "jpeg-js": "0.4.4",
+    "mdast-util-from-markdown": "2.0.2",
+    "pako": "2.1.0",
+    "yaml": "2.9.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.1",
+    "@types/mdast": "4.0.4",
+    "@types/node": "22.19.0",
+    "esbuild": "0.28.2",
+    "eslint": "9.39.1",
+    "fflate": "0.8.3",
+    "happy-dom": "21.0.4",
+    "obsidian": "1.14.4",
+    "playwright-core": "1.64.1",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.46.2",
+    "vitest": "5.0.5"
+  }
+}

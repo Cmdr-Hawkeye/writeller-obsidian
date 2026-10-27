@@ -1,0 +1,63 @@
+/* Theme-native forms remain readable on narrow mobile screens. */
+.writeller-json { width: min(70vw, 60rem); min-width: 12rem; max-width: 100%; font-family: var(--font-monospace); }
+.writeller-note-link { display: block; margin-block: 0.4rem; white-space: normal; text-align: start; height: auto; }
+@media (max-width: 600px) { .writeller-json { width: 100%; } }
+
+/* Presentation only: identities remain in YAML and backups remain in the visible Vault API. */
+.writeller-writing-note .metadata-property[data-property-key^="writeller-"] { display: none; }
+.writeller-writing-note .metadata-container:not(:has(.metadata-property:not([data-property-key^="writeller-"]))) { display: none; }
+
+/* A quiet, theme-native writing surface. No custom fonts, remote assets or dashboard cards. */
+.writeller-project-view { padding: 24px clamp(18px, 3.8vw, 52px); overflow: auto; }
+.writeller-project-switcher { display: flex; align-items: center; gap: 12px; padding-bottom: 22px; }
+.writeller-eyebrow { color: var(--text-muted); font-size: var(--font-ui-small); font-weight: 500; }
+.writeller-project-switcher select { max-width: 65%; margin-inline-start: auto; }
+.writeller-project-header { margin-bottom: 32px; }
+.writeller-project-header h2 { margin: 4px 0 10px; font-size: 30px; line-height: 1.2; letter-spacing: -0.025em; }
+.writeller-project-description { max-width: 65ch; color: var(--text-muted); line-height: 1.55; white-space: pre-wrap; }
+.writeller-progress-label { color: var(--text-muted); font-size: var(--font-ui-small); }
+.writeller-layout-hint { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; color: var(--text-muted); font-size: var(--font-ui-small); margin-block: 18px; padding-block: 12px; border-block: 1px solid var(--background-modifier-border); }
+.writeller-project-header progress { width: min(100%, 360px); height: 4px; accent-color: var(--interactive-accent); }
+.writeller-project-toolbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
+.writeller-project-toolbar > .clickable-icon { margin-inline-start: auto; }
+.writeller-writing-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(210px, 0.46fr); gap: clamp(24px, 4vw, 52px); align-items: start; }
+.writeller-section-heading, .writeller-chapter-heading { display: flex; align-items: center; gap: 8px; }
+.writeller-section-heading { justify-content: space-between; }
+.writeller-project-view h3 { font-size: var(--font-ui-medium); margin: 0 0 15px; }
+.writeller-section-heading h3 { margin: 0; }
+.writeller-section-heading { margin-bottom: 14px; }
+.writeller-chapter { padding: 10px 0 18px; border-top: 1px solid var(--background-modifier-border); }
+.writeller-chapter-heading > .writeller-note-row { flex: 1; min-width: 0; }
+.writeller-note-row { display: flex; align-items: center; gap: 8px; min-height: 38px; padding-inline-start: calc(var(--writeller-depth, 0) * 15px); border-radius: var(--radius-s); }
+.writeller-note-row:hover, .writeller-note-row:focus-within { background: var(--background-modifier-hover); }
+.writeller-note-title { flex: 1; min-width: 0; padding: 8px 6px; border: 0; box-shadow: none; background: transparent; color: var(--text-normal); text-align: start; height: auto; white-space: normal; overflow-wrap: anywhere; }
+.writeller-note-row.is-chapter .writeller-note-title { font-weight: 600; }
+.writeller-word-count { font-size: var(--font-ui-smaller); color: var(--text-faint); white-space: nowrap; }
+.writeller-note-row > .clickable-icon { opacity: 0.45; }
+.writeller-note-row:hover > .clickable-icon, .writeller-note-row:focus-within > .clickable-icon { opacity: 1; }
+.writeller-kind-group { padding: 10px 0; border-top: 1px solid var(--background-modifier-border); }
+.writeller-kind-group > summary { display: flex; align-items: center; gap: 8px; cursor: pointer; list-style: none; }
+.writeller-kind-group > summary::before { content: '›'; color: var(--text-faint); transition: transform 120ms ease; }
+.writeller-kind-group[open] > summary::before { transform: rotate(90deg); }
+.writeller-kind-label { flex: 1; display: flex; align-items: baseline; gap: 10px; font-size: var(--font-ui-small); font-weight: 500; }
+.writeller-count { color: var(--text-faint); font-size: var(--font-ui-smaller); font-weight: 400; }
+.writeller-kind-group .writeller-word-count { display: none; }
+.writeller-empty { padding: 22px 0; max-width: 48ch; }
+.writeller-empty > p:first-child { font-weight: 500; margin-top: 0; }
+.writeller-muted, .writeller-welcome p { color: var(--text-muted); line-height: 1.6; }
+.writeller-empty .writeller-text-button { display: block; margin-top: 12px; }
+.writeller-empty-row, .writeller-text-button { color: var(--text-muted); background: transparent; border: 0; box-shadow: none; height: auto; padding: 8px 5px; white-space: normal; text-align: start; }
+.writeller-welcome { max-width: 48ch; padding: 45px 0; }
+.writeller-welcome h2 { font-size: 28px; line-height: 1.25; }
+.writeller-welcome .writeller-text-button { display: block; margin-top: 12px; }
+.writeller-form { width: min(560px, 94vw); }
+.writeller-form .setting-item { display: flex; flex-direction: column; align-items: stretch; gap: 8px; border: 0; padding: 12px 0; }
+.writeller-form .setting-item-info { margin-inline-end: 0; }
+.writeller-form .setting-item-control { justify-content: stretch; }
+.writeller-form .setting-item-control input, .writeller-form .setting-item-control textarea, .writeller-form .setting-item-control select { width: 100%; }
+.writeller-form .setting-item:last-child .setting-item-control { justify-content: flex-end; }
+.writeller-form .setting-item:last-child .setting-item-control button { width: auto; }
+.writeller-form-error { color: var(--text-error); margin: 0; }
+.writeller-form-error:empty { display: none; }
+@media (max-width: 760px) { .writeller-writing-layout { grid-template-columns: 1fr; gap: 28px; } .writeller-project-header h2 { font-size: 26px; } }
+@media (prefers-reduced-motion: reduce) { .writeller-kind-group > summary::before { transition: none; } }

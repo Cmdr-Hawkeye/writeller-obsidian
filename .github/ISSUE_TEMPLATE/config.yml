@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Handbuch und häufige Fragen
+    url: https://github.com/Cmdr-Hawkeye/writeller-obsidian/blob/main/docs/faq.md
+    about: Hilfe zu Installation, Export, Sprache und technischen Ordnern.
+  - name: Writeller
+    url: https://www.writeller.com
+    about: Informationen zur Schreibanwendung.

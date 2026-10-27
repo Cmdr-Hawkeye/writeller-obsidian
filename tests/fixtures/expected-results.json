@@ -1,0 +1,265 @@
+{
+  "contractVersion": "1.0.0",
+  "provenance": "Entirely synthetic; no private projects, database files or credentials used.",
+  "hashAlgorithm": "SHA-256 over RFC 8785 JCS; record exclusions are top-level baseHash/createdAt/updatedAt only.",
+  "files": {
+    "minimal.writeller-exchange.json": {
+      "valid": true,
+      "expectedError": null,
+      "packageHash": "bd4723d15b6f3b8824587a71aa8c9a64ba723f97d327562010c278a682289fe4",
+      "records": {
+        "project": {
+          "project-hafen": "95dfad150c805170b162099d5c0d62ad0f0df52c0b6c79814ecc9632a6ecb7b2"
+        },
+        "chapters": {},
+        "scenes": {
+          "scene-ankunft": "9a16676ceea1fa39b67742fdf601f41cac5c1151e8e03ff0a2b760b73e1a235d"
+        },
+        "catalogItems": {},
+        "relationships": {},
+        "notes": {},
+        "researchItems": {}
+      }
+    },
+    "harbor.writeller-exchange.json": {
+      "valid": true,
+      "expectedError": null,
+      "packageHash": "2ac555b208879858bf15a07e7c5ca8b7ab4a8944fe21568ee5fe981d97363f1a",
+      "records": {
+        "project": {
+          "project-hafen": "8ab2535516e8c864cdf8cff429c5043f7899e65baba40649a3ca7c8921c1b5da"
+        },
+        "chapters": {
+          "chapter-1": "27ec114ced891230f6cfb5b91b30aab0a6677be3f521bef2c47a2d7486b64c66",
+          "chapter-2": "e9fb934177aab2e84197931d0dd41389f8441fdec630c4bc06586589c0dee54c"
+        },
+        "scenes": {
+          "scene-ankunft": "66245b7f67b08895ae40ded44d03fc70ab25cfb98ee7e4ecc57463290360ff54",
+          "scene-nachhall": "d40f363c408abaf58d994397e2ef5e5e55360852cc9b7aa045fb199b2e697364",
+          "scene-entscheidung": "1ec876add029a6927c0a3b79d937df938d9e5cbbe39c3bb31b928efa7489cc2b"
+        },
+        "catalogItems": {
+          "character-lina": "08fbe3fa41d9a4fc6f6bc53db34ebbed8c04a6a86edae5ccb7dfdba63d1eb298",
+          "location-turm": "c282223e5e65d8a7bedf40d515e3a3658ff8ec5d482c62749418ed9aeac1357d",
+          "object-kompass": "cfcbad7dbfb55171973190616aaebc220eda4a7621ec33c7901ed3c2c04be4cf",
+          "event-sturm": "dc06b54907fbe68aaccc9285698bfc13d5bfab5e66aa46bad85d2e4fdc1f899b",
+          "arc-vertrauen": "da5206eba34d5197d3991160a87ad80b96e19a7094bd68fc5c44f514ab7108b4",
+          "org-lotsen": "f5fd38652c44d5e3489c2bb182881ce5aa9011053ad5a814f651ecd859a6270a"
+        },
+        "relationships": {
+          "relationship-1": "70b8dcdf0cc7add05f45c882657e6d5aa189206f724fd66b211b32104d1e6af9",
+          "relationship-2": "b156c04394941b76adb5d3cdf48055cdf99316a647f04a6aaf20496b1f11fdd0"
+        },
+        "notes": {
+          "note-1": "0370cd1796d7a6c7af03023a833598421f657787043f8631787d862298e68e91",
+          "note-2": "8b94f75b8f2e4307926ae3f001651df5d53d0c71219a0af910a390947fcfab5c"
+        },
+        "researchItems": {
+          "research-1": "ff089574e27be9e345a8b889484dc034bbf5adab67e09a53dca5b293b7f534f1",
+          "research-2": "15d39383d810c2dc51ff553e182695fa9eb896a7fac0657c173aa4e9bdbbd7c4",
+          "research-3": "34627ea07be2e0651387f0af21e3b34b5931e57af9b488442381edc51e056e4e",
+          "research-4": "bd6be8926fd899bb011b71b4228bdc473464dd29b6486d52d2a3230f9db371c7",
+          "research-5": "b3082db6b673729c724d5f7c219d5a0b255b3ef87b59679c816d386c6efc2c62",
+          "research-6": "f9841303100b54f38a55d6c172a7bbaa3035aa21884d2801d60b609ef518c630"
+        }
+      }
+    },
+    "forest.writeller-exchange.json": {
+      "valid": true,
+      "expectedError": null,
+      "packageHash": "f463d47dba11e93727bf57bf3b217a131693685f3b4b30493bcf277165abf3e7",
+      "records": {
+        "project": {
+          "project-wald": "abfc961a20025468c070a23b05f5764287a76eb1ef3ef07c8ca67e3a9b0142f5"
+        },
+        "chapters": {
+          "chapter-1": "a7a897c8a0f0279cec8dc131b7391c1b9b8ccb427c4f1f161f10bc56936481ca",
+          "chapter-2": "14ceba829d37c3ffbda37c322ced521e5750bdf66b37c6a8ef36126872f8d4f8"
+        },
+        "scenes": {
+          "scene-ankunft": "15330ee7f7c153d0c2aee6c94dbb3658c23efad81f748e21d9c45b5be43ca3d2",
+          "scene-nachhall": "bfcfdec196879a46a8f177d060ef79bf56524afdcddc719180c06d7ce3d06b50",
+          "scene-entscheidung": "2593cce2a2b7ac05bb0dd2b2ff9f26db0f7d2f0505fbe9ac7f6cf81368639b31"
+        },
+        "catalogItems": {
+          "character-lina": "8497a856ef9dd7e9aadd5cd219e72cd305bd98e6043a6a57208a5405240e6da6",
+          "location-turm": "135e59ce00001ae19b9395a6d7ddb1ee98761df3169434ec5fe236be3639cc43",
+          "object-kompass": "6241bf52c45307a76bb9accc0f59c773fbfbfedcb2d19dd9760587c9ad598971",
+          "event-sturm": "102873666dbcbb7787ce8f5b4ce9dfb2eea131256fe0d38303e4be0b2817554f",
+          "arc-vertrauen": "eb26306843cc16ddf6322a67ad4b4fde3994e5cc11eeaa4b0b64516a110e3a66",
+          "org-lotsen": "0b42512df7201f7aadb47d8f7efc494b74e1e52479a07de125ff360a08b1e462"
+        },
+        "relationships": {
+          "relationship-1": "d8789c641fcac0ff79757ec5420502fdab3dccd549b736650fe1516a5f09060a",
+          "relationship-2": "89fd94f7f287d1720ff88280bfacf28fccd61d1af8a3c277e58f480ca3905d85"
+        },
+        "notes": {
+          "note-1": "58a25101b7a32d008e12b3750dae7df430a651cfc26f8e38e3bb2f8eb11070bb",
+          "note-2": "6083c232e84f6564edaca014fd76fd7ef945649221aa3df21a9adbabc9b22eb7"
+        },
+        "researchItems": {
+          "research-1": "dac8f4478ebcd344acbfbe4641bbef75540f8cee720c40dbd023f3b9803eebfe",
+          "research-2": "8e5fa32d1b7690028372e3cad79483e9816c72f3a4525b2f6622a9cdc28597b0",
+          "research-3": "63ff2f5eba9a64d39691cfbc53735537d1f22bd25259dc234c89cde7a8b43934",
+          "research-4": "6a7aa879ae5f92d19683760522c6bbafe1d88c77f30a722993668bb566c2f77d",
+          "research-5": "b90e8e09b9c59cfef220c07880053509642d543c2cbfc89762f94f0e1dbcc322",
+          "research-6": "8fc3142a858221a3f1b3db0004552ce1f0a96554de6e1f3c770d8987ccef7ab0"
+        }
+      }
+    },
+    "harbor-edited.writeller-exchange.json": {
+      "valid": true,
+      "expectedError": null,
+      "packageHash": "ee955ddc17cbb4ae6de1cfd74cdb682857a4bee573ca3bb6dcb64048cf4b4f65",
+      "records": {
+        "project": {
+          "project-hafen": "8ab2535516e8c864cdf8cff429c5043f7899e65baba40649a3ca7c8921c1b5da"
+        },
+        "chapters": {
+          "chapter-1": "27ec114ced891230f6cfb5b91b30aab0a6677be3f521bef2c47a2d7486b64c66",
+          "chapter-2": "e9fb934177aab2e84197931d0dd41389f8441fdec630c4bc06586589c0dee54c"
+        },
+        "scenes": {
+          "scene-ankunft": "9d04b7b0f7e28a9e56f138e0af5fe055f7c3161b9c04c1041545737aa233d6fa",
+          "scene-nachhall": "d40f363c408abaf58d994397e2ef5e5e55360852cc9b7aa045fb199b2e697364",
+          "scene-entscheidung": "1ec876add029a6927c0a3b79d937df938d9e5cbbe39c3bb31b928efa7489cc2b"
+        },
+        "catalogItems": {
+          "character-lina": "08fbe3fa41d9a4fc6f6bc53db34ebbed8c04a6a86edae5ccb7dfdba63d1eb298",
+          "location-turm": "c282223e5e65d8a7bedf40d515e3a3658ff8ec5d482c62749418ed9aeac1357d",
+          "object-kompass": "cfcbad7dbfb55171973190616aaebc220eda4a7621ec33c7901ed3c2c04be4cf",
+          "event-sturm": "dc06b54907fbe68aaccc9285698bfc13d5bfab5e66aa46bad85d2e4fdc1f899b",
+          "arc-vertrauen": "da5206eba34d5197d3991160a87ad80b96e19a7094bd68fc5c44f514ab7108b4",
+          "org-lotsen": "f5fd38652c44d5e3489c2bb182881ce5aa9011053ad5a814f651ecd859a6270a"
+        },
+        "relationships": {
+          "relationship-1": "70b8dcdf0cc7add05f45c882657e6d5aa189206f724fd66b211b32104d1e6af9",
+          "relationship-2": "b156c04394941b76adb5d3cdf48055cdf99316a647f04a6aaf20496b1f11fdd0"
+        },
+        "notes": {
+          "note-1": "0370cd1796d7a6c7af03023a833598421f657787043f8631787d862298e68e91",
+          "note-2": "8b94f75b8f2e4307926ae3f001651df5d53d0c71219a0af910a390947fcfab5c"
+        },
+        "researchItems": {
+          "research-1": "ff089574e27be9e345a8b889484dc034bbf5adab67e09a53dca5b293b7f534f1",
+          "research-2": "15d39383d810c2dc51ff553e182695fa9eb896a7fac0657c173aa4e9bdbbd7c4",
+          "research-3": "34627ea07be2e0651387f0af21e3b34b5931e57af9b488442381edc51e056e4e",
+          "research-4": "bd6be8926fd899bb011b71b4228bdc473464dd29b6486d52d2a3230f9db371c7",
+          "research-5": "b3082db6b673729c724d5f7c219d5a0b255b3ef87b59679c816d386c6efc2c62",
+          "research-6": "f9841303100b54f38a55d6c172a7bbaa3035aa21884d2801d60b609ef518c630"
+        }
+      }
+    },
+    "invalid-project.writeller-exchange.json": {
+      "valid": false,
+      "expectedError": {
+        "code": "PROJECT_MISMATCH",
+        "pointer": "/scenes/0/projectId"
+      },
+      "packageHash": "0ff96ceccb6649ee9e7328c52f7744c6dcdc95606f3b38ca94bcb5dfeb22a31d",
+      "records": {
+        "project": {
+          "project-hafen": "8ab2535516e8c864cdf8cff429c5043f7899e65baba40649a3ca7c8921c1b5da"
+        },
+        "chapters": {
+          "chapter-1": "27ec114ced891230f6cfb5b91b30aab0a6677be3f521bef2c47a2d7486b64c66",
+          "chapter-2": "e9fb934177aab2e84197931d0dd41389f8441fdec630c4bc06586589c0dee54c"
+        },
+        "scenes": {
+          "scene-ankunft": "cd7f2b42949da0394ed17b7c0b0fa4abaf087601bcfafe4cdacf5ec971f8b968",
+          "scene-nachhall": "d40f363c408abaf58d994397e2ef5e5e55360852cc9b7aa045fb199b2e697364",
+          "scene-entscheidung": "1ec876add029a6927c0a3b79d937df938d9e5cbbe39c3bb31b928efa7489cc2b"
+        },
+        "catalogItems": {
+          "character-lina": "08fbe3fa41d9a4fc6f6bc53db34ebbed8c04a6a86edae5ccb7dfdba63d1eb298",
+          "location-turm": "c282223e5e65d8a7bedf40d515e3a3658ff8ec5d482c62749418ed9aeac1357d",
+          "object-kompass": "cfcbad7dbfb55171973190616aaebc220eda4a7621ec33c7901ed3c2c04be4cf",
+          "event-sturm": "dc06b54907fbe68aaccc9285698bfc13d5bfab5e66aa46bad85d2e4fdc1f899b",
+          "arc-vertrauen": "da5206eba34d5197d3991160a87ad80b96e19a7094bd68fc5c44f514ab7108b4",
+          "org-lotsen": "f5fd38652c44d5e3489c2bb182881ce5aa9011053ad5a814f651ecd859a6270a"
+        },
+        "relationships": {
+          "relationship-1": "70b8dcdf0cc7add05f45c882657e6d5aa189206f724fd66b211b32104d1e6af9",
+          "relationship-2": "b156c04394941b76adb5d3cdf48055cdf99316a647f04a6aaf20496b1f11fdd0"
+        },
+        "notes": {
+          "note-1": "0370cd1796d7a6c7af03023a833598421f657787043f8631787d862298e68e91",
+          "note-2": "8b94f75b8f2e4307926ae3f001651df5d53d0c71219a0af910a390947fcfab5c"
+        },
+        "researchItems": {
+          "research-1": "ff089574e27be9e345a8b889484dc034bbf5adab67e09a53dca5b293b7f534f1",
+          "research-2": "15d39383d810c2dc51ff553e182695fa9eb896a7fac0657c173aa4e9bdbbd7c4",
+          "research-3": "34627ea07be2e0651387f0af21e3b34b5931e57af9b488442381edc51e056e4e",
+          "research-4": "bd6be8926fd899bb011b71b4228bdc473464dd29b6486d52d2a3230f9db371c7",
+          "research-5": "b3082db6b673729c724d5f7c219d5a0b255b3ef87b59679c816d386c6efc2c62",
+          "research-6": "f9841303100b54f38a55d6c172a7bbaa3035aa21884d2801d60b609ef518c630"
+        }
+      }
+    },
+    "invalid-reference.writeller-exchange.json": {
+      "valid": false,
+      "expectedError": {
+        "code": "MISSING_REFERENCE",
+        "pointer": "/scenes/0/chapterId"
+      },
+      "packageHash": "b9234eecabd7fbe80746981b2beceaed5b7b83bbfd35ea871301bfaf407fcad6",
+      "records": {
+        "project": {
+          "project-hafen": "8ab2535516e8c864cdf8cff429c5043f7899e65baba40649a3ca7c8921c1b5da"
+        },
+        "chapters": {
+          "chapter-1": "27ec114ced891230f6cfb5b91b30aab0a6677be3f521bef2c47a2d7486b64c66",
+          "chapter-2": "e9fb934177aab2e84197931d0dd41389f8441fdec630c4bc06586589c0dee54c"
+        },
+        "scenes": {
+          "scene-ankunft": "8a17696a969799bd0a7117f308a944baa9c2c853cbc408400ea320da8336299b",
+          "scene-nachhall": "d40f363c408abaf58d994397e2ef5e5e55360852cc9b7aa045fb199b2e697364",
+          "scene-entscheidung": "1ec876add029a6927c0a3b79d937df938d9e5cbbe39c3bb31b928efa7489cc2b"
+        },
+        "catalogItems": {
+          "character-lina": "08fbe3fa41d9a4fc6f6bc53db34ebbed8c04a6a86edae5ccb7dfdba63d1eb298",
+          "location-turm": "c282223e5e65d8a7bedf40d515e3a3658ff8ec5d482c62749418ed9aeac1357d",
+          "object-kompass": "cfcbad7dbfb55171973190616aaebc220eda4a7621ec33c7901ed3c2c04be4cf",
+          "event-sturm": "dc06b54907fbe68aaccc9285698bfc13d5bfab5e66aa46bad85d2e4fdc1f899b",
+          "arc-vertrauen": "da5206eba34d5197d3991160a87ad80b96e19a7094bd68fc5c44f514ab7108b4",
+          "org-lotsen": "f5fd38652c44d5e3489c2bb182881ce5aa9011053ad5a814f651ecd859a6270a"
+        },
+        "relationships": {
+          "relationship-1": "70b8dcdf0cc7add05f45c882657e6d5aa189206f724fd66b211b32104d1e6af9",
+          "relationship-2": "b156c04394941b76adb5d3cdf48055cdf99316a647f04a6aaf20496b1f11fdd0"
+        },
+        "notes": {
+          "note-1": "0370cd1796d7a6c7af03023a833598421f657787043f8631787d862298e68e91",
+          "note-2": "8b94f75b8f2e4307926ae3f001651df5d53d0c71219a0af910a390947fcfab5c"
+        },
+        "researchItems": {
+          "research-1": "ff089574e27be9e345a8b889484dc034bbf5adab67e09a53dca5b293b7f534f1",
+          "research-2": "15d39383d810c2dc51ff553e182695fa9eb896a7fac0657c173aa4e9bdbbd7c4",
+          "research-3": "34627ea07be2e0651387f0af21e3b34b5931e57af9b488442381edc51e056e4e",
+          "research-4": "bd6be8926fd899bb011b71b4228bdc473464dd29b6486d52d2a3230f9db371c7",
+          "research-5": "b3082db6b673729c724d5f7c219d5a0b255b3ef87b59679c816d386c6efc2c62",
+          "research-6": "f9841303100b54f38a55d6c172a7bbaa3035aa21884d2801d60b609ef518c630"
+        }
+      }
+    }
+  },
+  "transitions": {
+    "harbor -> harbor-edited": {
+      "changedRecords": [
+        "scenes/scene-ankunft"
+      ],
+      "unchangedOtherRecords": true,
+      "requiredWarning": "ANNOTATIONS_NEED_REVIEW"
+    },
+    "harbor -> harbor": {
+      "changedRecords": [],
+      "newFiles": 0,
+      "undoEntries": 0
+    },
+    "harbor + forest": {
+      "separateProjects": 2,
+      "sameNamesAllowed": true,
+      "sameObjectIdStringsAllowed": true
+    }
+  }
+}

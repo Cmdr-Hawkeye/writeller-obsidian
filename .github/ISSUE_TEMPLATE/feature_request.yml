@@ -1,0 +1,18 @@
+name: Idee vorschlagen / Suggest a feature
+description: Eine Verbesserung für den Schreiballtag beschreiben.
+title: "[Idee] "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Was möchtest du erreichen? / What are you trying to do?
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Vorschlag / Suggestion
+      description: Beschreibe den gewünschten Ablauf und wann er dir helfen würde.
+    validations:
+      required: true

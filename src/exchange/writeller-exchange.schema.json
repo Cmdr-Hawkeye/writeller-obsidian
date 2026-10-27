@@ -1,0 +1,1082 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:writeller:exchange:1.0.0",
+  "title": "Writeller Exchange 1.0.0",
+  "description": "Independent structural contract. Cross references, ownership, budgets, dates, images and hashes require semantic validation according to WRITELLER-EXCHANGE-SPEC.md.",
+  "$comment": "Analysis artifact, not production application code. Unknown JSON is accepted only inside metadata, fields and namespaced extensions.",
+  "type": "object",
+  "properties": {
+    "format": {
+      "const": "writeller.exchange"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "packageId": {
+      "$ref": "#/$defs/id"
+    },
+    "exportedAt": {
+      "$ref": "#/$defs/instant"
+    },
+    "producer": {
+      "$ref": "#/$defs/producer"
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "projectId": {
+          "$ref": "#/$defs/id"
+        },
+        "mode": {
+          "const": "snapshot"
+        }
+      },
+      "required": [
+        "projectId",
+        "mode"
+      ],
+      "additionalProperties": false
+    },
+    "project": {
+      "$ref": "#/$defs/project"
+    },
+    "chapters": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/chapter"
+      },
+      "maxItems": 10000
+    },
+    "scenes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/scene"
+      },
+      "maxItems": 10000
+    },
+    "catalogItems": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/catalogItem"
+      },
+      "maxItems": 10000
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/relationship"
+      },
+      "maxItems": 10000
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/note"
+      },
+      "maxItems": 10000
+    },
+    "researchItems": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/researchItem"
+      },
+      "maxItems": 10000
+    },
+    "attachments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/attachment"
+      },
+      "maxItems": 256
+    },
+    "extensions": {
+      "$ref": "#/$defs/extensions"
+    }
+  },
+  "required": [
+    "format",
+    "version",
+    "packageId",
+    "exportedAt",
+    "producer",
+    "scope",
+    "project",
+    "chapters",
+    "scenes",
+    "catalogItems",
+    "relationships",
+    "notes",
+    "researchItems",
+    "attachments",
+    "extensions"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$(?![\\s\\S])"
+    },
+    "hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$(?![\\s\\S])"
+    },
+    "instant": {
+      "type": "string",
+      "pattern": "^(?!0000)[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{6}Z$(?![\\s\\S])",
+      "format": "date-time"
+    },
+    "system": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "pattern": "^[a-z][a-z0-9.-]*$(?![\\s\\S])"
+    },
+    "jsonValue": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "string",
+          "maxLength": 8388608
+        },
+        {
+          "type": "number",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/jsonValue"
+          }
+        },
+        {
+          "$ref": "#/$defs/jsonObject"
+        }
+      ]
+    },
+    "jsonObject": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/jsonValue"
+      }
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9-]*(?:\\.[a-z][a-z0-9-]*)+$(?![\\s\\S])"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/jsonValue"
+      }
+    },
+    "origin": {
+      "type": "object",
+      "properties": {
+        "system": {
+          "$ref": "#/$defs/system"
+        },
+        "instanceId": {
+          "$ref": "#/$defs/id"
+        },
+        "objectId": {
+          "$ref": "#/$defs/id"
+        }
+      },
+      "required": [
+        "system",
+        "instanceId",
+        "objectId"
+      ],
+      "additionalProperties": false
+    },
+    "producer": {
+      "type": "object",
+      "properties": {
+        "system": {
+          "$ref": "#/$defs/system"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "instanceId": {
+          "$ref": "#/$defs/id"
+        }
+      },
+      "required": [
+        "system",
+        "version",
+        "instanceId"
+      ],
+      "additionalProperties": false
+    },
+    "reference": {
+      "type": "object",
+      "properties": {
+        "collection": {
+          "enum": [
+            "project",
+            "chapters",
+            "scenes",
+            "catalogItems",
+            "relationships",
+            "notes",
+            "researchItems"
+          ]
+        },
+        "id": {
+          "$ref": "#/$defs/id"
+        }
+      },
+      "required": [
+        "collection",
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "content": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "enum": [
+            "plain",
+            "markdown"
+          ]
+        },
+        "text": {
+          "type": "string",
+          "maxLength": 8388608
+        }
+      },
+      "required": [
+        "format",
+        "text"
+      ],
+      "additionalProperties": false
+    },
+    "project": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "origin": {
+          "$ref": "#/$defs/origin"
+        },
+        "baseHash": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/hash"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "createdAt": {
+          "$ref": "#/$defs/instant"
+        },
+        "updatedAt": {
+          "$ref": "#/$defs/instant"
+        },
+        "metadata": {
+          "$ref": "#/$defs/jsonObject"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500,
+          "pattern": "\\S"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 8388608
+        },
+        "projectType": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "genreOrTopic": {
+          "type": "string",
+          "maxLength": 8388608
+        },
+        "languageCode": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "status": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "wordTarget": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "origin",
+        "baseHash",
+        "createdAt",
+        "updatedAt",
+        "metadata",
+        "extensions",
+        "title",
+        "description",
+        "projectType",
+        "genreOrTopic",
+        "languageCode",
+        "status",
+        "wordTarget"
+      ],
+      "additionalProperties": false
+    },
+    "chapter": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "projectId": {
+          "$ref": "#/$defs/id"
+        },
+        "origin": {
+          "$ref": "#/$defs/origin"
+        },
+        "baseHash": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/hash"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "createdAt": {
+          "$ref": "#/$defs/instant"
+        },
+        "updatedAt": {
+          "$ref": "#/$defs/instant"
+        },
+        "metadata": {
+          "$ref": "#/$defs/jsonObject"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        },
+        "partId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500,
+          "pattern": "\\S"
+        },
+        "summary": {
+          "type": "string",
+          "maxLength": 8388608
+        },
+        "orderIndex": {
+          "type": "number",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "status": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        }
+      },
+      "required": [
+        "id",
+        "projectId",
+        "origin",
+        "baseHash",
+        "createdAt",
+        "updatedAt",
+        "metadata",
+        "extensions",
+        "partId",
+        "title",
+        "summary",
+        "orderIndex",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "scene": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "projectId": {
+          "$ref": "#/$defs/id"
+        },
+        "origin": {
+          "$ref": "#/$defs/origin"
+        },
+        "baseHash": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/hash"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "createdAt": {
+          "$ref": "#/$defs/instant"
+        },
+        "updatedAt": {
+          "$ref": "#/$defs/instant"
+        },
+        "metadata": {
+          "$ref": "#/$defs/jsonObject"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        },
+        "chapterId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "parentSceneId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500,
+          "pattern": "\\S"
+        },
+        "summary": {
+          "type": "string",
+          "maxLength": 8388608
+        },
+        "content": {
+          "$ref": "#/$defs/content"
+        },
+        "authorIntent": {
+          "type": "string",
+          "maxLength": 8388608
+        },
+        "povCharacterId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sceneType": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "status": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "orderIndex": {
+          "type": "number",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "storyDateStart": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/instant"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "storyDateEnd": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/instant"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "estimatedWordTarget": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tensionLevel": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "emotionalTone": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 8388608
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "goal": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 8388608
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "conflict": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 8388608
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "outcome": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 8388608
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "projectId",
+        "origin",
+        "baseHash",
+        "createdAt",
+        "updatedAt",
+        "metadata",
+        "extensions",
+        "chapterId",
+        "parentSceneId",
+        "title",
+        "summary",
+        "content",
+        "authorIntent",
+        "povCharacterId",
+        "sceneType",
+        "status",
+        "orderIndex",
+        "storyDateStart",
+        "storyDateEnd",
+        "estimatedWordTarget",
+        "tensionLevel",
+        "emotionalTone",
+        "goal",
+        "conflict",
+        "outcome"
+      ],
+      "additionalProperties": false
+    },
+    "catalogItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "projectId": {
+          "$ref": "#/$defs/id"
+        },
+        "origin": {
+          "$ref": "#/$defs/origin"
+        },
+        "baseHash": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/hash"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "createdAt": {
+          "$ref": "#/$defs/instant"
+        },
+        "updatedAt": {
+          "$ref": "#/$defs/instant"
+        },
+        "metadata": {
+          "$ref": "#/$defs/jsonObject"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500,
+          "pattern": "\\S"
+        },
+        "summary": {
+          "type": "string",
+          "maxLength": 8388608
+        },
+        "status": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "fields": {
+          "$ref": "#/$defs/jsonObject"
+        }
+      },
+      "required": [
+        "id",
+        "projectId",
+        "origin",
+        "baseHash",
+        "createdAt",
+        "updatedAt",
+        "metadata",
+        "extensions",
+        "type",
+        "name",
+        "summary",
+        "status",
+        "fields"
+      ],
+      "additionalProperties": false
+    },
+    "relationship": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "projectId": {
+          "$ref": "#/$defs/id"
+        },
+        "origin": {
+          "$ref": "#/$defs/origin"
+        },
+        "baseHash": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/hash"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "createdAt": {
+          "$ref": "#/$defs/instant"
+        },
+        "updatedAt": {
+          "$ref": "#/$defs/instant"
+        },
+        "metadata": {
+          "$ref": "#/$defs/jsonObject"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        },
+        "source": {
+          "$ref": "#/$defs/reference"
+        },
+        "target": {
+          "$ref": "#/$defs/reference"
+        },
+        "relationshipType": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 8388608
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 8388608
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "strength": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "direction": {
+          "enum": [
+            "directed",
+            "undirected"
+          ]
+        },
+        "validFromStoryTime": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/instant"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "validToStoryTime": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/instant"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "projectId",
+        "origin",
+        "baseHash",
+        "createdAt",
+        "updatedAt",
+        "metadata",
+        "extensions",
+        "source",
+        "target",
+        "relationshipType",
+        "label",
+        "description",
+        "strength",
+        "direction",
+        "validFromStoryTime",
+        "validToStoryTime"
+      ],
+      "additionalProperties": false
+    },
+    "note": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "projectId": {
+          "$ref": "#/$defs/id"
+        },
+        "origin": {
+          "$ref": "#/$defs/origin"
+        },
+        "baseHash": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/hash"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "createdAt": {
+          "$ref": "#/$defs/instant"
+        },
+        "updatedAt": {
+          "$ref": "#/$defs/instant"
+        },
+        "metadata": {
+          "$ref": "#/$defs/jsonObject"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        },
+        "target": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/reference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500,
+          "pattern": "\\S"
+        },
+        "content": {
+          "$ref": "#/$defs/content"
+        },
+        "source": {
+          "type": "string",
+          "maxLength": 8388608
+        },
+        "sourceSuggestionId": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "projectId",
+        "origin",
+        "baseHash",
+        "createdAt",
+        "updatedAt",
+        "metadata",
+        "extensions",
+        "target",
+        "title",
+        "content",
+        "source",
+        "sourceSuggestionId"
+      ],
+      "additionalProperties": false
+    },
+    "researchItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "projectId": {
+          "$ref": "#/$defs/id"
+        },
+        "origin": {
+          "$ref": "#/$defs/origin"
+        },
+        "baseHash": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/hash"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "createdAt": {
+          "$ref": "#/$defs/instant"
+        },
+        "updatedAt": {
+          "$ref": "#/$defs/instant"
+        },
+        "metadata": {
+          "$ref": "#/$defs/jsonObject"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions"
+        },
+        "kind": {
+          "enum": [
+            "link",
+            "file",
+            "image",
+            "pdf",
+            "webNote",
+            "source"
+          ]
+        },
+        "target": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/reference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500,
+          "pattern": "\\S"
+        },
+        "uri": {
+          "type": "string",
+          "maxLength": 8388608
+        },
+        "content": {
+          "$ref": "#/$defs/content"
+        },
+        "source": {
+          "type": "string",
+          "maxLength": 8388608
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 8388608
+          },
+          "maxItems": 10000
+        }
+      },
+      "required": [
+        "id",
+        "projectId",
+        "origin",
+        "baseHash",
+        "createdAt",
+        "updatedAt",
+        "metadata",
+        "extensions",
+        "kind",
+        "target",
+        "title",
+        "uri",
+        "content",
+        "source",
+        "tags"
+      ],
+      "additionalProperties": false
+    },
+    "attachment": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/hash"
+        },
+        "projectId": {
+          "$ref": "#/$defs/id"
+        },
+        "mimeType": {
+          "enum": [
+            "image/png",
+            "image/jpeg"
+          ]
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2400
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2400
+        },
+        "data": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 2796204,
+          "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
+        }
+      },
+      "required": [
+        "id",
+        "projectId",
+        "mimeType",
+        "width",
+        "height",
+        "data"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

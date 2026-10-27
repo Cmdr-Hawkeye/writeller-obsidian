@@ -1,0 +1,30 @@
+name: Fehler melden / Report a bug
+description: Ein konkretes Problem mit Schritten zum Nachstellen melden.
+title: "[Fehler] "
+labels: [bug]
+body:
+  - type: input
+    id: versions
+    attributes:
+      label: Versionen und System / Versions and system
+      description: Plugin-Version, Obsidian-Version, Betriebssystem und Theme.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Schritte / Steps to reproduce
+      description: Möglichst mit einem kleinen synthetischen Testprojekt beschreiben.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Erwartetes und tatsächliches Verhalten / Expected and actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Ergänzungen / Additional context
+      description: Optionale Aufnahme oder Fehlermeldung. Keine privaten Manuskripte, Journale, Zugangsdaten oder vollständigen Exporte veröffentlichen.

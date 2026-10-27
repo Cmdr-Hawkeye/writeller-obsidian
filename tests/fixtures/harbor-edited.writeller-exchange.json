@@ -1,0 +1,699 @@
+{
+  "format": "writeller.exchange",
+  "version": "1.0.0",
+  "packageId": "package-harbor-002",
+  "exportedAt": "2026-10-26T11:00:00.000000Z",
+  "producer": {
+    "system": "obsidian",
+    "version": "0.1.0",
+    "instanceId": "fixture-obsidian-origin"
+  },
+  "scope": {
+    "projectId": "project-hafen",
+    "mode": "snapshot"
+  },
+  "project": {
+    "id": "project-hafen",
+    "origin": {
+      "system": "synthetic",
+      "instanceId": "fixture-origin",
+      "objectId": "project-hafen"
+    },
+    "baseHash": "8ab2535516e8c864cdf8cff429c5043f7899e65baba40649a3ca7c8921c1b5da",
+    "createdAt": "2026-10-26T09:00:00.000000Z",
+    "updatedAt": "2026-10-26T09:00:00.000000Z",
+    "metadata": {
+      "storyContext": "Eine Insel, zwei Wege.",
+      "storyboard": {
+        "version": 1,
+        "positions": {
+          "scene-ankunft": {
+            "x": 120,
+            "y": 240
+          }
+        },
+        "timeline": [
+          "scene-ankunft"
+        ]
+      },
+      "authorName": "Fiktive Autorin"
+    },
+    "extensions": {
+      "org.writeller.policy": {
+        "aiEnabled": false,
+        "cloudSyncEnabled": false,
+        "noAiNoCloud": true
+      },
+      "org.example.future": {
+        "preserve": true,
+        "nested": [
+          null,
+          3.5,
+          "Öl",
+          {
+            "1": "eins"
+          }
+        ]
+      }
+    },
+    "title": "Der stille Hafen",
+    "description": "Synthetischer Kurzroman.",
+    "projectType": "novel",
+    "genreOrTopic": "Abenteuer",
+    "languageCode": "de",
+    "status": "planned",
+    "wordTarget": 50000
+  },
+  "chapters": [
+    {
+      "id": "chapter-1",
+      "projectId": "project-hafen",
+      "origin": {
+        "system": "synthetic",
+        "instanceId": "fixture-origin",
+        "objectId": "chapter-1"
+      },
+      "baseHash": "27ec114ced891230f6cfb5b91b30aab0a6677be3f521bef2c47a2d7486b64c66",
+      "createdAt": "2026-10-26T09:00:00.000000Z",
+      "updatedAt": "2026-10-26T09:00:00.000000Z",
+      "metadata": {},
+      "extensions": {},
+      "partId": "group-erster-teil",
+      "title": "Am Wasser",
+      "summary": "Der Anfang.",
+      "orderIndex": 0,
+      "status": "planned"
+    },
+    {
+      "id": "chapter-2",
+      "projectId": "project-hafen",
+      "origin": {
+        "system": "synthetic",
+        "instanceId": "fixture-origin",
+        "objectId": "chapter-2"
+      },
+      "baseHash": "e9fb934177aab2e84197931d0dd41389f8441fdec630c4bc06586589c0dee54c",
+      "createdAt": "2026-10-26T09:00:00.000000Z",
+      "updatedAt": "2026-10-26T09:00:00.000000Z",
+      "metadata": {},
+      "extensions": {},
+      "partId": null,
+      "title": "Der Weg",
+      "summary": "Die Entscheidung.",
+      "orderIndex": 1.5,
+      "status": "outlined"
+    }
+  ],
+  "scenes": [
+    {
+      "id": "scene-ankunft",
+      "projectId": "project-hafen",
+      "origin": {
+        "system": "synthetic",
+        "instanceId": "fixture-origin",
+        "objectId": "scene-ankunft"
+      },
+      "baseHash": "66245b7f67b08895ae40ded44d03fc70ab25cfb98ee7e4ecc57463290360ff54",
+      "createdAt": "2026-10-26T09:00:00.000000Z",
+      "updatedAt": "2026-10-26T10:30:00.000000Z",
+      "metadata": {},
+      "extensions": {
+        "org.writeller.policy": {
+          "aiAssistAllowed": false
+        },
+        "org.writeller.text-review": {
+          "basisHash": "3868cbc477d11d92ea895f7fb023b261aee7319fd5a2b3de0e2724769c6c43f4",
+          "annotations": [
+            {
+              "id": "annotation-nebel",
+              "sceneId": "scene-ankunft",
+              "startOffset": 7,
+              "endOffset": 12,
+              "selectedText": "Nebel",
+              "comment": "Synthetischer Kommentar; Position vor Textbearbeitung prüfen.",
+              "resolved": false,
+              "createdAt": "2026-10-26T09:00:00.000000Z",
+              "updatedAt": "2026-10-26T09:00:00.000000Z"
+            }
+          ]
+        }
+      },
+      "chapterId": "chapter-1",
+      "parentSceneId": null,
+      "title": "Ankunft",
+      "summary": "Lina erreicht den Hafen.",
+      "content": {
+        "format": "markdown",
+        "text": "🌊 Der Morgennebel lag über dem **Wasser**.\n\nLina sah den [Leuchtturm](entity:catalogItems/location-turm).\n\n<div align=\"center\">\nEin Licht.\n</div>\n\n![Skizze](asset:88d9ff12ee45717d98bb9899e830d8adc9dee9f2c935eef208d77444f3a3de68?width=70&align=center)\n\n- Der erste Weg\n- Der zweite Weg\n\n| Zeichen | Wert |\n| --- | --- |\n| Ä | 2 |\n\n```text\nEin literales Beispiel: [Figur](entity:catalogItems/nicht-vorhanden)\n```\n"
+      },
+      "authorIntent": "Eine offene Frage etablieren.",
+      "povCharacterId": "character-lina",
+      "sceneType": "scene",
+      "status": "drafting",
+      "orderIndex": 0,
+      "storyDateStart": "2026-01-01T09:00:00.123456Z",
+      "storyDateEnd": "2026-01-01T09:00:00.123457Z",
+      "estimatedWordTarget": 800,
+      "tensionLevel": 35,
+      "emotionalTone": "gespannt",
+      "goal": "Ankommen",
+      "conflict": "Das Boot fehlt.",
+      "outcome": null
+    },
+    {
+      "id": "scene-nachhall",
+      "projectId": "project-hafen",
+      "origin": {
+        "system": "synthetic",
+        "instanceId": "fixture-origin",
+        "objectId": "scene-nachhall"
+      },
+      "baseHash": "d40f363c408abaf58d994397e2ef5e5e55360852cc9b7aa045fb199b2e697364",
+      "createdAt": "2026-10-26T09:00:00.000000Z",
+      "updatedAt": "2026-10-26T09:00:00.000000Z",
+      "metadata": {},
+      "extensions": {},
+      "chapterId": "chapter-1",
+      "parentSceneId": "scene-ankunft",
+      "title": "Nachhall",
+      "summary": "Ein kurzer Gedanke.",
+      "content": {
+        "format": "plain",
+        "text": "Ein Sternchen * ist hier wörtlich.\r\nDie zweite Zeile bleibt erhalten."
+      },
+      "authorIntent": "Eine offene Frage etablieren.",
+      "povCharacterId": null,
+      "sceneType": "scene",
+      "status": "drafting",
+      "orderIndex": 0.5,
+      "storyDateStart": "2026-01-01T09:00:00.123456Z",
+      "storyDateEnd": "2026-01-01T09:00:00.123457Z",
+      "estimatedWordTarget": 800,
+      "tensionLevel": 35,
+      "emotionalTone": "gespannt",
+      "goal": "Ankommen",
+      "conflict": "Das Boot fehlt.",
+      "outcome": null
+    },
+    {
+      "id": "scene-entscheidung",
+      "projectId": "project-hafen",
+      "origin": {
+        "system": "synthetic",
+        "instanceId": "fixture-origin",
+        "objectId": "scene-entscheidung"
+      },
+      "baseHash": "1ec876add029a6927c0a3b79d937df938d9e5cbbe39c3bb31b928efa7489cc2b",
+      "createdAt": "2026-10-26T09:00:00.000000Z",
+      "updatedAt": "2026-10-26T09:00:00.000000Z",
+      "metadata": {},
+      "extensions": {},
+      "chapterId": "chapter-2",
+      "parentSceneId": null,
+      "title": "Ankunft",
+      "summary": "Absichtlich gleicher Szenentitel.",
+      "content": {
+        "format": "plain",
+        "text": "Lina wählt den Weg zum Turm."
+      },
+      "authorIntent": "Eine offene Frage etablieren.",
+      "povCharacterId": null,
+      "sceneType": "scene",
+      "status": "drafting",
+      "orderIndex": 0,
+      "storyDateStart": "2026-01-01T09:00:00.123456Z",
+      "storyDateEnd": "2026-01-01T09:00:00.123457Z",
+      "estimatedWordTarget": 800,
+      "tensionLevel": 35,
+      "emotionalTone": "gespannt",
+      "goal": "Ankommen",
+      "conflict": "Das Boot fehlt.",
+      "outcome": null
+    }
+  ],
+  "catalogItems": [
+    {
+      "id": "character-lina",
+      "projectId": "project-hafen",
+      "origin": {
+        "system": "synthetic",
+        "instanceId": "fixture-origin",
+        "objectId": "character-lina"
+      },
+      "baseHash": "08fbe3fa41d9a4fc6f6bc53db34ebbed8c04a6a86edae5ccb7dfdba63d1eb298",
+      "createdAt": "2026-10-26T09:00:00.000000Z",
+      "updatedAt": "2026-10-26T09:00:00.000000Z",
+      "metadata": {},
+      "extensions": {},
+      "type": "character",
+      "name": "Lina",
+      "summary": "Vollständig erfundenes Projektmaterial.",
+      "status": "planned",
+      "fields": {
+        "roleFunction": "Lotsin",
+        "age": "32",
+        "appearance": "Regenmantel",
+        "personality": "Ruhig",
+        "motivation": "Den Hafen schützen",
+        "fear": "Orientierungslosigkeit",
+        "secret": "Kennt den alten Weg",
+        "background": "Auf der Insel aufgewachsen",
+        "goal": "Den Turm erreichen",
+        "conflict": "Der Sturm",
+        "arc": "Vertrauen lernen",
+        "voice": "Kurze Sätze",
+        "relationshipNotes": "Kennt die Lotsen",
+        "customStats": {
+          "score": 7,
+          "active": true,
+          "aliases": [
+            "L.",
+            "Lina"
+          ],
+          "unknown": null
+        }
+      }
+    },
+    {
+      "id": "location-turm",
+      "projectId": "project-hafen",
+      "origin": {
+        "system": "synthetic",
+        "instanceId": "fixture-origin",
+        "objectId": "location-turm"
+      },
+      "baseHash": "c282223e5e65d8a7bedf40d515e3a3658ff8ec5d482c62749418ed9aeac1357d",
+      "createdAt": "2026-10-26T09:00:00.000000Z",
+      "updatedAt": "2026-10-26T09:00:00.000000Z",
+      "metadata": {},
+      "extensions": {},
+      "type": "location",
+      "name": "Leuchtturm",
+      "summary": "Vollständig erfundenes Projektmaterial.",
+      "status": "planned",
+      "fields": {
+        "detail": "Synthetisches Detail",
+        "coordinates": [
+          12.5,
+          54.25
+        ]
+      }
+    },
+    {
+      "id": "object-kompass",
+      "projectId": "project-hafen",
+      "origin": {
+        "system": "synthetic",
+        "instanceId": "fixture-origin",
+        "objectId": "object-kompass"
+      },
+      "baseHash": "cfcbad7dbfb55171973190616aaebc220eda4a7621ec33c7901ed3c2c04be4cf",
+      "createdAt": "2026-10-26T09:00:00.000000Z",
+      "updatedAt": "2026-10-26T09:00:00.000000Z",
+      "metadata": {},
+      "extensions": {},
+      "type": "object",
+      "name": "Kompass",
+      "summary": "Vollständig erfundenes Projektmaterial.",
+      "status": "planned",
+      "fields": {
+        "detail": "Synthetisches Detail",
+        "coordinates": [
+          12.5,
+          54.25
+        ]
+      }
+    },
+    {
+      "id": "event-sturm",
+      "projectId": "project-hafen",
+      "origin": {
+        "system": "synthetic",
+        "instanceId": "fixture-origin",
+        "objectId": "event-sturm"
+      },
+      "baseHash": "dc06b54907fbe68aaccc9285698bfc13d5bfab5e66aa46bad85d2e4fdc1f899b",
+      "createdAt": "2026-10-26T09:00:00.000000Z",
+      "updatedAt": "2026-10-26T09:00:00.000000Z",
+      "metadata": {},
+      "extensions": {},
+      "type": "timelineEvent",
+      "name": "Der Sturm",
+      "summary": "Vollständig erfundenes Projektmaterial.",
+      "status": "planned",
+      "fields": {
+        "detail": "Synthetisches Detail",
+        "coordinates": [
+          12.5,
+          54.25
+        ]
+      }
+    },
+    {
+      "id": "arc-vertrauen",
+      "projectId": "project-hafen",
+      "origin": {
+        "system": "synthetic",
+        "instanceId": "fixture-origin",
+        "objectId": "arc-vertrauen"
+      },
+      "baseHash": "da5206eba34d5197d3991160a87ad80b96e19a7094bd68fc5c44f514ab7108b4",
+      "createdAt": "2026-10-26T09:00:00.000000Z",
+      "updatedAt": "2026-10-26T09:00:00.000000Z",
+      "metadata": {},
+      "extensions": {},
+      "type": "arc",
+      "name": "Vertrauen",
+      "summary": "Vollständig erfundenes Projektmaterial.",
+      "status": "planned",
+      "fields": {
+        "detail": "Synthetisches Detail",
+        "coordinates": [
+          12.5,
+          54.25
+        ]
+      }
+    },
+    {
+      "id": "org-lotsen",
+      "projectId": "project-hafen",
+      "origin": {
+        "system": "synthetic",
+        "instanceId": "fixture-origin",
+        "objectId": "org-lotsen"
+      },
+      "baseHash": "f5fd38652c44d5e3489c2bb182881ce5aa9011053ad5a814f651ecd859a6270a",
+      "createdAt": "2026-10-26T09:00:00.000000Z",
+      "updatedAt": "2026-10-26T09:00:00.000000Z",
+      "metadata": {},
+      "extensions": {},
+      "type": "custom:example.organization",
+      "name": "Die Lotsen",
+      "summary": "Vollständig erfundenes Projektmaterial.",
+      "status": "custom-review",
+      "fields": {
+        "detail": "Synthetisches Detail",
+        "coordinates": [
+          12.5,
+          54.25
+        ]
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "id": "relationship-1",
+      "projectId": "project-hafen",
+      "origin": {
+        "system": "synthetic",
+        "instanceId": "fixture-origin",
+        "objectId": "relationship-1"
+      },
+      "baseHash": "70b8dcdf0cc7add05f45c882657e6d5aa189206f724fd66b211b32104d1e6af9",
+      "createdAt": "2026-10-26T09:00:00.000000Z",
+      "updatedAt": "2026-10-26T09:00:00.000000Z",
+      "metadata": {},
+      "extensions": {},
+      "source": {
+        "collection": "scenes",
+        "id": "scene-ankunft"
+      },
+      "target": {
+        "collection": "catalogItems",
+        "id": "character-lina"
+      },
+      "relationshipType": "appearsIn",
+      "label": "Lina tritt auf",
+      "description": "Die Figur ist in der Szene anwesend.",
+      "strength": 0.8,
+      "direction": "directed",
+      "validFromStoryTime": null,
+      "validToStoryTime": null
+    },
+    {
+      "id": "relationship-2",
+      "projectId": "project-hafen",
+      "origin": {
+        "system": "synthetic",
+        "instanceId": "fixture-origin",
+        "objectId": "relationship-2"
+      },
+      "baseHash": "b156c04394941b76adb5d3cdf48055cdf99316a647f04a6aaf20496b1f11fdd0",
+      "createdAt": "2026-10-26T09:00:00.000000Z",
+      "updatedAt": "2026-10-26T09:00:00.000000Z",
+      "metadata": {},
+      "extensions": {},
+      "source": {
+        "collection": "catalogItems",
+        "id": "character-lina"
+      },
+      "target": {
+        "collection": "catalogItems",
+        "id": "org-lotsen"
+      },
+      "relationshipType": "associatedWith",
+      "label": null,
+      "description": null,
+      "strength": null,
+      "direction": "undirected",
+      "validFromStoryTime": "2026-01-01T00:00:00.000000Z",
+      "validToStoryTime": "2026-12-31T23:59:59.999999Z"
+    }
+  ],
+  "notes": [
+    {
+      "id": "note-1",
+      "projectId": "project-hafen",
+      "origin": {
+        "system": "synthetic",
+        "instanceId": "fixture-origin",
+        "objectId": "note-1"
+      },
+      "baseHash": "0370cd1796d7a6c7af03023a833598421f657787043f8631787d862298e68e91",
+      "createdAt": "2026-10-26T09:00:00.000000Z",
+      "updatedAt": "2026-10-26T09:00:00.000000Z",
+      "metadata": {},
+      "extensions": {},
+      "target": {
+        "collection": "scenes",
+        "id": "scene-ankunft"
+      },
+      "title": "Motiv",
+      "content": {
+        "format": "markdown",
+        "text": "Das Licht steht für **Hoffnung**."
+      },
+      "source": "manual",
+      "sourceSuggestionId": null
+    },
+    {
+      "id": "note-2",
+      "projectId": "project-hafen",
+      "origin": {
+        "system": "synthetic",
+        "instanceId": "fixture-origin",
+        "objectId": "note-2"
+      },
+      "baseHash": "8b94f75b8f2e4307926ae3f001651df5d53d0c71219a0af910a390947fcfab5c",
+      "createdAt": "2026-10-26T09:00:00.000000Z",
+      "updatedAt": "2026-10-26T09:00:00.000000Z",
+      "metadata": {},
+      "extensions": {},
+      "target": {
+        "collection": "relationships",
+        "id": "relationship-2"
+      },
+      "title": "Beziehungshinweis",
+      "content": {
+        "format": "plain",
+        "text": "Bereits übernommener, hier rein synthetischer Notizinhalt."
+      },
+      "source": "ai",
+      "sourceSuggestionId": "suggestion-not-in-package"
+    }
+  ],
+  "researchItems": [
+    {
+      "id": "research-1",
+      "projectId": "project-hafen",
+      "origin": {
+        "system": "synthetic",
+        "instanceId": "fixture-origin",
+        "objectId": "research-1"
+      },
+      "baseHash": "ff089574e27be9e345a8b889484dc034bbf5adab67e09a53dca5b293b7f534f1",
+      "createdAt": "2026-10-26T09:00:00.000000Z",
+      "updatedAt": "2026-10-26T09:00:00.000000Z",
+      "metadata": {},
+      "extensions": {},
+      "kind": "link",
+      "target": {
+        "collection": "project",
+        "id": "project-hafen"
+      },
+      "title": "Hafenlexikon",
+      "uri": "https://example.invalid/harbor",
+      "content": {
+        "format": "plain",
+        "text": "Nur synthetische Quellenangabe; keine Datei wird mitgeliefert oder abgerufen."
+      },
+      "source": "Erfundene Quelle",
+      "tags": [
+        "Hafen",
+        "Recherche",
+        "Hafen"
+      ]
+    },
+    {
+      "id": "research-2",
+      "projectId": "project-hafen",
+      "origin": {
+        "system": "synthetic",
+        "instanceId": "fixture-origin",
+        "objectId": "research-2"
+      },
+      "baseHash": "15d39383d810c2dc51ff553e182695fa9eb896a7fac0657c173aa4e9bdbbd7c4",
+      "createdAt": "2026-10-26T09:00:00.000000Z",
+      "updatedAt": "2026-10-26T09:00:00.000000Z",
+      "metadata": {},
+      "extensions": {},
+      "kind": "file",
+      "target": null,
+      "title": "Lokaldatei-Verweis",
+      "uri": "quellen/notizen.txt",
+      "content": {
+        "format": "plain",
+        "text": "Nur synthetische Quellenangabe; keine Datei wird mitgeliefert oder abgerufen."
+      },
+      "source": "Erfundene Quelle",
+      "tags": [
+        "Hafen",
+        "Recherche",
+        "Hafen"
+      ]
+    },
+    {
+      "id": "research-3",
+      "projectId": "project-hafen",
+      "origin": {
+        "system": "synthetic",
+        "instanceId": "fixture-origin",
+        "objectId": "research-3"
+      },
+      "baseHash": "34627ea07be2e0651387f0af21e3b34b5931e57af9b488442381edc51e056e4e",
+      "createdAt": "2026-10-26T09:00:00.000000Z",
+      "updatedAt": "2026-10-26T09:00:00.000000Z",
+      "metadata": {},
+      "extensions": {},
+      "kind": "image",
+      "target": null,
+      "title": "Bildquellen-Verweis",
+      "uri": "quellen/skizze.png",
+      "content": {
+        "format": "plain",
+        "text": "Nur synthetische Quellenangabe; keine Datei wird mitgeliefert oder abgerufen."
+      },
+      "source": "Erfundene Quelle",
+      "tags": [
+        "Hafen",
+        "Recherche",
+        "Hafen"
+      ]
+    },
+    {
+      "id": "research-4",
+      "projectId": "project-hafen",
+      "origin": {
+        "system": "synthetic",
+        "instanceId": "fixture-origin",
+        "objectId": "research-4"
+      },
+      "baseHash": "bd6be8926fd899bb011b71b4228bdc473464dd29b6486d52d2a3230f9db371c7",
+      "createdAt": "2026-10-26T09:00:00.000000Z",
+      "updatedAt": "2026-10-26T09:00:00.000000Z",
+      "metadata": {},
+      "extensions": {},
+      "kind": "pdf",
+      "target": null,
+      "title": "PDF-Verweis",
+      "uri": "quellen/karte.pdf",
+      "content": {
+        "format": "plain",
+        "text": "Nur synthetische Quellenangabe; keine Datei wird mitgeliefert oder abgerufen."
+      },
+      "source": "Erfundene Quelle",
+      "tags": [
+        "Hafen",
+        "Recherche",
+        "Hafen"
+      ]
+    },
+    {
+      "id": "research-5",
+      "projectId": "project-hafen",
+      "origin": {
+        "system": "synthetic",
+        "instanceId": "fixture-origin",
+        "objectId": "research-5"
+      },
+      "baseHash": "b3082db6b673729c724d5f7c219d5a0b255b3ef87b59679c816d386c6efc2c62",
+      "createdAt": "2026-10-26T09:00:00.000000Z",
+      "updatedAt": "2026-10-26T09:00:00.000000Z",
+      "metadata": {},
+      "extensions": {},
+      "kind": "webNote",
+      "target": null,
+      "title": "Wettergedanke",
+      "uri": "",
+      "content": {
+        "format": "plain",
+        "text": "Nur synthetische Quellenangabe; keine Datei wird mitgeliefert oder abgerufen."
+      },
+      "source": "Erfundene Quelle",
+      "tags": [
+        "Hafen",
+        "Recherche",
+        "Hafen"
+      ]
+    },
+    {
+      "id": "research-6",
+      "projectId": "project-hafen",
+      "origin": {
+        "system": "synthetic",
+        "instanceId": "fixture-origin",
+        "objectId": "research-6"
+      },
+      "baseHash": "f9841303100b54f38a55d6c172a7bbaa3035aa21884d2801d60b609ef518c630",
+      "createdAt": "2026-10-26T09:00:00.000000Z",
+      "updatedAt": "2026-10-26T09:00:00.000000Z",
+      "metadata": {},
+      "extensions": {},
+      "kind": "source",
+      "target": null,
+      "title": "Fiktive Quelle",
+      "uri": "",
+      "content": {
+        "format": "plain",
+        "text": "Nur synthetische Quellenangabe; keine Datei wird mitgeliefert oder abgerufen."
+      },
+      "source": "Erfundene Quelle",
+      "tags": [
+        "Hafen",
+        "Recherche",
+        "Hafen"
+      ]
+    }
+  ],
+  "attachments": [
+    {
+      "id": "88d9ff12ee45717d98bb9899e830d8adc9dee9f2c935eef208d77444f3a3de68",
+      "projectId": "project-hafen",
+      "mimeType": "image/png",
+      "width": 2,
+      "height": 2,
+      "data": "iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGklEQVR4AWNkCEj5H2Vjw8ByoqeJQUOElQEAMRIEooYDbx8AAAAASUVORK5CYII="
+    }
+  ],
+  "extensions": {}
+}

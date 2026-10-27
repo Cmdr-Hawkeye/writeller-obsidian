@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-labelledby="title desc">
   <title id="title">Writeller for Obsidian</title>
-  <desc id="desc">Kapitel. Szenen. Deine Geschichte. Ein typografischer Repository-Header.</desc>
+  <desc id="desc">Kapitel. Szenen. Deine Geschichte. Chapters. Scenes. Your story.</desc>
   <rect width="1200" height="300" rx="12" fill="#191a1e"/>
   <path d="M72 58v184" stroke="#a88bdf" stroke-width="4"/>
   <text x="108" y="85" fill="#b6a0df" font-family="Segoe UI,Arial,sans-serif" font-size="18" letter-spacing="4">WRITELLER FOR OBSIDIAN</text>
   <text x="104" y="155" fill="#f4f1eb" font-family="Segoe UI,Arial,sans-serif" font-size="49" font-weight="600">Kapitel. Szenen. Deine Geschichte.</text>
-  <text x="108" y="214" fill="#bab8c0" font-family="Segoe UI,Arial,sans-serif" font-size="22">Dein Schreibprojekt. Deine Markdown-Dateien.</text>
+  <text x="108" y="214" fill="#bab8c0" font-family="Segoe UI,Arial,sans-serif" font-size="22">Chapters. Scenes. Your story.</text>
   <text x="108" y="259" fill="#b6a0df" font-family="Segoe UI,Arial,sans-serif" font-size="18">writeller.com</text>
 </svg>

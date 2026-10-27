@@ -26,7 +26,8 @@ for (const name of ['WRITELLER-EXCHANGE-SPEC.md', 'architecture.md', 'data-layou
   'assets/header.svg', 'assets/schreibuebersicht.png', 'assets/figur-formular.png', 'assets/schmale-ansicht.png', 'assets/README.md']) content.set(`docs/${name}`, new Uint8Array(await readFile(`docs/${name}`)));
 content.set('dependency-licenses.json', new Uint8Array(await readFile('docs/dependency-licenses.json')));
 content.set('release-status.json', strToU8(JSON.stringify({ version: pkg.version, published: false, openPublisherFields: open,
-  independentContract: 'Writeller Exchange 1.0.0', desktopApiTest: `offen - keine native ${pkg.version} Abnahme`, mobileDeviceTest: 'offen', writellerEndToEnd: 'offen' }, null, 2)));
+  independentContract: 'Writeller Exchange 1.0.0', desktopApiTest: `offen - keine native ${pkg.version} Abnahme`, mobileDeviceTest: 'offen',
+  writellerEndToEnd: 'implementiert und getestet; durch Benni bestaetigt (27.10.2026)' }, null, 2)));
 const archive = {};
 for (const [name, data] of [...content].sort(([a], [b]) => a.localeCompare(b))) {
   const parent = name.slice(0, name.lastIndexOf('/'));

@@ -2,7 +2,7 @@
 
 Schreibprojekte mit Kapiteln, Szenen, Figuren, Orten und Ideen in normalen Markdown-Dateien organisieren. Die Schreibübersicht führt zu deinen Notizen und zeigt Manuskript, Planung und Wortziel zusammen. Kostenlos nutzbar, ohne Konto, Writeller-Lizenz, Tracking, KI-Aufrufe oder Netzwerkzugriff des Plugins. [Writeller](https://www.writeller.com).
 
-**Entwicklungsstand 0.2.2:** Schreiboberfläche mit lesbarer Ablage, stabilen Bedienelementen bei unveränderten Hintergrundaktualisierungen und auffindbaren Exporten. Automatisierte Vertrags-, Speicher- und Oberflächentests sowie ein Browser-Testhost sind geprüft. Die native Obsidian-Abnahme dieser Version und echte Mobile-Gerätetests sind noch offen. Keine Community-Freigabe. Der manuelle Austausch folgt exakt **Writeller Exchange 1.0.0**. Laut mitgelieferter Spezifikation ist dieser Vertrag noch nicht in Writeller implementiert; ein echter Austausch mit der Anwendung wird nicht behauptet. Das bisherige Archiv `*.writeller.json` / `writeller.project.v5` ist inkompatibel.
+**Entwicklungsstand 0.2.2:** Schreiboberfläche mit lesbarer Ablage, stabilen Bedienelementen bei unveränderten Hintergrundaktualisierungen und auffindbaren Exporten. Automatisierte Vertrags-, Speicher- und Oberflächentests sowie ein Browser-Testhost sind geprüft. Die native Obsidian-Abnahme dieser Version und echte Mobile-Gerätetests sind noch offen. Keine Community-Freigabe. Der manuelle Austausch folgt exakt **Writeller Exchange 1.0.0**, das in Writeller implementiert und getestet ist; Benni hat diesen aktuellen Stand am 27.10.2026 bestätigt. Das bisherige Archiv `*.writeller.json` / `writeller.project.v5` ist ein anderes Format und bleibt inkompatibel.
 
 ## Installation und erster Start
 

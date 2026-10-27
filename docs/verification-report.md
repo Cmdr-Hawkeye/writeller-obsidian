@@ -21,6 +21,7 @@ Prüfstand: **27.10.2026**, Version **0.2.2**, Windows / Node **22.13.1**, npm *
 | Vertragsdateien | 4 gültige akzeptiert; 2 ungültige mit gelieferten Codes abgewiesen |
 | Handoff-Byteidentität | 9 übernommene Prüfartefakte entsprechen den Original-SHA256SUMS |
 | Fach-/Pakethashes | sämtliche gelieferten unabhängigen Sollwerte stimmen |
+| Writeller-Anwendung | Exchange 1.0.0 implementiert und getestet; am 27.10.2026 von Benni bestätigt |
 | Roundtrip | Fachhashes sämtlicher Sammlungen und vollständige Bildbytes erhalten |
 | Konflikte und Journal | vorhandene Import-/Export-/Recovery-Prüfungen weiterhin bestanden |
 | Austauschlogik im Browser | erzeugtes Bundle ohne Node/DOM/Obsidian; Netzwerkzähler 0 |
@@ -42,4 +43,4 @@ Die native Desktop-API-/UI-Abnahme von **0.2.2** bleibt offen. Die frühere isol
 
 Im echten Obsidian sind insbesondere Fokus/Tastatur, die Properties- und Dateibaumdarstellung mit aktuellen Themes, Editorpuffer und die native automatische Linkanpassung bei lesbaren Umbenennungen zu prüfen. Unbekannte Zwischenstände werden konservativ blockiert und behalten ihre Originalsicherung. DOM-/Fake-Prüfungen ersetzen diese Hostprüfung nicht.
 
-Echte iOS-/Android-Geräteabnahme und Writeller-End-to-End-Austausch sind offen. Kein Community-Katalogeintrag wurde eingereicht; dessen Namens-/ID-Prüfung und Review sind gesonderte Schritte. Benni ist als Autor und in der MIT-Nennung gesetzt, der Autorenlink ist writeller.com. Der Publish-Readiness-Gate prüft diese Werte ohne verbliebene Platzhalter. GitHub-CI startet bei Push auf Windows und Linux; ihr tatsächlicher Status steht in [Actions](https://github.com/Cmdr-Hawkeye/writeller-obsidian/actions). Die lokale Releasevorbereitung veröffentlicht selbst nichts.
+Echte iOS-/Android-Geräteabnahme bleibt offen. Der aktuelle Implementierungs- und Teststand des anwendungsseitigen Writeller Exchange ist oben mit Benni als Quelle dokumentiert. Kein Community-Katalogeintrag wurde eingereicht; dessen Namens-/ID-Prüfung und Review sind gesonderte Schritte. Benni ist als Autor und in der MIT-Nennung gesetzt, der Autorenlink ist writeller.com. Der Publish-Readiness-Gate prüft diese Werte ohne verbliebene Platzhalter. GitHub-CI startet bei Push auf Windows und Linux; ihr tatsächlicher Status steht in [Actions](https://github.com/Cmdr-Hawkeye/writeller-obsidian/actions). Die lokale Releasevorbereitung veröffentlicht selbst nichts.

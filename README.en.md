@@ -2,7 +2,7 @@
 
 **Chapters, scenes, characters and places. Your writing project in ordinary Markdown files.**
 
-[Deutsch](README.md) · [Download](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases) · [writeller.com](https://www.writeller.com)
+[Deutsch](README.md#deutsch) · [Both languages](README.md) · [Download](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases) · [writeller.com](https://www.writeller.com)
 
 ![Writing workspace with a manuscript and planning notes](docs/assets/schreibuebersicht.png)
 
@@ -50,7 +50,7 @@ Exports go to `Exporte/<title>.writeller-exchange.json`. A twelve-second message
 
 The normal explorer view hides technical data and folders containing only exchange exports. Enable **Technische Informationen anzeigen** in Writeller settings to reveal them. A folder containing ordinary notes, images or other files remains visible. **Back up the entire vault, including `Writeller-Daten`; hiding a folder does not remove its files.**
 
-The adapter follows **Writeller Exchange 1.0.0**. Its supplied specification says the format is not yet implemented in the Writeller application, so an actual application-to-application roundtrip is not promised. Legacy `*.writeller.json` archives are incompatible. The [compatibility notes](docs/compatibility.md) and [verification report](docs/verification-report.md) distinguish automated tests from pending native-device tests.
+The adapter follows **Writeller Exchange 1.0.0**. The contract is implemented and tested in Writeller, enabling manual project exchange between Writeller and this Obsidian plugin. Legacy `*.writeller.json` archives use a different format and remain incompatible. See the [compatibility notes](docs/compatibility.md) and [verification report](docs/verification-report.md) for details.
 
 ## Help and contributing
 

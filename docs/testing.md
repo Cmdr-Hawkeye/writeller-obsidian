@@ -55,7 +55,7 @@ Start-Process -FilePath "$env:ProgramFiles\Obsidian\Obsidian.exe" -ArgumentList 
 
 Noch nativ ausführen und protokollieren: Buchsymbol und Projektansicht, Fokus/Tastatur/Leerzustände, aktuelle Themes und Properties-Selektoren, lesbares Umordnen einschließlich automatischer Linkanpassung, aktive Editoränderungen während offener Vorschau, langsamer MetadataCache, Properties-Zwischenabbruch, lokale Trash-Interaktion, OS-Dateinamenskollisionen, iOS-/Android-Transport und UI. Die gemeinsame Vault-Dateiauswahl ist implementiert; keine externe Dateipicker-/OS-Teilen-Integration wird behauptet.
 
-Ein echter Writeller-End-to-End-Test und die Community-Katalogprüfung sind offen. Sie sind keine Voraussetzung für die unabhängige Vertragsprüfung, werden aber vor einer entsprechenden Kompatibilitäts-/Freigabeaussage benötigt.
+Die Implementierung und Tests von Writeller Exchange 1.0.0 in der Writeller-Anwendung hat Benni am 27.10.2026 bestätigt. Diese anwendungsseitige Bestätigung ergänzt die hier dokumentierten unabhängigen Plugin-Vertragsprüfungen. Die Community-Katalogprüfung und die oben genannten nativen Geräteabnahmen bleiben gesonderte offene Schritte.
 
 ## Zusätzliche Releaseprüfungen
 

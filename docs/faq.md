@@ -28,7 +28,7 @@ Das Plugin verwendet denselben Vault-Dateiweg auf Desktop und Mobile. Ein native
 
 Für diesen Text bietet Obsidians `manifest.json` derzeit nur **ein statisches Feld `description`** und keine sprachabhängigen Varianten. Deshalb ist die kurze Beschreibung zweisprachig. Der Anzeigename des Autors ist **Benni**, der Autorenlink führt zu **[writeller.com](https://www.writeller.com)**. [Offizielle Manifest-Dokumentation](https://docs.obsidian.md/Reference/Manifest).
 
-Die eigentliche Plugin-Oberfläche ist derzeit Deutsch. Die englische README erklärt die wichtigsten Begriffe. Eine vollständig nach Obsidian-Sprache umschaltende Oberfläche ist in dieser Version nicht implementiert.
+Die eigentliche Plugin-Oberfläche ist derzeit Deutsch. Die GitHub-Startseite enthält Deutsch und Englisch direkt auf derselben Seite; die englische Fassung erklärt die wichtigsten Begriffe. Eine vollständig nach Obsidian-Sprache umschaltende Oberfläche ist in dieser Version nicht implementiert.
 
 ## Wozu gibt es `records`, `journal` und `state.json`?
 
@@ -36,7 +36,7 @@ Die eigentliche Plugin-Oberfläche ist derzeit Deutsch. Die englische README erk
 
 ## Funktioniert der Austausch schon mit der Writeller-Anwendung?
 
-Das Plugin implementiert und testet den unabhängigen Vertrag **Writeller Exchange 1.0.0**. Die mitgelieferte Spezifikation bezeichnet dessen Implementierung in der Anwendung noch als offen. Ein echter End-to-End-Austausch mit einer Anwendungsversion ist nicht nachgewiesen. Das frühere Projektarchiv `*.writeller.json` wird nicht importiert. [Kompatibilität](compatibility.md).
+Ja. **Writeller Exchange 1.0.0 ist in Writeller implementiert und getestet.** Projekte können über dieses Format manuell mit dem Obsidian-Plugin ausgetauscht werden. Diesen aktuellen Stand hat Benni am 27.10.2026 bestätigt. Verwende die Datei mit der Endung `.writeller-exchange.json`; das frühere Projektarchiv `*.writeller.json` ist ein anderes Format und wird nicht importiert. [Kompatibilität](compatibility.md).
 
 ## Muss ich für das Plugin bezahlen oder ein Konto anlegen?
 

@@ -2,7 +2,9 @@
 
 Stand: 27.10.2026. Unterstützter Austauschvertrag: exakt **Writeller Exchange 1.0.0**, UTF-8 ohne Writer-BOM, `.writeller-exchange.json`, ein Projekt pro Datei. Andere Versionen werden vor Schreibzugriff abgelehnt. Alle sieben Datensatzarten sowie PNG-/JPEG-Assets werden validiert, erhalten und wieder ausgegeben. Unbekannte Typen, Statuswerte und namensräumliche Erweiterungen sind Erhaltungsdaten.
 
-Das bisherige Archiv `*.writeller.json` mit Kennung `writeller.project.v5` ist inkompatibel und wird nicht gelesen oder geschrieben. Die mitgelieferte Spezifikation bezeichnet Exchange selbst als noch nicht in Writeller implementiert. Keine Anwendungsversion von Writeller und kein tatsächlicher End-to-End-Austausch wurden geprüft. Vertragskonformität wird unabhängig anhand synthetischer Daten, fremd erzeugter Sollhashes und vollständiger Bildbytes getestet. Es gibt keine Laufzeitabhängigkeit von Writeller.
+**Writeller Exchange 1.0.0 ist in der Writeller-Anwendung implementiert und getestet.** Benni hat den aktualisierten Implementierungs- und Teststand am 27.10.2026 bestätigt. Projekte lassen sich über Exchange-Dateien manuell zwischen Writeller und diesem Plugin austauschen. Die Vertragskonformität des Plugins wird zusätzlich unabhängig anhand synthetischer Daten, fremd erzeugter Sollhashes und vollständiger Bildbytes getestet. Es gibt keine Laufzeitabhängigkeit von Writeller.
+
+Die unveränderte mitgelieferte Spezifikation ist ein archiviertes Handoff-Prüfartefakt. Ihre historische Aussage zur damals noch offenen Anwendungsimplementierung ist durch den oben dokumentierten aktuellen Stand überholt; Schema und neun unabhängige Prüfartefakte bleiben byteidentisch. Das bisherige Archiv `*.writeller.json` mit Kennung `writeller.project.v5` ist ein anderes Format und wird weiterhin nicht gelesen oder geschrieben.
 
 ## Obsidian und Plattformen
 

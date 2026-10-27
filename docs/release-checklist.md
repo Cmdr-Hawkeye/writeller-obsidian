@@ -31,7 +31,7 @@ Der Tag entspricht exakt der Manifestversion, ohne `v`. Als Assets werden mindes
 
 - Native Obsidian-API-/UI-Prüfung mit Fokus, Klicks, Exportmeldung, aktueller Ordner-/Properties-Darstellung, Editorpuffern, Linkanpassung und Wiederherstellung.
 - Echte iOS-/Android-Geräte und erforderliche Obsidian-Version.
-- Austausch mit der Writeller-Anwendung, sobald diese Exchange implementiert.
+- Austauschtests bei Änderungen an Format oder Anwendung erneut ausführen; Implementierung und Tests von Exchange 1.0.0 in Writeller sind durch Benni am 27.10.2026 bestätigt.
 - Vor einer Community-Einreichung Name/ID im aktuellen Verzeichnis, Einreichungsanforderungen und automatisiertes Review prüfen.
 
 Für das isolierte native Testprofil entscheidet der Benutzer selbst über Obsidian-Vertrauensabfragen. DOM-/Fake-Tests werden nicht als Geräteprüfung bezeichnet. [Prüfnachweis](verification-report.md).

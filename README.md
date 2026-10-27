@@ -2,7 +2,7 @@
 
 <p align="center"><a href="#deutsch">Deutsch</a> · <a href="#english">English</a> · <a href="https://www.writeller.com">writeller.com</a> · <a href="https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases">Download</a></p>
 
-<p align="center"><a href="https://github.com/Cmdr-Hawkeye/writeller-obsidian/actions/workflows/check.yml"><img src="https://github.com/Cmdr-Hawkeye/writeller-obsidian/actions/workflows/check.yml/badge.svg" alt="Automatisierte Prüfung"></a> <a href="LICENSE">MIT-Lizenz</a> · Vorschau 0.2.2 · von Benni</p>
+<p align="center"><a href="https://github.com/Cmdr-Hawkeye/writeller-obsidian/actions/workflows/check.yml"><img src="https://github.com/Cmdr-Hawkeye/writeller-obsidian/actions/workflows/check.yml/badge.svg" alt="Automatisierte Prüfung"></a> <a href="LICENSE">MIT-Lizenz</a> · Vorschau 0.2.3 · von Benni</p>
 
 # Deutsch
 
@@ -27,8 +27,8 @@ Dein Buch wächst in **normalen Markdown-Dateien**. Writeller bringt Kapitel, Sz
 
 Das Plugin ist eine **Vorschau** und noch nicht im Obsidian-Community-Verzeichnis gelistet. Die Oberfläche ist derzeit Deutsch. Voraussetzung: Obsidian **1.14.5 oder neuer**; echte Mobile-Geräte sind noch nicht abgenommen.
 
-1. Den Vault sichern und das [Release 0.2.2](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.2.2) öffnen.
-2. Unter **Assets** `writeller-0.2.2.zip` herunterladen und entpacken.
+1. Den Vault sichern und das [Release 0.2.3](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.2.3) öffnen.
+2. Unter **Assets** `writeller-0.2.3.zip` herunterladen und entpacken.
 3. Den enthaltenen Ordner `writeller` nach `<Vault>/.obsidian/plugins/` kopieren. `main.js`, `manifest.json` und `styles.css` müssen direkt darin liegen.
 4. Obsidian öffnen und **Einstellungen → Community-Erweiterungen → Writeller** aktivieren. Beim Update die Plugin-Dateien ersetzen und das Plugin neu laden.
 
@@ -41,6 +41,21 @@ Der Download ist das **Plugin-ZIP unter Assets**, nicht GitHubs automatisch erze
 3. **Kapitel hinzufügen**, darin eine **Szene hinzufügen** und in der geöffneten Markdown-Datei schreiben.
 
 Figuren und Orte liegen rechts in der Übersicht. Ein Klick auf ihren Namen öffnet die entsprechende Notiz; das Menü daneben führt zu **Details bearbeiten**. Auch die Befehlspalette verwendet diese Schreibbegriffe.
+
+## Notizen direkt in Obsidian anlegen
+
+Auch **Neue Notiz** im Obsidian-Dateibaum ist möglich. Dateien im Projektordner erscheinen anschließend unter **Noch nicht im Schreibprojekt**. Unter `Figuren` schlägt das Plugin beispielsweise **Als Figur übernehmen** vor. Bestätige das Formular einmal; Text, eigene Properties und Dateipfad bleiben erhalten. Danach gehört die Notiz zum Projekt und wird exportiert. **Andere Notizart…** erlaubt eine abweichende Zuordnung.
+
+Vor dem Export weist das Plugin auf noch nicht zugeordnete Dateien hin. Du kannst zuerst die Übersicht öffnen oder ausdrücklich nur die bereits zugeordneten Notizen exportieren. Im Rechtsklickmenü eines Projekt-Unterordners gibt es außerdem direkt **Writeller: Figur hinzufügen**, **Ort hinzufügen** usw.
+
+<details>
+<summary>Vorschau: normale Markdown-Notiz als Figur übernehmen</summary>
+
+![Eine über Obsidian angelegte Notiz wird mit „Als Figur übernehmen“ angeboten](docs/assets/notiz-uebernehmen.png)
+
+Aufnahme aus dem Browser-Testhost mit synthetischen Daten; keine native Geräteabnahme.
+
+</details>
 
 <details>
 <summary>Figurenformular und schmale Ansicht ansehen</summary>
@@ -119,8 +134,8 @@ The plugin is free to use and requires no account or Writeller license. It makes
 
 This plugin is **not yet listed in the Obsidian Community directory**. Minimum version: **Obsidian 1.14.5**. Actual mobile-device acceptance tests are still pending.
 
-1. Back up your vault and open [release 0.2.2](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.2.2).
-2. Download `writeller-0.2.2.zip` from **Assets** and extract it.
+1. Back up your vault and open [release 0.2.3](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.2.3).
+2. Download `writeller-0.2.3.zip` from **Assets** and extract it.
 3. Copy its `writeller` directory to `<vault>/.obsidian/plugins/`. `main.js`, `manifest.json` and `styles.css` must be directly inside that directory.
 4. Enable Writeller in Obsidian's Community plugins settings. For updates, replace the plugin files and reload the plugin.
 
@@ -139,6 +154,12 @@ Schreibprojekte/My first book/
 ```
 
 Folder and command labels are currently German. The bilingual description in Obsidian's plugin list does not mean the entire interface is translated. Obsidian's manifest has one static description field; it does not expose per-language descriptions. [Manifest documentation](https://docs.obsidian.md/Reference/Manifest).
+
+## Create notes directly in Obsidian
+
+You can also use Obsidian's ordinary **New note** action. Markdown files inside a project folder appear under **Noch nicht im Schreibprojekt** (not yet part of the writing project). For example, a file in `Figuren` offers **Als Figur übernehmen** (adopt as a character). Confirm the form once; existing text, user properties and the file path are preserved. The note then becomes part of the project and its exports. **Andere Notizart…** lets you choose another type.
+
+Before exporting, the plugin points out unassigned files so you can review them first or explicitly export only the already assigned notes. Folder context menus also offer direct typed creation, such as **Writeller: Figur hinzufügen** (add a character).
 
 ## Where are exports and technical files?
 

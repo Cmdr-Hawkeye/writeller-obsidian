@@ -23,7 +23,7 @@ for (const name of ['main.js', 'styles.css', 'README.md', 'README.en.md', 'CHANG
 content.set('manifest.json', strToU8(JSON.stringify(manifest, null, 2) + '\n'));
 content.set('LICENSE', strToU8(sourceLicense.replace(/^Copyright \(c\) (\d{4}) .+$/m, (_line, year) => `Copyright (c) ${year} ${copyright}`)));
 for (const name of ['WRITELLER-EXCHANGE-SPEC.md', 'architecture.md', 'data-layout.md', 'compatibility.md', 'testing.md', 'release-checklist.md', 'verification-report.md', 'handbuch.md', 'faq.md',
-  'assets/header.svg', 'assets/schreibuebersicht.png', 'assets/figur-formular.png', 'assets/schmale-ansicht.png', 'assets/README.md']) content.set(`docs/${name}`, new Uint8Array(await readFile(`docs/${name}`)));
+  'assets/header.svg', 'assets/schreibuebersicht.png', 'assets/figur-formular.png', 'assets/schmale-ansicht.png', 'assets/notiz-uebernehmen.png', 'assets/README.md']) content.set(`docs/${name}`, new Uint8Array(await readFile(`docs/${name}`)));
 content.set('dependency-licenses.json', new Uint8Array(await readFile('docs/dependency-licenses.json')));
 content.set('release-status.json', strToU8(JSON.stringify({ version: pkg.version, published: false, openPublisherFields: open,
   independentContract: 'Writeller Exchange 1.0.0', desktopApiTest: `offen - keine native ${pkg.version} Abnahme`, mobileDeviceTest: 'offen',

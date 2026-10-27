@@ -1,12 +1,12 @@
 # Releaseverfahren
 
-Repository: [Cmdr-Hawkeye/writeller-obsidian](https://github.com/Cmdr-Hawkeye/writeller-obsidian). Version **0.2.2** ist eine Vorschau; ein öffentliches GitHub-Repository und eine Community-Verzeichnisfreigabe sind getrennte Schritte.
+Repository: [Cmdr-Hawkeye/writeller-obsidian](https://github.com/Cmdr-Hawkeye/writeller-obsidian). Version **0.2.3** ist eine Vorschau; ein öffentliches GitHub-Repository und eine Community-Verzeichnisfreigabe sind getrennte Schritte.
 
 ## Lokale technische Gates
 
 - `npm ci` aus dem Lockfile.
 - `npm run check`: Typen, Lint, Modulgrenzen, Handoff-Integrität, lokale Dokumentationslinks, Tests und Build.
-- `npm run test:ui`: acht Prüfungen im Browser-Testhost; Bilder ausdrücklich als Vorschau mit API-Ersatz kennzeichnen.
+- `npm run test:ui`: zehn Prüfungen im Browser-Testhost, einschließlich gewöhnlicher Notiz → Figur → Export; Bilder ausdrücklich als Vorschau mit API-Ersatz kennzeichnen.
 - `npm audit` und `npm run audit:dependencies`.
 - `npm run licenses`: Drittanbieterhinweise und maschinenlesbare Lizenzliste.
 - `node scripts/reproducible.mjs`: zweimal identische Bundlebytes.
@@ -42,4 +42,4 @@ Erst nach entsprechender Abnahme über das [Community-Portal](https://community.
 
 ## Lokales Update
 
-Vault sichern, Plugin-Dateien aus `writeller-0.2.2.zip` in `.obsidian/plugins/writeller` ersetzen und das Plugin neu laden. Die Erweiterungsliste muss **0.2.2 · Benni** anzeigen. Bisherige Projektdateien werden nicht automatisch umbenannt. **Dateinamen vereinfachen** bietet eine Vorschau. Frühere Standard-Exportziele werden auf `Exporte` umgestellt; wirklich leere alte Wurzeln werden aufgeräumt. Reine Austausch-/Exportordner werden standardmäßig ausgeblendet und können über die technische Anzeigeeinstellung eingeblendet werden.
+Vault sichern, Plugin-Dateien aus `writeller-0.2.3.zip` in `.obsidian/plugins/writeller` ersetzen und das Plugin neu laden. Die Erweiterungsliste muss **0.2.3 · Benni** anzeigen. Bisherige Projektdateien werden nicht automatisch umbenannt. **Dateinamen vereinfachen** bietet eine Vorschau. Frühere Standard-Exportziele werden auf `Exporte` umgestellt; wirklich leere alte Wurzeln werden aufgeräumt. Reine Austausch-/Exportordner werden standardmäßig ausgeblendet und können über die technische Anzeigeeinstellung eingeblendet werden.

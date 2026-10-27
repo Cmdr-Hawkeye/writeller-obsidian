@@ -142,9 +142,14 @@ export class MarkdownView {
 export class TFile {
   /** Keeps a local vault-relative path only. */
   constructor(readonly path: string) {}
+  /** Mirrors the public extension property for native file-menu tests. */
+  get extension(): string { return this.path.split('.').at(-1) ?? ''; }
 }
 /** Required export for the native adapter's folder type checks. */
-export class TFolder {}
+export class TFolder {
+  /** Keeps the native folder-menu path without creating real directories. */
+  constructor(readonly path = '') {}
+}
 /** Test-only settings container. */
 export class PluginSettingTab {
   containerEl = document.createElement('div');

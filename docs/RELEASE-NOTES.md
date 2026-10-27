@@ -1,35 +1,35 @@
-# Writeller 0.2.2
+# Writeller 0.2.3
 
 [Deutsch](#deutsch) · [English](#english) · [writeller.com](https://www.writeller.com)
 
 ## Deutsch
 
-Schreibprojekte mit Kapiteln, Szenen, Figuren und Orten in normalen Markdown-Dateien.
+**Normale Obsidian-Notizen werden im Schreibprojekt erkannt.**
 
-- Reine Austausch- und Exportordner werden ausgeblendet, auch wenn sie Exchange-JSON-Dateien enthalten. Eigene Notizen, Bilder und unbekannte Dateien bleiben sichtbar. **Technische Informationen anzeigen** blendet die Ordner wieder ein.
-- Sichtbarer Autor: **Benni**. Der Autorenlink führt zu **writeller.com**. Die kurze Beschreibung in der Erweiterungsliste ist zweisprachig; die Plugin-Oberfläche bleibt Deutsch.
-- Die [GitHub-Startseite](https://github.com/Cmdr-Hawkeye/writeller-obsidian) bietet Deutsch und Englisch direkt auf derselben Seite. Dazu kommen Screenshots, Installationshilfe, Handbuch und FAQ.
-- Enthält die Schreibübersicht, lesbare Dateinamen, verständliche Formulare, stabile Buttons bei unveränderten Aktualisierungen und eine Meldung mit dem genauen Exportpfad.
+- Über **Neue Notiz** angelegte Markdown-Dateien erscheinen in der Schreibübersicht unter **Noch nicht im Schreibprojekt**. Im Ordner `Figuren` wird beispielsweise **Als Figur übernehmen** angeboten.
+- Ein bestätigtes Formular ergänzt Projektidentität und Begleitdaten. Text, eigene Properties und Dateipfad bleiben erhalten. Übernommene Notizen erscheinen anschließend als reguläre Objekte in Übersicht und Export. **Andere Notizart…** lässt den Vorschlag ändern.
+- Vor dem Export weist das Plugin auf noch nicht zugeordnete Dateien hin. Du kannst zuerst die Übersicht öffnen oder ausdrücklich nur bereits zugeordnete Notizen exportieren.
+- Im nativen Rechtsklickmenü der Projekt-Unterordner gibt es passende Erstellungsaktionen, etwa **Writeller: Figur hinzufügen**. Gewöhnliche Dateien erhalten passende Übernahmeaktionen.
+- Projektgrenzen, Kapitelzuordnung und nachträgliche Dateiänderungen werden geprüft. Ordnernamen ändern keine bereits vorhandene Identität. Abbrechen verändert die gewöhnliche Datei nicht.
 
-**Writeller Exchange 1.0.0 ist in Writeller implementiert und getestet.** Projekte können über Exchange-Dateien manuell mit dem Plugin ausgetauscht werden. Das frühere Archiv `*.writeller.json` ist ein anderes Format und bleibt inkompatibel. Der aktuelle anwendungsseitige Stand wurde am 27.10.2026 von Benni bestätigt.
+**Installation:** `writeller-0.2.3.zip` unter **Assets** herunterladen, Plugin-Dateien in `<Vault>/.obsidian/plugins/writeller/` ersetzen und das Plugin neu laden. Mindestversion: Obsidian 1.14.5.
 
-**Installation:** Unter **Assets** `writeller-0.2.2.zip` herunterladen und den enthaltenen Ordner `writeller` nach `<Vault>/.obsidian/plugins/` kopieren. Bei einem Update die Plugin-Dateien ersetzen und das Plugin neu laden. Mindestversion: Obsidian 1.14.5.
-
-**Vorschau:** 471 automatisierte Tests und acht Browser-Oberflächenchecks sind bestanden. Screenshots zeigen den Browser-Testhost mit synthetischen Daten. Native Desktop-/Mobile-Abnahme und Community-Verzeichnisfreigabe sind weiterhin gesonderte offene Schritte.
+**Prüfung:** 485 Tests in 15 Dateien und zehn Browser-Oberflächenchecks bestanden. Der Browser-Test übernimmt eine gewöhnliche Notiz als Figur und exportiert deren vollständigen Text über die tatsächliche Produktionsoberfläche. Native Desktop-/Mobile-Abnahme und Community-Verzeichnisfreigabe bleiben gesonderte offene Schritte.
 
 ## English
 
-Writing projects with chapters, scenes, characters and places in ordinary Markdown files.
+**Ordinary Obsidian notes are now detected inside writing projects.**
 
-- Folders containing only exchange exports are hidden, including folders that contain exchange JSON files. Ordinary notes, images and unknown files remain visible. Enable **Technische Informationen anzeigen** to reveal these folders again.
-- Displayed author: **Benni**. The author link points to **writeller.com**. The short description in Obsidian's plugin list is bilingual; the plugin UI is currently German.
-- The [GitHub README](https://github.com/Cmdr-Hawkeye/writeller-obsidian) includes German and English on the same page, alongside screenshots, installation instructions, a handbook and FAQ.
-- Includes the writing workspace, readable filenames, clear forms, stable buttons during unchanged refreshes and a message showing the exact export path.
+- Markdown files created with Obsidian's **New note** action appear under **Noch nicht im Schreibprojekt** (not yet part of the writing project). For example, files in `Figuren` offer **Als Figur übernehmen** (adopt as a character).
+- Confirming the form adds project identity and preservation data while retaining existing text, user properties and the file path. Adopted notes become regular project objects in the overview and exports. **Andere Notizart…** lets you choose a different type.
+- Before exporting, the plugin points out unassigned files. Review them in the overview or explicitly export only notes already assigned to the project.
+- Native project-folder menus offer typed creation, such as **Writeller: Figur hinzufügen** (add a character). Ordinary file menus offer a matching adoption action.
+- Project boundaries, chapter context and edits made after planning are checked. Folder names do not change existing identities. Cancelling leaves the ordinary file unchanged.
 
-**Writeller Exchange 1.0.0 is implemented and tested in Writeller.** Projects can be exchanged manually with this plugin using exchange files. Legacy `*.writeller.json` archives use a different format and remain incompatible. Benni confirmed the current application-side implementation and test status on 27 October 2026.
+**Installation:** Download `writeller-0.2.3.zip` from **Assets**, replace the plugin files in `<vault>/.obsidian/plugins/writeller/` and reload the plugin. Minimum version: Obsidian 1.14.5. The plugin UI is currently German.
 
-**Installation:** Download `writeller-0.2.2.zip` from **Assets** and copy its `writeller` folder to `<vault>/.obsidian/plugins/`. For updates, replace the plugin files and reload the plugin. Minimum version: Obsidian 1.14.5.
+**Validation:** 485 tests across 15 files and ten browser UI smoke checks passed. The browser test adopts an ordinary note as a character and exports its complete text through the production UI. Native desktop/mobile acceptance tests and Community-directory approval remain separate pending steps.
 
-**Preview:** 471 automated tests and eight browser UI smoke checks passed. Screenshots show a browser test host with synthetic data. Native desktop/mobile acceptance tests and Community-directory approval remain separate pending steps.
+Writeller Exchange 1.0.0 is implemented and tested in Writeller, as confirmed by Benni on 27 October 2026. / Writeller Exchange 1.0.0 ist in Writeller implementiert und getestet, bestätigt durch Benni am 27.10.2026.
 
-[Changelog / Änderungen](https://github.com/Cmdr-Hawkeye/writeller-obsidian/blob/main/CHANGELOG.md) · [Download and installation / Download und Installation](https://github.com/Cmdr-Hawkeye/writeller-obsidian#installieren)
+[README](https://github.com/Cmdr-Hawkeye/writeller-obsidian) · [Changelog](https://github.com/Cmdr-Hawkeye/writeller-obsidian/blob/main/CHANGELOG.md)

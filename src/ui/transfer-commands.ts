@@ -10,6 +10,7 @@ import { CommandContext } from './command-context';
 import { choose, confirmPreview, input } from './dialogs';
 import { pendingJournals } from '../storage/recovery-index';
 import { namedChoices } from '../objects/kinds';
+import { reviewExportCoverage } from './unassigned-notes';
 
 /** Manual transport workflows use visible vault files on both desktop and mobile. */
 export class TransferCommands {
@@ -60,6 +61,7 @@ export class TransferCommands {
   /** Asks for exactly one known partner when needed; then previews a uniquely named export. */
   async exportProject(projectId?: string): Promise<void> {
     const snapshot = await this.ctx.project(projectId, projectId === undefined); if (!snapshot) return;
+    if (!await reviewExportCoverage(this.ctx, snapshot.state.projectId)) return;
     const peers = new Map([...snapshot.records.values()].flatMap(s => s.peerBaselines).map(b => [`${b.system}/${b.instanceId}`, { system: b.system, instanceId: b.instanceId }]));
     let peer: { system: string; instanceId: string } | null = null;
     if (peers.size === 1) peer = [...peers.values()][0]!;

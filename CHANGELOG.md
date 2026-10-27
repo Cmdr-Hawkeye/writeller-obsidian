@@ -1,5 +1,13 @@
 # Änderungen
 
+## 0.2.3 — 27.10.2026
+
+- Über Obsidian angelegte Markdown-Dateien im Projektordner werden in der Schreibübersicht als noch nicht zugeordnet angezeigt. Eine passende Notizart wird vorgeschlagen und einmal ausdrücklich bestätigt.
+- Text, eigene YAML-Eigenschaften und Dateipfad bleiben beim Übernehmen erhalten; Projektidentität und Begleitdaten werden ergänzt. Nachträgliche Änderungen blockieren veraltete Schreibpläne.
+- Vor einem Export wird auf unzugeordnete Dateien hingewiesen; Auslassen erfordert eine ausdrückliche Wahl.
+- Native Ordner- und Dateimenüs bieten passende Erstellungs- und Übernahmeaktionen.
+- Kapitelvorschläge berücksichtigen verwaltete Kapitel. Szenen unter `Ohne Kapitel` werden nicht automatisch dem letzten Kapitel zugeordnet. Fremde und verschachtelte Projekte bleiben getrennt.
+
 ## Dokumentation — 27.10.2026
 
 - Die GitHub-Startseite enthält Deutsch und Englisch auf derselben Seite, mit Sprunglinks zur jeweiligen Sprache.

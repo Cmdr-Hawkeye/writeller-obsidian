@@ -7,6 +7,8 @@ import { writingKinds, namedChoices } from '../objects/kinds';
 import { manuscriptOrder } from '../domain/order';
 import { moveInManuscript } from '../objects/reorder';
 import { iconButton, renderManuscript, renderPlanning, writingWordCount, type ProjectActions } from './project-sections';
+import { discoverNotes } from '../projects/note-discovery';
+import { renderUnassigned } from './unassigned-notes';
 
 export const projectViewType = 'writeller-writing-project';
 export interface ProjectViewTools { inspect(): Promise<void>; advanced(): Promise<void>; organize(projectId: string): Promise<void>; recover(): Promise<void> }
@@ -55,10 +57,12 @@ export class WritingProjectView extends ItemView {
     if (this.closed || generation !== this.generation) return;
     // Native focus/cache events often refresh without a content change. Keeping the same
     // DOM preserves the button between pointerdown and click, plus keyboard focus and folds.
-    const key = `${id}/${snapshot.fingerprint}/${this.ctx.service.settings.showTechnicalInfo}`;
+    const candidates = discoverNotes(this.ctx.service.vault, this.ctx.service.index, id);
+    const key = `${id}/${snapshot.fingerprint}/${this.ctx.service.settings.showTechnicalInfo}/${JSON.stringify(candidates)}`;
     if (key === this.renderedKey) return;
     this.contentEl.empty(); this.switcher(choices, id); this.renderedKey = key;
     this.projectHeader(snapshot);
+    renderUnassigned(this.contentEl, candidates, this.ctx, this.writing, this.run);
     const workspace = this.contentEl.createDiv({ cls: 'writeller-writing-layout' }), actions = this.actions(snapshot);
     renderManuscript(workspace.createDiv({ cls: 'writeller-manuscript' }), snapshot, actions);
     renderPlanning(workspace.createEl('aside', { cls: 'writeller-planning', attr: { 'aria-label': 'Figuren, Welt und Ideen' } }), snapshot, actions);

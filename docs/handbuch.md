@@ -2,11 +2,11 @@
 
 Schreibprojekte mit Kapiteln, Szenen, Figuren, Orten und Ideen in normalen Markdown-Dateien organisieren. Die Schreibübersicht führt zu deinen Notizen und zeigt Manuskript, Planung und Wortziel zusammen. Kostenlos nutzbar, ohne Konto, Writeller-Lizenz, Tracking, KI-Aufrufe oder Netzwerkzugriff des Plugins. [Writeller](https://www.writeller.com).
 
-**Entwicklungsstand 0.2.2:** Schreiboberfläche mit lesbarer Ablage, stabilen Bedienelementen bei unveränderten Hintergrundaktualisierungen und auffindbaren Exporten. Automatisierte Vertrags-, Speicher- und Oberflächentests sowie ein Browser-Testhost sind geprüft. Die native Obsidian-Abnahme dieser Version und echte Mobile-Gerätetests sind noch offen. Keine Community-Freigabe. Der manuelle Austausch folgt exakt **Writeller Exchange 1.0.0**, das in Writeller implementiert und getestet ist; Benni hat diesen aktuellen Stand am 27.10.2026 bestätigt. Das bisherige Archiv `*.writeller.json` / `writeller.project.v5` ist ein anderes Format und bleibt inkompatibel.
+**Entwicklungsstand 0.2.3:** Schreiboberfläche mit lesbarer Ablage, stabilen Bedienelementen bei unveränderten Hintergrundaktualisierungen und auffindbaren Exporten. Automatisierte Vertrags-, Speicher- und Oberflächentests sowie ein Browser-Testhost sind geprüft. Die native Obsidian-Abnahme dieser Version und echte Mobile-Gerätetests sind noch offen. Keine Community-Freigabe. Der manuelle Austausch folgt exakt **Writeller Exchange 1.0.0**, das in Writeller implementiert und getestet ist; Benni hat diesen aktuellen Stand am 27.10.2026 bestätigt. Das bisherige Archiv `*.writeller.json` / `writeller.project.v5` ist ein anderes Format und bleibt inkompatibel.
 
 ## Installation und erster Start
 
-1. Vault sichern. Aus `release/0.2.2/writeller-0.2.2.zip` den Ordner `writeller` nach `<Vault>/.obsidian/plugins/` kopieren. Bei einem Update die Plugin-Dateien ersetzen, eigene Vault-Dateien behalten. Mindestversion: **1.14.5**.
+1. Vault sichern. Aus `release/0.2.3/writeller-0.2.3.zip` den Ordner `writeller` nach `<Vault>/.obsidian/plugins/` kopieren. Bei einem Update die Plugin-Dateien ersetzen, eigene Vault-Dateien behalten. Mindestversion: **1.14.5**.
 2. Writeller in Obsidian aktivieren beziehungsweise neu laden. Über das Buchsymbol oder **Writeller: Schreibprojekte öffnen** die Übersicht öffnen.
 3. **Schreibprojekt erstellen** wählen, Titel und bei Bedarf Beschreibung und Wortziel eingeben. Das Formular legt das Projekt an und öffnet die Übersicht.
 4. **Kapitel hinzufügen**, **Szene hinzufügen**, **Figur hinzufügen** oder **Ort hinzufügen** wählen. Die Formulare fragen nach verständlichen Angaben; Szenen können direkt einem Kapitel zugeordnet werden. Anschließend öffnet sich die echte Markdown-Datei zum Schreiben.
@@ -31,7 +31,11 @@ Namen enthalten keine angehängten IDs oder Hashes. Nur bei tatsächlichen Namen
 
 Bestehende Projekte werden **nicht automatisch umbenannt**. Bei den bisherigen Hashnamen bietet die Übersicht **Dateinamen vereinfachen** an. Alternativ: **Projektdateien lesbar ordnen** in der Palette. Die Vorschau nennt die Umzüge; erst **Übernehmen** startet sie. Texte, Identitäten, Austauschbasen und Bildbytes bleiben erhalten. Auch nach Titel- oder Reihenfolgeänderungen lässt sich die Ablage darüber bewusst neu ordnen.
 
-Dateinamen und Ordner bestimmen keine Zugehörigkeit. Interne Eigenschaften verbinden die Notizen weiterhin mit dem richtigen Projekt. Eigene Obsidian-Properties bleiben erhalten. Eine normale Dateikopie übernimmt auch die Identität; für ein unabhängiges Schreibprojekt **Projekt kopieren** verwenden. Eine vorhandene gewöhnliche Notiz lässt sich über **Diese Notiz einem Schreibprojekt zuordnen** aufnehmen.
+Dateinamen und Ordner bestimmen keine bestehende Zugehörigkeit. Interne Eigenschaften verbinden die Notizen weiterhin mit dem richtigen Projekt. Eigene Obsidian-Properties bleiben erhalten. Eine normale Dateikopie übernimmt auch die Identität; für ein unabhängiges Schreibprojekt **Projekt kopieren** verwenden. Eine vorhandene gewöhnliche Notiz lässt sich über **Diese Notiz einem Schreibprojekt zuordnen** aufnehmen.
+
+Ab 0.2.3 erkennt die Übersicht auch gewöhnliche Markdown-Dateien im tatsächlichen Projektordner. Sie erscheinen unter **Noch nicht im Schreibprojekt**, mit einem Vorschlag wie **Als Figur übernehmen**. Ein bestätigtes Formular ergänzt Identität und Begleitdaten, erhält aber Text, eigene Properties und Dateipfad. **Andere Notizart…** lässt den Vorschlag ändern. Unter einem erkannten Kapitel wird die Kapitelzuordnung vorgeschlagen; `Ohne Kapitel` bleibt ausdrücklich unzugeordnet. Bei gemeinsam genutzten Projektordnern ist der Projekttitel im Formular zu prüfen. Es erfolgt keine stille Umdeutung vorhandener Projektobjekte.
+
+Vor dem Export wird auf noch nicht zugeordnete Dateien hingewiesen. Du kannst zuerst die Übersicht öffnen oder ausdrücklich nur bereits zugeordnete Notizen exportieren. Native Projektordner-Menüs bieten passende Writeller-Aktionen zum sofort verwalteten Anlegen. Änderungen einer gewöhnlichen Datei zwischen Übernahmeplanung und Schreiben blockieren einen veralteten Plan und bleiben erhalten.
 
 ## Details und technische Daten
 

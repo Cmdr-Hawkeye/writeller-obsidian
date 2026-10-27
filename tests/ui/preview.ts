@@ -11,7 +11,7 @@ import { TransferCommands } from '../../src/ui/transfer-commands';
 import { WritingProjectView } from '../../src/ui/project-view';
 import { technicalFolderCss } from '../../src/obsidian/presentation';
 import { exportFoldersToHide } from '../../src/projects/export-location';
-import { utf8 } from '../../src/storage/vault-port';
+import { utf8, text } from '../../src/storage/vault-port';
 
 // Browser preview of the actual production components in an explicit API-fake host.
 installDomHelpers(window);
@@ -57,8 +57,20 @@ function refreshTree(): void {
       }
     }
   }
+  // Expose a test-only assertion about bytes produced by the real export action.
+  document.documentElement.dataset.nativeNoteExported = String(vault.files().filter(f => f.path.startsWith('Exporte/') && f.path.endsWith('.writeller-exchange.json')).some(f => {
+    const pkg = JSON.parse(text(vault.data.get(f.path)!)) as { catalogItems?: { name: string; type: string; summary: string }[] };
+    return pkg.catalogItems?.some(item => item.name === 'Bernd das Brot' && item.type === 'character' && item.summary === 'Bernd kennt den Hafen.\n');
+  }));
 }
 ctx.changed.add(refreshTree); refreshTree(); await view.onOpen();
 // Test-host event only: exercise an asynchronous refresh between native browser mouse events.
 document.addEventListener('writeller-test-refresh', () => { void view.refresh().then(() => document.documentElement.dataset.refreshFinished = 'true'); });
+// Reproduces Obsidian's ordinary new-note action without pre-creating any Writeller metadata.
+document.addEventListener('writeller-test-native-note', () => {
+  const root = service.index.manifests()[0]!.path.split('/').slice(0, -1).join('/');
+  void vault.create(`${root}/Figuren/Bernd das Brot.md`, utf8('Bernd kennt den Hafen.\n'), false).then(async () => {
+    refreshTree(); await view.refresh(); document.documentElement.dataset.nativeNoteReady = 'true';
+  }).catch(error => ctx.report(error));
+});
 document.documentElement.dataset.previewReady = 'true';

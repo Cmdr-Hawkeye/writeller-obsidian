@@ -59,5 +59,12 @@
 .writeller-form .setting-item:last-child .setting-item-control button { width: auto; }
 .writeller-form-error { color: var(--text-error); margin: 0; }
 .writeller-form-error:empty { display: none; }
+/* Ordinary Obsidian notes stay visible until the author deliberately assigns their writing type. */
+.writeller-unassigned { border-block: 1px solid var(--background-modifier-border); padding-block: 18px; margin-bottom: 28px; }
+.writeller-unassigned > p { max-width: 78ch; }
+.writeller-unassigned-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding-block: 8px; }
+.writeller-unassigned-row > div { flex: 1 1 240px; min-width: 0; }
+.writeller-unassigned-row small { display: block; overflow-wrap: anywhere; }
+.writeller-unassigned-row > button { height: auto; white-space: normal; }
 @media (max-width: 760px) { .writeller-writing-layout { grid-template-columns: 1fr; gap: 28px; } .writeller-project-header h2 { font-size: 26px; } }
 @media (prefers-reduced-motion: reduce) { .writeller-kind-group > summary::before { transition: none; } }

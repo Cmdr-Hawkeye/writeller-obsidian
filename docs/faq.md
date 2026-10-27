@@ -12,6 +12,16 @@ Aktiviere das Plugin in Obsidian unter **Einstellungen → Community-Erweiterung
 
 Über das Buchsymbol oder **Writeller: Schreibprojekte öffnen**. Lege ein Projekt an und füge Kapitel und Szenen hinzu. Figuren, Orte und Ideen findest du im Planungsbereich. Alle Titel öffnen echte Markdown-Dateien. Du benötigst keine technische Objekt-ID.
 
+## Wird „Neue Notiz“ im Obsidian-Dateibaum erkannt?
+
+Ja. Ab 0.2.3 zeigt die Schreibübersicht gewöhnliche Markdown-Dateien im tatsächlichen Projektordner unter **Noch nicht im Schreibprojekt** an. In `Figuren` lautet der Vorschlag **Als Figur übernehmen**, in `Orte` entsprechend **Als Ort übernehmen**. **Andere Notizart…** erlaubt eine andere Wahl. Beim Übernehmen bestätigst du einmal das Formular. Vorhandener Text, eigene Properties und der Dateipfad bleiben erhalten; die nötigen Projektmetadaten und Begleitdaten werden ergänzt.
+
+Die Datei wird erst nach dieser Übernahme als Projektobjekt exportiert. Vor einem Export mit noch nicht zugeordneten Dateien kannst du zunächst zur Schreibübersicht wechseln oder ausdrücklich nur die schon zugeordneten Notizen exportieren. Abbrechen verändert keine gewöhnliche Notiz.
+
+Das Ordnerlayout ist ein Vorschlag für die Erstaufnahme. Danach bestimmt die gespeicherte Identität die Zugehörigkeit; ein späterer Umzug macht aus einer Figur nicht automatisch einen Ort und wechselt kein Projekt. Verschachtelte Projekte werden getrennt behandelt. Teilen mehrere Projekte denselben Ordner, prüfe den Projektnamen im Übernahmeformular.
+
+Direkt im Rechtsklickmenü eines Projekt-Unterordners gibt es außerdem passende Writeller-Befehle, etwa **Figur hinzufügen**. Diese legen sofort eine verwaltete Markdown-Datei an.
+
 ## Warum sehe ich „Writeller Austausch“ oder „Exporte“ nicht mehr?
 
 Obsidian zeigt Austausch-JSON-Dateien im normalen Dateibaum üblicherweise nicht als Notizen. Dadurch kann ihr Ordner leer wirken, obwohl er Exportdateien enthält. Ab 0.2.2 blendet das Plugin alte Austauschordner und das aktuelle Exportziel aus, solange sie leer sind oder ausschließlich Exchange-Dateien enthalten. Eigene Markdown-Notizen, Bilder und unbekannte Dateien verhindern die Ausblendung.

@@ -10,6 +10,7 @@ import { chapterField, detailFields, detailHeading, applyDetails, wordGoal } fro
 import { writingForm, type FormField, type FormValues } from './form';
 import { choose } from './dialogs';
 import type { CommandContext } from './command-context';
+import { suggestNote } from '../projects/note-discovery';
 
 /** Everyday writing actions: familiar nouns, contextual project selection and ordinary Markdown notes. */
 export class WritingCommands {
@@ -30,21 +31,24 @@ export class WritingCommands {
   }
   /** Offers familiar object types for toolbar/context actions instead of a technical collection picker. */
   async pickKind(assignPath?: string): Promise<void> {
-    const kind = await choose(this.ctx.app, 'Was möchtest du hinzufügen?', writingKinds.map(k => ({ label: k.singular, value: k.id })));
-    if (kind) await this.add(kind, undefined, undefined, assignPath);
+    const suggestion = assignPath ? suggestNote(this.ctx.service.index, assignPath) : null;
+    const kind = await choose(this.ctx.app, 'Was möchtest du hinzufügen?', writingKinds.filter(k => !assignPath || k.id !== 'relationship').map(k => ({ label: k.singular, value: k.id })));
+    if (kind) await this.add(kind, suggestion?.projectId, suggestion?.chapterId, assignPath);
   }
   /** Adds one selected writing object, with visible chapter context and collision-safe readable paths. */
-  async add(kindId: string, projectId?: string, chapterId?: string, assignPath?: string): Promise<void> {
+  async add(kindId: string, projectId?: string, chapterId?: string | null, assignPath?: string): Promise<void> {
     const kind = writingKinds.find(k => k.id === kindId); if (!kind) return;
     const snapshot = await this.ctx.project(projectId); if (!snapshot) return;
-    const pkg = snapshot.exchange, fields: FormField[] = [{ key: 'title', label: kind.collection === 'catalogItems' ? 'Name' : 'Titel', value: assignPath?.split('/').at(-1)?.replace(/\.md$/, '') ?? '', required: true }];
-    if (['chapters', 'catalogItems'].includes(kind.collection)) fields.push({ key: 'summary', label: 'Kurzbeschreibung', kind: 'area', placeholder: 'Optional. Du kannst die Notiz anschließend frei bearbeiten.' });
-    if (kind.id === 'scene') fields.push(chapterField(pkg, chapterId ?? this.chapterContext(pkg.project.id, pkg.scenes) ?? pkg.chapters.at(-1)?.id ?? null));
+    const pkg = snapshot.exchange, fields: FormField[] = [{ key: 'title', label: kind.collection === 'catalogItems' ? 'Name' : 'Titel', value: assignPath?.split('/').at(-1)?.replace(/\.md$/i, '') ?? '', required: true,
+      ...(assignPath ? { description: 'Der vorhandene Text und deine eigenen Eigenschaften bleiben erhalten. Die Datei bleibt an ihrem Ort.' } : {}) }];
+    if (!assignPath && ['chapters', 'catalogItems'].includes(kind.collection)) fields.push({ key: 'summary', label: 'Kurzbeschreibung', kind: 'area', placeholder: 'Optional. Du kannst die Notiz anschließend frei bearbeiten.' });
+    if (kind.id === 'scene') fields.push(chapterField(pkg, chapterId !== undefined ? chapterId : this.chapterContext(pkg.project.id, pkg.scenes) ?? pkg.chapters.at(-1)?.id ?? null));
     if (kind.id === 'research') fields.push({ key: 'uri', label: 'Quelle oder Link', placeholder: 'Optional. Es wird nichts automatisch heruntergeladen.' });
     if (kind.id === 'character') fields.push({ key: 'roleFunction', label: 'Rolle in der Geschichte', placeholder: 'Optional.' }, { key: 'motivation', label: 'Was treibt die Figur an?', placeholder: 'Optional.' });
     if (kind.id === 'custom') fields.push({ key: 'typeName', label: 'Eigene Objektart', placeholder: 'Zum Beispiel: Organisation', required: true });
     if (kind.id === 'relationship') fields.push(...this.relationshipFields(entries(pkg)));
-    const values = await writingForm(this.ctx.app, `${kind.singular} hinzufügen · ${pkg.project.title}`, fields, `${kind.singular} hinzufügen`, validateWriting);
+    const action = `${kind.singular} ${assignPath ? 'übernehmen' : 'hinzufügen'}`;
+    const values = await writingForm(this.ctx.app, `${action} · ${pkg.project.title}`, fields, action, validateWriting);
     if (!values) return;
     const type = kind.type ?? (kind.id === 'custom' ? customType(values['typeName']!, pkg.catalogItems) : undefined);
     const source = kind.id === 'relationship' ? refFor(values['source'], entries(pkg)) : undefined;
@@ -59,7 +63,10 @@ export class WritingCommands {
     if ('relationshipType' in entry.record) entry.record.relationshipType = values['relationshipType']?.trim() || 'relatedTo';
     if (kind.id === 'custom') entry.record.extensions['org.writeller.obsidian'] = { customTypeName: values['typeName']!.trim() };
     const assignments = await this.assign(entry, assignPath);
-    setEntry(pkg, entry); await this.ctx.save(await this.ctx.service.previewSave(pkg, snapshot, null, new Set(), assignments));
+    setEntry(pkg, entry);
+    const preview = await this.ctx.service.previewSave(pkg, snapshot, null, new Set(), assignments.paths);
+    for (const [path, bytes] of assignments.guards) preview.guards.set(path, bytes);
+    await this.ctx.save(preview);
     const note = this.ctx.service.index.find(pkg.project.id, entry.collection, entry.record.id);
     if (note) await this.ctx.open(note.path);
   }
@@ -80,15 +87,15 @@ export class WritingCommands {
     return active.collection === 'chapters' ? active.id : scenes.find(s => s.id === active.id)?.chapterId ?? null;
   }
   /** Preserves an ordinary existing note's body and user properties during explicit assignment. */
-  private async assign(entry: Entry, path?: string): Promise<Map<string, string>> {
-    const result = new Map<string, string>(); if (!path) return result;
+  private async assign(entry: Entry, path?: string): Promise<{ paths: Map<string, string>; guards: Map<string, Uint8Array> }> {
+    const result = { paths: new Map<string, string>(), guards: new Map<string, Uint8Array>() }; if (!path) return result;
     const bytes = await this.ctx.service.vault.read(path); if (!bytes) fail('LOCAL_CHANGED', 'Die ausgewählte Notiz fehlt.');
     const source = new TextDecoder().decode(bytes);
     if (parseManaged(path, source)) fail('IDENTITY_CONFLICT', 'Diese Notiz gehört bereits zu einem Schreibprojekt.');
     if ('content' in entry.record) entry.record.content.text = splitNote(source).body;
     else if ('summary' in entry.record) entry.record.summary = splitNote(source).body;
     else fail('UNSUPPORTED_REPRESENTATION', 'Für bestehende Notizen bitte eine Notizart mit frei bearbeitbarem Text wählen.');
-    result.set(recordKey(entry.collection, entry.record.id), path); return result;
+    result.paths.set(recordKey(entry.collection, entry.record.id), path); result.guards.set(path, bytes); return result;
   }
   /** Selects both relationship endpoints by readable type/title while hidden values remain typed refs. */
   private relationshipFields(all: Entry[]): FormField[] {

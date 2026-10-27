@@ -40,15 +40,16 @@ export class CommandContext {
   }
   /** Saves a user-submitted writing form without a second technical confirmation dialog. */
   async save(preview: CommitPreview): Promise<void> {
-    await this.flushEditors(preview.projectId);
+    await this.flushEditors(preview.projectId, preview.guards.keys());
     await this.service.commit(preview); this.selectedProjectId = preview.projectId;
     for (const listener of this.changed) listener();
   }
   /** Saves editor buffers belonging to the selected project before taking or committing a snapshot. */
-  async flushEditors(projectId: string): Promise<void> {
+  async flushEditors(projectId: string, extraPaths: Iterable<string> = []): Promise<void> {
+    const assigned = new Set(extraPaths);
     for (const leaf of this.app.workspace.getLeavesOfType('markdown')) {
       const view = leaf.view;
-      if (view instanceof MarkdownView && view.file && this.service.index.notes.some(n => n.path === view.file?.path && n.projectId === projectId) && view.getViewData() !== view.data) await view.save(false);
+      if (view instanceof MarkdownView && view.file && (assigned.has(view.file.path) || this.service.index.notes.some(n => n.path === view.file?.path && n.projectId === projectId)) && view.getViewData() !== view.data) await view.save(false);
     }
   }
   /** Selects one typed endpoint; relationships cannot themselves be relation endpoints. */

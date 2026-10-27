@@ -23,8 +23,8 @@ The plugin is free to use and requires no account or Writeller license. It makes
 
 This plugin is **not yet listed in the Obsidian Community directory**. Minimum version: **Obsidian 1.14.5**. Actual mobile-device acceptance tests are still pending.
 
-1. Back up your vault and open [release 0.2.2](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.2.2).
-2. Download `writeller-0.2.2.zip` from **Assets** and extract it.
+1. Back up your vault and open [release 0.2.3](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.2.3).
+2. Download `writeller-0.2.3.zip` from **Assets** and extract it.
 3. Copy its `writeller` directory to `<vault>/.obsidian/plugins/`. `main.js`, `manifest.json` and `styles.css` must be directly inside that directory.
 4. Enable Writeller in Obsidian's Community plugins settings. For updates, replace the plugin files and reload the plugin.
 
@@ -43,6 +43,12 @@ Schreibprojekte/My first book/
 ```
 
 Folder and command labels are currently German. The bilingual description in Obsidian's plugin list does not mean the entire interface is translated. Obsidian's manifest has one static description field; it does not expose per-language descriptions. [Manifest documentation](https://docs.obsidian.md/Reference/Manifest).
+
+## Create notes directly in Obsidian
+
+You can also use Obsidian's ordinary **New note** action. Markdown files inside a project folder appear under **Noch nicht im Schreibprojekt** (not yet part of the writing project). For example, a file in `Figuren` offers **Als Figur übernehmen** (adopt as a character). Confirm the form once; existing text, user properties and the file path are preserved. The note then becomes part of the project and its exports. **Andere Notizart…** lets you choose another type.
+
+Before exporting, the plugin points out unassigned files so you can review them first or explicitly export only the already assigned notes. Folder context menus also offer direct typed creation, such as **Writeller: Figur hinzufügen** (add a character).
 
 ## Where are exports and technical files?
 

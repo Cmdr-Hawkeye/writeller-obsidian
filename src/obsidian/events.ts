@@ -1,10 +1,11 @@
-import { TFile, type Plugin } from 'obsidian';
+import type { Plugin } from 'obsidian';
 import type { CommandContext } from '../ui/command-context';
 import type { WritingCommands } from '../ui/writing-commands';
 import type { LocalCommands } from '../ui/local-commands';
 import type { Inspection } from '../ui/inspection';
 import type { WritingPresentation } from './presentation';
 import { WritingProjectView } from '../ui/project-view';
+import { writingFileMenu } from './file-menu';
 
 /** Registers reversible UI hints; full source verification remains in the exchange service. */
 export function registerWritingEvents(plugin: Plugin, ctx: CommandContext, writing: WritingCommands, advanced: LocalCommands,
@@ -29,14 +30,5 @@ export function registerWritingEvents(plugin: Plugin, ctx: CommandContext, writi
   plugin.registerEvent(plugin.app.metadataCache.on('changed', invalidate));
   plugin.registerEvent(plugin.app.workspace.on('active-leaf-change', update));
   plugin.registerEvent(plugin.app.workspace.on('layout-change', () => { void presentation.refresh().catch(e => ctx.report(e)); }));
-  plugin.registerEvent(plugin.app.workspace.on('file-menu', (menu, file) => {
-    if (!(file instanceof TFile) || file.extension !== 'md') return;
-    const note = ctx.active(file.path);
-    if (!note) menu.addItem(item => item.setTitle('Writeller: Einem Schreibprojekt zuordnen').onClick(() => run(() => writing.pickKind(file.path))));
-    else {
-      menu.addItem(item => item.setTitle('Writeller: Schreibprojekt öffnen').setIcon('book-open-text').onClick(() => run(async () => { await ctx.openProjectView?.(note.projectId); })));
-      menu.addItem(item => item.setTitle('Writeller: Details bearbeiten').setIcon('pencil').onClick(() => run(() => writing.details(note.projectId, `${note.collection}/${note.id}`))));
-      if (note.collection === 'catalogItems') menu.addItem(item => item.setTitle('Writeller: Notizart ändern').onClick(() => run(() => advanced.changeType(file.path))));
-    }
-  }));
+  plugin.registerEvent(plugin.app.workspace.on('file-menu', (menu, file) => writingFileMenu(menu, file, ctx, writing, advanced, run)));
 }

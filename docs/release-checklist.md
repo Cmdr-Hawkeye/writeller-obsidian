@@ -23,9 +23,11 @@ Eine sprachabhängige Manifest-Beschreibung ist in der aktuellen offiziellen Obs
 
 ## GitHub-Release
 
-Der Tag entspricht exakt der Manifestversion, ohne `v`. Als Assets werden mindestens `main.js`, `manifest.json` und `styles.css` angehängt; zusätzlich Plugin-ZIP, Prüfsummen und Lizenzhinweise. Die Vorschau wird als **Pre-release** gekennzeichnet. Das Plugin-ZIP enthält die dokumentierten relativen Bilder und Anleitungen.
+Der Tag entspricht exakt der Manifestversion, ohne `v`. Als Assets werden mindestens `main.js`, `manifest.json` und `styles.css` angehängt; zusätzlich Plugin-ZIP, Prüfsummen und Lizenzhinweise. Version 0.2.3 ist als regulärer **Latest Release**, nicht als Entwurf oder Pre-release veröffentlicht. Zuvor gab es ausschließlich Vorabversionen und GitHubs Latest-Release-Endpunkt lieferte 404. Das Plugin-ZIP enthält die dokumentierten relativen Bilder und Anleitungen.
 
-`.github/workflows/release.yml` startet nur durch `workflow_dispatch`. `publish:false` bereitet Artefakte vor. `publish:true` veröffentlicht nach erfolgreichen Gates; der Workflow kennzeichnet den Release derzeit ausdrücklich als Vorschau. Normale Pushes starten ausschließlich die Windows-/Linux-Prüfung. [Aktuelle Actions](https://github.com/Cmdr-Hawkeye/writeller-obsidian/actions).
+`.github/workflows/release.yml` startet nur durch `workflow_dispatch`. `publish:false` bereitet Artefakte vor. `publish:true` veröffentlicht nach erfolgreichen Gates standardmäßig einen regulären Latest Release. Die separate Option `prerelease:true` kennzeichnet ausdrücklich gewünschte Testversionen als Vorabversion und setzt sie nicht als Latest. Normale Pushes starten ausschließlich die Windows-/Linux-Prüfung. [Aktuelle Actions](https://github.com/Cmdr-Hawkeye/writeller-obsidian/actions).
+
+Bei „No release matches your manifest version“ zuerst Manifestversion, exakt gleichnamigen Tag, hochgeladene Assets und Releasekennzeichnung prüfen. Anschließend im Community-Portal **Check for new releases** auslösen. Die Erkennung eines passenden Releases und die anschließende Prüfung/Freigabe des Eintrags sind getrennte Schritte.
 
 ## Noch offene Abnahmen
 

@@ -7,6 +7,11 @@ on:
         required: true
         default: false
         type: boolean
+      prerelease:
+        description: 'Als Vorabversion veröffentlichen (für reguläre Community-Releases ausgeschaltet lassen)'
+        required: true
+        default: false
+        type: boolean
 permissions:
   contents: write
 jobs:
@@ -42,6 +47,13 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
+          PRERELEASE: ${{ inputs.prerelease }}
         run: |
           VERSION=$(node -p "require('./manifest.json').version")
-          gh release create "$VERSION" "release/$VERSION/main.js" "release/$VERSION/manifest.json" "release/$VERSION/styles.css" "release/$VERSION/writeller-$VERSION.zip" "release/$VERSION/SHA256SUMS.txt" "release/$VERSION/THIRD-PARTY-NOTICES.md" --title "$VERSION – Vorschau" --notes-file docs/RELEASE-NOTES.md --prerelease
+          TITLE="$VERSION"
+          LATEST=true
+          if [ "$PRERELEASE" = "true" ]; then
+            TITLE="$VERSION – Vorschau"
+            LATEST=false
+          fi
+          gh release create "$VERSION" "release/$VERSION/main.js" "release/$VERSION/manifest.json" "release/$VERSION/styles.css" "release/$VERSION/writeller-$VERSION.zip" "release/$VERSION/SHA256SUMS.txt" "release/$VERSION/THIRD-PARTY-NOTICES.md" --title "$TITLE" --notes-file docs/RELEASE-NOTES.md --prerelease="$PRERELEASE" --latest="$LATEST"

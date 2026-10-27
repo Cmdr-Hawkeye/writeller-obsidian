@@ -10,6 +10,7 @@
 
 ## Dokumentation — 27.10.2026
 
+- GitHub-Release 0.2.3 ist als regulärer Latest Release veröffentlicht. Der manuelle Workflow erzeugt reguläre Releases als Standard; Vorabversionen benötigen eine ausdrückliche Option.
 - Die GitHub-Startseite enthält Deutsch und Englisch auf derselben Seite, mit Sprunglinks zur jeweiligen Sprache.
 - Der Austauschstatus ist aktualisiert: Writeller Exchange 1.0.0 ist in Writeller implementiert und getestet; am 27.10.2026 von Benni bestätigt.
 

@@ -23,8 +23,8 @@ The plugin is free to use and requires no account or Writeller license. It makes
 
 The following steps describe manual installation from the GitHub release. Minimum version: **Obsidian 1.14.5**. Actual mobile-device acceptance tests are still pending.
 
-1. Back up your vault and open [release 0.3.0](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.3.0).
-2. Download `writeller-0.3.0.zip` from **Assets** and extract it.
+1. Back up your vault and open [release 0.3.1](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.3.1).
+2. Download `writeller-0.3.1.zip` from **Assets** and extract it.
 3. Copy its `writeller` directory to `<vault>/.obsidian/plugins/`. `main.js`, `manifest.json` and `styles.css` must be directly inside that directory.
 4. Enable Novel Planner - by Writeller in Obsidian's Community plugins settings. For updates, replace the plugin files and reload the plugin.
 

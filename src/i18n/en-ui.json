@@ -215,5 +215,5 @@
   "{0} · {1} Notizen · {2} Hinweise": "{0} · {1} notes · {2} notices",
   "{0} · Austausch {1}": "{0} · Exchange {1}", "Ausgabedatei: {0}": "Output file: {0}",
   "Objekte: {0}; Bilder: {1}.": "Objects: {0}; images: {1}.", "{0} · Vorgang {1}": "{0} · Operation {1}",
-  "Bild": "Image", "{0} übernehmen": "Adopt {0}", "Dateien": "Files"
+  "Bild": "Image", "{0} übernehmen": "Adopt {0}", "Dateien": "Files", "Speichern…": "Saving…"
 }

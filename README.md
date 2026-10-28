@@ -4,7 +4,7 @@
 
 <p align="center"><a href="#deutsch">Deutsch</a> · <a href="#english">English</a> · <a href="https://www.writeller.com">writeller.com</a> · <a href="https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases">Download</a></p>
 
-<p align="center"><a href="https://github.com/Cmdr-Hawkeye/writeller-obsidian/actions/workflows/check.yml"><img src="https://github.com/Cmdr-Hawkeye/writeller-obsidian/actions/workflows/check.yml/badge.svg" alt="Automatisierte Prüfung"></a> <a href="LICENSE">MIT-Lizenz</a> · Vorschau 0.3.0 · von Benni</p>
+<p align="center"><a href="https://github.com/Cmdr-Hawkeye/writeller-obsidian/actions/workflows/check.yml"><img src="https://github.com/Cmdr-Hawkeye/writeller-obsidian/actions/workflows/check.yml/badge.svg" alt="Automatisierte Prüfung"></a> <a href="LICENSE">MIT-Lizenz</a> · Vorschau 0.3.1 · von Benni</p>
 
 ## Deutsch
 
@@ -29,8 +29,8 @@ Dein Buch wächst in **normalen Markdown-Dateien**. Writeller bringt Kapitel, Sz
 
 Die folgende Anleitung beschreibt die manuelle Installation aus dem GitHub-Release. Die Oberfläche unterstützt Deutsch und Englisch. Voraussetzung: Obsidian **1.14.5 oder neuer**; echte Mobile-Geräte sind noch nicht abgenommen.
 
-1. Den Vault sichern und das [Release 0.3.0](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.3.0) öffnen.
-2. Unter **Assets** `writeller-0.3.0.zip` herunterladen und entpacken.
+1. Den Vault sichern und das [Release 0.3.1](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.3.1) öffnen.
+2. Unter **Assets** `writeller-0.3.1.zip` herunterladen und entpacken.
 3. Den enthaltenen Ordner `writeller` nach `<Vault>/.obsidian/plugins/` kopieren. `main.js`, `manifest.json` und `styles.css` müssen direkt darin liegen.
 4. Obsidian öffnen und **Einstellungen → Community-Erweiterungen → Novel Planner - by Writeller** aktivieren. Beim Update die Plugin-Dateien ersetzen und das Plugin neu laden.
 
@@ -111,6 +111,7 @@ Ab 0.2.4 werden Schema-Validatoren während des Builds erzeugt; das Plugin verwe
 | Fehler oder Idee melden | [Issues](https://github.com/Cmdr-Hawkeye/writeller-obsidian/issues/new/choose) |
 | Selbst beitragen | [CONTRIBUTING](CONTRIBUTING.md) |
 | Architektur und Dateigrenzen | [Architektur](docs/architecture.md) |
+| Performanceanalyse und Messvergleich | [Performance](docs/performance.md) |
 | Tatsächliche Prüfungen und offene Geräteabnahme | [Prüfnachweis](docs/verification-report.md) |
 
 Quellcode: **[MIT](LICENSE), © 2026 Benni**. Drittanbieter-Lizenzen: [THIRD-PARTY-NOTICES](THIRD-PARTY-NOTICES.md). Dieses Repository enthält den eigenständigen Obsidian-Adapter; keinen proprietären Writeller-Anwendungscode. Keine Zugehörigkeit zum Obsidian-Hersteller wird behauptet.
@@ -142,8 +143,8 @@ The plugin is free to use and requires no account or Writeller license. It makes
 
 The following steps describe manual installation from the GitHub release. Minimum version: **Obsidian 1.14.5**. Actual mobile-device acceptance tests are still pending.
 
-1. Back up your vault and open [release 0.3.0](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.3.0).
-2. Download `writeller-0.3.0.zip` from **Assets** and extract it.
+1. Back up your vault and open [release 0.3.1](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.3.1).
+2. Download `writeller-0.3.1.zip` from **Assets** and extract it.
 3. Copy its `writeller` directory to `<vault>/.obsidian/plugins/`. `main.js`, `manifest.json` and `styles.css` must be directly inside that directory.
 4. Enable Novel Planner - by Writeller in Obsidian's Community plugins settings. For updates, replace the plugin files and reload the plugin.
 

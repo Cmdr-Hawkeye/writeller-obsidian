@@ -28,7 +28,7 @@ export default class WritellerPlugin extends Plugin {
   private presentation!: WritingPresentation;
   private ready = false;
   private busy = false;
-  /** Composes the writing-first UI without migrating or reorganising existing files on startup. */
+  /** Composes services and offers a concrete preview if automatic language setup needs folder moves. */
   override async onload(): Promise<void> {
     const loaded: unknown = await this.loadData();
     if (isObject(loaded)) {
@@ -89,7 +89,11 @@ export default class WritellerPlugin extends Plugin {
   private async run(action: () => Promise<void>): Promise<void> {
     if (this.busy || !this.ready) return;
     this.busy = true;
-    try { await this.app.workspace.getActiveViewOfType(MarkdownView)?.save(false); validateSettings(this.preferences); await action(); }
+    try {
+      const editor = this.app.workspace.getActiveViewOfType(MarkdownView);
+      if (editor && editor.getViewData() !== editor.data) await editor.save(false);
+      validateSettings(this.preferences); await action();
+    }
     catch (error) { this.context.report(error); }
     finally {
       this.busy = false;

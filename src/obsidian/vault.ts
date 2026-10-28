@@ -12,7 +12,7 @@ export class ObsidianVault implements VaultPort {
   /** Receives the host App; no filesystem, Electron or Node API is used. */
   constructor(private readonly app: App) {}
   /** Enumerates visible files, including JSON and binary assets. */
-  files(): VaultFile[] { return this.app.vault.getFiles().map(f => ({ path: f.path, markdown: f.extension === 'md' })); }
+  files(): VaultFile[] { return this.app.vault.getFiles().map(f => ({ path: f.path, markdown: f.extension === 'md', version: `${f.stat.ctime}/${f.stat.mtime}/${f.stat.size}` })); }
   /** Includes empty folders so translation never merges with an existing target directory. */
   folders(): string[] { return this.app.vault.getAllFolders().map(folder => folder.path); }
   /** Uses the host's folder rename and native link handling, preserving every child basename. */

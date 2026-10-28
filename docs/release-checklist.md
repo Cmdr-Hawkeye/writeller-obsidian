@@ -1,6 +1,6 @@
 # Releaseverfahren
 
-Repository: [Cmdr-Hawkeye/writeller-obsidian](https://github.com/Cmdr-Hawkeye/writeller-obsidian). Releaseverfahren für **0.3.0**; ein öffentliches GitHub-Release und eine Community-Verzeichnisfreigabe sind getrennte Schritte.
+Repository: [Cmdr-Hawkeye/writeller-obsidian](https://github.com/Cmdr-Hawkeye/writeller-obsidian). Releaseverfahren für **0.3.1**; ein öffentliches GitHub-Release und eine Community-Verzeichnisfreigabe sind getrennte Schritte.
 
 ## Lokale technische Gates
 
@@ -54,4 +54,4 @@ Erst nach entsprechender Abnahme über das [Community-Portal](https://community.
 
 ## Lokales Update
 
-Vault sichern, Plugin-Dateien aus `writeller-0.3.0.zip` in `.obsidian/plugins/writeller` ersetzen und das Plugin neu laden. Die Erweiterungsliste muss **Novel Planner - by Writeller · 0.3.0 · Benni** anzeigen. Bisherige Projektdateien werden nicht automatisch umbenannt. **Dateinamen vereinfachen** bietet eine Vorschau. Frühere Standard-Exportziele werden auf `Exporte` umgestellt; wirklich leere alte Wurzeln werden aufgeräumt. Reine Austausch-/Exportordner werden standardmäßig ausgeblendet und können über die technische Anzeigeeinstellung eingeblendet werden.
+Vault sichern, Plugin-Dateien aus `writeller-0.3.1.zip` in `.obsidian/plugins/writeller` ersetzen und das Plugin neu laden. Die Erweiterungsliste muss **Novel Planner - by Writeller · 0.3.1 · Benni** anzeigen. Bisherige Projektdateien werden nicht automatisch umbenannt. **Dateinamen vereinfachen** bietet eine Vorschau. Frühere Standard-Exportziele werden auf `Exporte` umgestellt; wirklich leere alte Wurzeln werden aufgeräumt. Reine Austausch-/Exportordner werden standardmäßig ausgeblendet und können über die technische Anzeigeeinstellung eingeblendet werden.

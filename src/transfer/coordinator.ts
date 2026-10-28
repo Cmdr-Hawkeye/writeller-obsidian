@@ -7,7 +7,7 @@ import { readExchange, validateExchange, writeExchange } from '../exchange/codec
 import type { Settings, Layout } from '../projects/layout';
 import { newLayout, extendLayout } from '../projects/layout';
 import { ProjectIndex } from '../projects/index';
-import { snapshotProject, type Snapshot } from '../projects/snapshot';
+import { snapshotProject, assertNoPending, type Snapshot } from '../projects/snapshot';
 import { forkProject } from '../projects/fork';
 import { planImport, resolveImport, type ImportPlan, type Decision } from './import-plan';
 import { planPersistence, type PersistencePlan } from './persistence';
@@ -42,7 +42,7 @@ export class TransferCoordinator {
   }
   /** Selects explicit identity mode before computing conflicts; same-name matching is forbidden. */
   async previewImport(pkg: Exchange, mode: 'new' | 'update' | 'copy', targetId?: string): Promise<ImportPlan> {
-    await validateExchange(pkg); await this.index.rebuild(); this.index.assertClean();
+    await validateExchange(pkg); await this.index.refresh(); this.index.assertClean();
     if (mode === 'copy') pkg = forkProject(pkg, newId()).exchange;
     const existing = this.index.find(pkg.project.id, 'project', pkg.project.id);
     if (mode !== 'update' && existing) fail('IDENTITY_CONFLICT', tr('Diese Projekt-ID ist bereits bekannt. Aktualisieren oder unabhängig kopieren wählen.'));
@@ -79,7 +79,7 @@ export class TransferCoordinator {
       if (original && await recordHash(e.record) !== await recordHash(original)) e.record.updatedAt = now() < e.record.createdAt ? e.record.createdAt : now();
     }
     await validateExchange(pkg);
-    await this.index.rebuild(); this.index.assertClean();
+    await this.index.refresh(); this.index.assertClean();
     const occupied = this.vault.files().map(f => f.path);
     const layout: Layout = local ? { root: local.root, statePath: local.statePath, state: clone(local.state) } : await newLayout(pkg, this.settings, occupied);
     if (!local && this.index.notes.some(n => n.projectId === pkg.project.id)) fail('IDENTITY_CONFLICT', tr('Projektidentität ist inzwischen vorhanden. Neue Vorschau oder Aktualisierung wählen.'));
@@ -112,13 +112,15 @@ export class TransferCoordinator {
   /** Commits a confirmed preview serially through a write-ahead journal, then refreshes identity. */
   async commit(preview: CommitPreview): Promise<void> {
     await assertLanguageReady(this.vault);
+    await assertNoPending(this.vault, preview.layout.root, preview.projectId);
     await this.assertFresh(preview);
     if (!preview.source) {
       const base = preview.layout.state.manifestPath.slice(0, preview.layout.state.manifestPath.lastIndexOf('/'));
       for (const folder of [tr('Manuskript'), tr('Figuren'), tr('Orte'), tr('Gegenstände'), tr('Ereignisse'), tr('Handlungsbögen'), tr('Notizen'), tr('Recherche')]) await this.vault.mkdir(`${base}/${folder}`);
     }
     await this.journal.commit(preview.layout.root, preview.projectId, preview.persistence.mutations);
-    await this.index.rebuild();
+    for (const mutation of preview.persistence.mutations) this.index.invalidate(mutation.path);
+    await this.index.refresh();
   }
   /** Prepares a selected-partner export without mutating manuscripts or received baselines. */
   async previewExport(projectId: string, peer: Pick<Producer, 'system' | 'instanceId'> | null): Promise<{ preview: CommitPreview; path: string; exchange: Exchange }> {
@@ -151,6 +153,8 @@ export class TransferCoordinator {
   }
   /** Gets a current loss-preserving snapshot for commands and property forms. */
   snapshot(projectId: string): Promise<Snapshot> { return snapshotProject(this.vault, this.index, projectId); }
+  /** Provides display/form data from index hints; commit guards still require fresh source reads. */
+  displaySnapshot(projectId: string): Promise<Snapshot> { return snapshotProject(this.vault, this.index, projectId, false, new Map(), null, true); }
   /** Looks up one typed entry from a current project snapshot for object commands. */
   entry(snapshot: Snapshot, key: string): Entry {
     const entry = entries(snapshot.exchange).find(e => recordKey(e.collection, e.record.id) === key);

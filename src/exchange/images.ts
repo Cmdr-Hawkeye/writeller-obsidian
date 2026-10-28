@@ -6,6 +6,10 @@ import type { Attachment } from '../domain/types';
 import { fail } from '../domain/diagnostics';
 import { sha256 } from './hash';
 
+// A verified content hash and exact image metadata identify immutable decoded bytes.
+// Retain only bounded keys, not manuscripts, image buffers or mutable validation objects.
+const decodedImages = new Map<string, true>();
+
 /** Inspects an explicitly selected local image and returns a complete validated public attachment. */
 export async function createAttachment(bytes: Uint8Array, projectId: string): Promise<Attachment> {
   if (bytes.length > 2 * 1024 ** 2) fail('LIMIT_EXCEEDED', tr('Bild überschreitet 2 MiB. Vor Aufnahme bewusst vorbereiten.'));
@@ -41,7 +45,11 @@ export async function assertImages(attachments: Attachment[]): Promise<void> {
     total += bytes.length;
     if (bytes.length > 2 * 1024 ** 2 || total > 64 * 1024 ** 2 || attachments.length > 256) fail('LIMIT_EXCEEDED', tr('Bildbudget überschritten.'));
     if (await sha256(bytes) !== image.id) fail('INVALID_ASSET', tr('Bildhash stimmt nicht mit den Bytes überein.'));
-    assertImageBytes(bytes, image);
+    const key = `${image.id}/${image.mimeType}/${image.width}/${image.height}`;
+    if (!decodedImages.has(key)) {
+      assertImageBytes(bytes, image); decodedImages.set(key, true);
+      if (decodedImages.size > 256) decodedImages.delete(decodedImages.keys().next().value!);
+    }
   }
 }
 /** Validates bounded headers first and then fully decodes PNG/JPEG using browser libraries. */

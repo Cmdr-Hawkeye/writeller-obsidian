@@ -1,2 +1,2 @@
 /** Plugin release version, separate from the immutable Writeller Exchange 1.0.0 contract. */
-export const pluginVersion = '0.3.0';
+export const pluginVersion = '0.3.1';

@@ -1,4 +1,4 @@
-export interface VaultFile { path: string; markdown: boolean }
+export interface VaultFile { path: string; markdown: boolean; version?: string }
 /** Storage boundary: implementations must enforce create exclusivity and synchronous text CAS. */
 export interface VaultPort {
   /** Inventories visible files only; paths are local hints, never object identities. */

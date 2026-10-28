@@ -1,5 +1,14 @@
 # Änderungen
 
+## 0.3.1 — 28.10.2026
+
+- Performance: unveränderte Ansichten lesen keine Notiz-/Begleitdateien erneut und rekonstruieren das Projekt nicht bei jedem Fokus-/Layout-Ereignis. Überlappende Aktualisierungen werden zusammengeführt.
+- Metadatenhinweise und gezielte Dateiereignisse aktualisieren den Anzeigeindex inkrementell; identischer gelesener Quelltext kann seine geprüfte YAML-Auswertung wiederverwenden. Vor jedem Schreiben werden die Quellen weiterhin vollständig frisch gelesen und gegen Vorschau und Begleitdaten geprüft.
+- Abgeschlossene Journale werden bei gewöhnlichen Projektoperationen anhand ihrer Abschluss-/Besitzmetadaten geprüft; ihre historischen Sicherungsbytes werden erst bei ausdrücklicher Wiederherstellung vollständig validiert. Aktuelle Quellen und unvollständige Journale bleiben geschützt, auch wenn ein offener Vorgang erst nach der Vorschau hinzugekommen ist.
+- Vollständig geprüfte Bilder müssen nach erneuter Hash- und Metadatenprüfung nicht bei jedem Aufruf nochmals dekodiert werden. Der begrenzte Cache hält ausschließlich Schlüssel.
+- Nach Formularbestätigung kann Obsidian zuerst zeichnen; längeres Speichern zeigt eine vorübergehende, auch bei Fehlern entfernte Aktivitätsmeldung. Unveränderte Editorpuffer werden nicht unnötig gespeichert.
+- Reproduzierbarer Vergleich mit 0.3.0, neue IO-/Cache-/Konflikt-/Bildtests und dokumentierte Nachweisgrenzen.
+
 ## 0.3.0 — 28.10.2026
 
 - Neuer Anzeigename **Novel Planner - by Writeller**. Plugin-ID `writeller`, Befehls-IDs und bestehende Projektidentitäten bleiben erhalten.

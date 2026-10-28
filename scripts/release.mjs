@@ -22,7 +22,7 @@ const content = new Map();
 for (const name of ['main.js', 'styles.css', 'README.md', 'README.en.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'THIRD-PARTY-NOTICES.md']) content.set(name, new Uint8Array(await readFile(name)));
 content.set('manifest.json', strToU8(JSON.stringify(manifest, null, 2) + '\n'));
 content.set('LICENSE', strToU8(sourceLicense.replace(/^Copyright \(c\) (\d{4}) .+$/m, (_line, year) => `Copyright (c) ${year} ${copyright}`)));
-for (const name of ['WRITELLER-EXCHANGE-SPEC.md', 'architecture.md', 'data-layout.md', 'compatibility.md', 'testing.md', 'release-checklist.md', 'verification-report.md', 'handbuch.md', 'faq.md', 'languages.md',
+for (const name of ['WRITELLER-EXCHANGE-SPEC.md', 'architecture.md', 'data-layout.md', 'compatibility.md', 'testing.md', 'release-checklist.md', 'verification-report.md', 'handbuch.md', 'faq.md', 'languages.md', 'performance.md',
   'assets/header.svg', 'assets/schreibuebersicht.png', 'assets/schreibuebersicht-en.png', 'assets/figur-formular.png', 'assets/schmale-ansicht.png', 'assets/notiz-uebernehmen.png', 'assets/README.md']) content.set(`docs/${name}`, new Uint8Array(await readFile(`docs/${name}`)));
 content.set('dependency-licenses.json', new Uint8Array(await readFile('docs/dependency-licenses.json')));
 content.set('release-status.json', strToU8(JSON.stringify({ version: pkg.version, published: false, openPublisherFields: open,

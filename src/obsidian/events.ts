@@ -17,8 +17,8 @@ export function registerWritingEvents(plugin: Plugin, ctx: CommandContext, writi
     const view = plugin.app.workspace.getActiveViewOfType(WritingProjectView);
     if (view) void view.refresh().catch(e => ctx.report(e));
   };
-  const invalidate = (): void => {
-    ctx.service.index.invalidate();
+  const invalidate = (file: { path: string }, oldPath?: string): void => {
+    ctx.service.index.invalidate(file.path); if (oldPath) ctx.service.index.invalidate(oldPath);
     if (timer !== null) window.clearTimeout(timer);
     timer = window.setTimeout(() => { timer = null; update(); }, 200);
   };
@@ -27,7 +27,7 @@ export function registerWritingEvents(plugin: Plugin, ctx: CommandContext, writi
   plugin.registerEvent(plugin.app.vault.on('modify', invalidate));
   plugin.registerEvent(plugin.app.vault.on('rename', invalidate));
   plugin.registerEvent(plugin.app.vault.on('delete', invalidate));
-  plugin.registerEvent(plugin.app.metadataCache.on('changed', invalidate));
+  plugin.registerEvent(plugin.app.metadataCache.on('changed', file => invalidate(file)));
   plugin.registerEvent(plugin.app.workspace.on('active-leaf-change', update));
   plugin.registerEvent(plugin.app.workspace.on('layout-change', () => { void presentation.refresh().catch(e => ctx.report(e)); }));
   plugin.registerEvent(plugin.app.workspace.on('file-menu', (menu, file) => writingFileMenu(menu, file, ctx, writing, advanced, run)));

@@ -47,6 +47,8 @@ JCS verwendet `canonicalize`, einschließlich ECMAScript-Zahlendarstellung und U
 
 ## Laufzeitabhängigkeiten
 
+Ab 0.3.1 sind Anzeige und Autorisierung ausdrücklich getrennt: `ProjectIndex.refresh()` verwendet optionale Stat-/Ereignishinweise, `rebuild()` liest echte Quellen. `note-cache.ts` vermeidet erneutes YAML-Parsen identischen gelesenen Texts. `view-revision.ts` und `ui/refresh-queue.ts` verhindern unveränderte beziehungsweise überlappende Vollrekonstruktionen. `displaySnapshot()` ist eine Formular-/Ansichtshilfe, keine Schreibfreigabe; Commit prüft Indexquellen, Dateiguards und Pending-Journale frisch. `journal-header.ts` prüft abgeschlossene Metadaten ohne wiederholte historische Backup-Leseläufe. Recovery validiert Originalbytes unverändert vollständig. Der begrenzte Bildcache enthält nur Schlüssel erfolgreich dekodierter Inhalte und verlangt bei jedem Zugriff erneut den richtigen Bytehash und dieselben Bildmetadaten. [Performanceanalyse und reproduzierbarer Messvergleich](performance.md).
+
 | Bibliothek | Zweck | Lizenz / Browser und Mobile |
 | --- | --- | --- |
 | ajv 8.20.0 | Draft-2020-12-Compiler beim Build, statische Validatoren im Plugin | MIT; nur benötigte Runtime-Helfer gebündelt |

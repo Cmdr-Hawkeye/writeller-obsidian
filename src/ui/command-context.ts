@@ -25,14 +25,14 @@ export class CommandContext {
   }
   /** Uses explicit view/active-note context, asking only when the target project is ambiguous. */
   async project(projectId?: string, forceChoice = false, excludeId?: string): Promise<Snapshot | null> {
-    await this.service.index.rebuild(); this.service.index.assertClean();
+    await this.service.index.refresh(); this.service.index.assertClean();
     const manifests = this.service.index.manifests().filter(n => n.projectId !== excludeId);
     if (!manifests.length) { new Notice(tr('Zuerst ein Schreibprojekt erstellen oder importieren.')); return null; }
     const contextual = projectId ?? (!forceChoice ? this.active()?.projectId ?? this.selectedProjectId : null);
     const matching = manifests.find(n => n.projectId === contextual);
     const id = matching?.projectId ?? (manifests.length === 1 ? manifests[0]!.projectId : (await choose(this.app, tr('Für welches Schreibprojekt?'), namedChoices(manifests, n => String(n.properties['writeller-title']))))?.projectId);
     if (!id) return null;
-    this.selectedProjectId = id; await this.flushEditors(id); return this.service.snapshot(id);
+    this.selectedProjectId = id; await this.flushEditors(id); return this.service.displaySnapshot(id);
   }
   /** Confirms exact planned counts and warnings before invoking any write operation. */
   async commit(preview: CommitPreview, heading: string, extra: string[] = [], successMessage = tr('Gespeichert.')): Promise<boolean> {

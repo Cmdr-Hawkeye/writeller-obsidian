@@ -121,6 +121,8 @@ export class Notice {
   static messages: string[] = [];
   /** Records one UI notice. */
   constructor(message: string) { Notice.messages.push(message); }
+  /** Mirrors the public lifetime hook used for a temporary storage-work indicator. */
+  hide(): void {}
 }
 /** ItemView lifecycle surface used by the actual production view. */
 export class ItemView {

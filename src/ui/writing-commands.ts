@@ -13,6 +13,7 @@ import { choose } from './dialogs';
 import type { CommandContext } from './command-context';
 import { suggestNote } from '../projects/note-discovery';
 import { language } from '../i18n/language';
+import { withActivity } from './activity';
 
 /** Everyday writing actions: familiar nouns, contextual project selection and ordinary Markdown notes. */
 export class WritingCommands {
@@ -28,7 +29,7 @@ export class WritingCommands {
     if (!values) return;
     const pkg = createProject(values['title']!.trim()); pkg.project.languageCode = language(); pkg.project.description = values['description'] ?? '';
     pkg.project.wordTarget = wordGoal(values['wordTarget']);
-    await this.ctx.save(await this.ctx.service.previewSave(pkg, null));
+    await withActivity(tr('Speichern…'), async () => { await this.ctx.save(await this.ctx.service.previewSave(pkg, null)); });
     await this.ctx.openProjectView?.(pkg.project.id); new Notice(tr('Dein Schreibprojekt ist bereit.'));
   }
   /** Offers familiar object types for toolbar/context actions instead of a technical collection picker. */
@@ -66,11 +67,13 @@ export class WritingCommands {
     if (kind.id === 'custom') entry.record.extensions['org.writeller.obsidian'] = { customTypeName: values['typeName']!.trim() };
     const assignments = await this.assign(entry, assignPath);
     setEntry(pkg, entry);
-    const preview = await this.ctx.service.previewSave(pkg, snapshot, null, new Set(), assignments.paths);
-    for (const [path, bytes] of assignments.guards) preview.guards.set(path, bytes);
-    await this.ctx.save(preview);
-    const note = this.ctx.service.index.find(pkg.project.id, entry.collection, entry.record.id);
-    if (note) await this.ctx.open(note.path);
+    await withActivity(tr('Speichern…'), async () => {
+      const preview = await this.ctx.service.previewSave(pkg, snapshot, null, new Set(), assignments.paths);
+      for (const [path, bytes] of assignments.guards) preview.guards.set(path, bytes);
+      await this.ctx.save(preview);
+      const note = this.ctx.service.index.find(pkg.project.id, entry.collection, entry.record.id);
+      if (note) await this.ctx.open(note.path);
+    });
   }
   /** Edits ordinary details without exposing identities, raw JSON or preservation internals. */
   async details(projectId?: string, key?: string): Promise<void> {
@@ -80,7 +83,7 @@ export class WritingCommands {
     const values = await writingForm(this.ctx.app, detailHeading(entry), detailFields(entry, snapshot.exchange), tr('Änderungen speichern'), validateWriting);
     if (!values) return;
     applyDetails(entry, values, snapshot.exchange); setEntry(snapshot.exchange, entry);
-    await this.ctx.save(await this.ctx.service.previewSave(snapshot.exchange, snapshot));
+    await withActivity(tr('Speichern…'), async () => { await this.ctx.save(await this.ctx.service.previewSave(snapshot.exchange, snapshot)); });
   }
   /** Derives a visible default chapter from the active managed note, never from its folder name. */
   private chapterContext(projectId: string, scenes: { id: string; chapterId: string | null }[]): string | null {

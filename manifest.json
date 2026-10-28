@@ -1,7 +1,7 @@
 {
   "id": "writeller",
   "name": "Novel Planner - by Writeller",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "minAppVersion": "1.14.5",
   "description": "Schreibprojekte mit Kapiteln, Szenen und Figuren in Markdown. / Writing projects with chapters, scenes and characters in Markdown.",
   "author": "Benni",

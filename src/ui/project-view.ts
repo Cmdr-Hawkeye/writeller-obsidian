@@ -11,6 +11,8 @@ import { moveInManuscript } from '../objects/reorder';
 import { iconButton, renderManuscript, renderPlanning, writingWordCount, type ProjectActions } from './project-sections';
 import { discoverNotes } from '../projects/note-discovery';
 import { renderUnassigned } from './unassigned-notes';
+import { viewRevision } from '../projects/view-revision';
+import { RefreshQueue } from './refresh-queue';
 
 export const projectViewType = 'writeller-writing-project';
 export interface ProjectViewTools { inspect(): Promise<void>; advanced(): Promise<void>; organize(projectId: string): Promise<void>; recover(): Promise<void> }
@@ -19,6 +21,8 @@ export class WritingProjectView extends ItemView {
   private generation = 0;
   private closed = false;
   private renderedKey: string | null = null;
+  private dataKey: string | null = null;
+  private readonly queue = new RefreshQueue(() => this.update());
   private readonly onChanged = (): void => { void this.refresh().catch(error => this.ctx.report(error)); };
   /** Injects action services; the view owns no manuscript data or separate identity registry. */
   constructor(leaf: WorkspaceLeaf, private readonly ctx: CommandContext, private readonly writing: WritingCommands,
@@ -32,14 +36,18 @@ export class WritingProjectView extends ItemView {
   /** Subscribes to saved project changes and renders the initial state. */
   override async onOpen(): Promise<void> { this.closed = false; this.contentEl.addClass('writeller-project-view'); this.ctx.changed.add(this.onChanged); await this.refresh(); }
   /** Removes owned listeners and invalidates outstanding asynchronous renders. */
-  override async onClose(): Promise<void> { this.closed = true; this.generation++; this.renderedKey = null; this.ctx.changed.delete(this.onChanged); this.contentEl.empty(); }
+  override async onClose(): Promise<void> { this.closed = true; this.generation++; this.renderedKey = null; this.dataKey = null; this.ctx.changed.delete(this.onChanged); this.contentEl.empty(); }
   /** Selects projects by title; fresh source snapshots remain the sole source of ownership. */
-  async refresh(): Promise<void> {
+  refresh(): Promise<void> { return this.queue.request(); }
+  /** Avoids snapshots for unchanged displays; full source verification remains in write operations. */
+  private async update(): Promise<void> {
+    if (this.closed) return;
     const generation = ++this.generation;
-    await this.ctx.service.index.rebuild();
+    await this.ctx.service.index.refresh();
     if (this.closed || generation !== this.generation) return;
     const manifests = this.ctx.service.index.manifests();
     if (!manifests.length) {
+      this.dataKey = null;
       if (this.renderedKey !== `empty/${language()}`) { this.contentEl.empty(); this.empty(); this.renderedKey = `empty/${language()}`; }
       return;
     }
@@ -47,16 +55,24 @@ export class WritingProjectView extends ItemView {
     const id = manifests.some(m => m.projectId === this.ctx.selectedProjectId) ? this.ctx.selectedProjectId! : manifests[0]!.projectId;
     this.ctx.selectedProjectId = id;
     let snapshot: Snapshot;
-    try { await this.ctx.flushEditors(id); snapshot = await this.ctx.service.snapshot(id); }
+    let dataKey: string | null = null;
+    try {
+      await this.ctx.flushEditors(id); await this.ctx.service.index.refresh(); this.ctx.service.index.assertClean();
+      const revision = await viewRevision(this.ctx.service.vault, this.ctx.service.index, id);
+      dataKey = revision === null ? null : `${language()}/${id}/${this.ctx.service.settings.showTechnicalInfo}/${revision}`;
+      if (dataKey !== null && dataKey === this.dataKey) return;
+      snapshot = await this.ctx.service.displaySnapshot(id);
+    }
     catch (error) {
       if (this.closed || generation !== this.generation) return;
-      this.renderedKey = null; this.contentEl.empty(); this.switcher(choices, id);
+      this.renderedKey = null; this.dataKey = null; this.contentEl.empty(); this.switcher(choices, id);
       this.contentEl.createEl('p', { text: tr('Dieses Projekt braucht eine Überprüfung, bevor es weiter gespeichert oder ausgetauscht werden kann.') });
       this.contentEl.createEl('button', { text: tr('Projekt prüfen') }).addEventListener('click', () => this.run(() => this.tools.inspect()));
       this.contentEl.createEl('button', { text: tr('Unterbrochenen Vorgang wiederherstellen') }).addEventListener('click', () => this.run(() => this.tools.recover()));
       this.ctx.report(error); return;
     }
     if (this.closed || generation !== this.generation) return;
+    this.dataKey = dataKey;
     // Native focus/cache events often refresh without a content change. Keeping the same
     // DOM preserves the button between pointerdown and click, plus keyboard focus and folds.
     const candidates = discoverNotes(this.ctx.service.vault, this.ctx.service.index, id);

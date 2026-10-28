@@ -10,8 +10,7 @@ import { encodeBase64 } from '../exchange/images';
 import { reverseBody } from '../mapping/projection';
 import { applyProperties } from '../mapping/properties';
 import { holdAnnotations } from '../mapping/annotations';
-import { parseLocalJson } from '../storage/local-json';
-import { isObject } from '../exchange/parser';
+import { projectJournalHeader } from '../storage/journal-header';
 import { loadLayoutJournal } from '../storage/layout-journal-format';
 import { pluginVersion } from '../domain/version';
 import { assertLanguageReady } from '../storage/language-status';
@@ -25,9 +24,9 @@ import { safePath, sidecarPath, isBelow } from '../storage/paths';
 export interface Snapshot { exchange: Exchange; state: ProjectState; statePath: string; root: string;
   records: Map<string, RecordState>; fingerprint: string; files: Map<string, Uint8Array>; warnings: Diagnostic[] }
 /** Reconstructs a consistent project from current notes plus loss-preserving sidecars. */
-export async function snapshotProject(vault: VaultPort, index: ProjectIndex, projectId: string, allowDangling = false, assetOriginals = new Map<string, Uint8Array>(), editorKey: string | null = null): Promise<Snapshot> {
+export async function snapshotProject(vault: VaultPort, index: ProjectIndex, projectId: string, allowDangling = false, assetOriginals = new Map<string, Uint8Array>(), editorKey: string | null = null, displayOnly = false): Promise<Snapshot> {
   await assertLanguageReady(vault);
-  await index.rebuild(); index.assertClean();
+  if (displayOnly) await index.refresh(); else await index.rebuild(); index.assertClean();
   const manifest = index.find(projectId, 'project', projectId);
   if (!manifest) fail('STATE_MISSING', tr('Projektmanifest fehlt. Original-Import reparieren oder Manifest wiederherstellen.'));
   const hint = manifest.properties['writeller-state-path'];
@@ -99,9 +98,15 @@ export async function snapshotFingerprint(index: ProjectIndex, files: Map<string
 /** Pending journals block ordinary operations until explicit recovery has completed. */
 export async function assertNoPending(vault: VaultPort, root: string, projectId: string): Promise<void> {
   const { loadJournal } = await import('../storage/journal-format');
-  for (const file of vault.files().filter(f => f.path.startsWith(root + '/journal/') && f.path.endsWith('/journal.json'))) {
-    const bytes = await vault.read(file.path), header = bytes ? parseLocalJson(text(bytes)) : null;
-    const journal = isObject(header) && header['kind'] === 'layout' ? await loadLayoutJournal(vault, file.path, projectId) : await loadJournal(vault, file.path, projectId);
+  const journals = vault.files().filter(f => f.path.startsWith(root + '/journal/') && f.path.endsWith('/journal.json'));
+  if (!journals.length) return;
+  const projectHash = await sha256(projectId);
+  for (const file of journals) {
+    const bytes = await vault.read(file.path);
+    if (!bytes) fail('STATE_MISSING', tr('Journal fehlt. Gesicherte Originale unverändert prüfen.'));
+    const header = projectJournalHeader(text(bytes), file.path, projectId, projectHash);
+    if (header.final) continue;
+    const journal = header.layout ? await loadLayoutJournal(vault, file.path, projectId) : await loadJournal(vault, file.path, projectId);
     if (journal.status === 'prepared' || journal.status === 'recoveryConflict') fail('LOCAL_CHANGED', tr('Unvollständiger Vorgang vorhanden. „Import wiederherstellen“ ausführen.'));
   }
 }

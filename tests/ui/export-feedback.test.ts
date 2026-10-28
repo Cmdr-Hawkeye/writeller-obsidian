@@ -66,10 +66,10 @@ describe('auffindbare Exporte und frühere leere Austauschordner', () => {
   });
   it('prüft im nativen Adapter auch leere Unterordner und verschiebt nur wirklich leere Ordner in den Papierkorb', async () => {
     const nonempty = Object.assign(new TFolder(), { children: [new TFolder()] }), empty = Object.assign(new TFolder(), { children: [] });
-    const trash = vi.fn(async () => {}), app = { vault: { getAbstractFileByPath: (path: string) => path === 'Leer' ? empty : nonempty, trash } } as unknown as App;
+    const trash = vi.fn(async () => {}), app = { vault: { getAbstractFileByPath: (path: string) => path === 'Leer' ? empty : nonempty }, fileManager: { trashFile: trash } } as unknown as App;
     const adapter = new ObsidianVault(app);
     await adapter.removeEmptyFolder('Mit Unterordner'); expect(trash).not.toHaveBeenCalled();
-    await adapter.removeEmptyFolder('Leer'); expect(trash).toHaveBeenCalledWith(empty, false);
+    await adapter.removeEmptyFolder('Leer'); expect(trash).toHaveBeenCalledWith(empty);
   });
   it('blendet alte und aktuelle Exportordner auch mit unsichtbaren JSON-Dateien aus, schützt aber eigene Inhalte', () => {
     const vault = new FakeVault();

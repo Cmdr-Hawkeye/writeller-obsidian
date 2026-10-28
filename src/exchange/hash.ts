@@ -11,7 +11,7 @@ export function jcs(value: unknown): string {
 /** Web Crypto SHA-256; fails closed when the host lacks secure cryptographic APIs. */
 export async function sha256(value: string | Uint8Array): Promise<string> {
   const bytes = typeof value === 'string' ? new TextEncoder().encode(value) : value;
-  const digest = await globalThis.crypto.subtle.digest('SHA-256', new Uint8Array(bytes).buffer);
+  const digest = await crypto.subtle.digest('SHA-256', new Uint8Array(bytes).buffer);
   return Array.from(new Uint8Array(digest), b => b.toString(16).padStart(2, '0')).join('');
 }
 /** Hashes only domain fields; nested fields with excluded names remain significant. */
@@ -20,6 +20,6 @@ export async function recordHash(record: ExchangeRecord): Promise<string> {
   return sha256(jcs(fields));
 }
 /** Generates an opaque UUID v4 without device identifiers or weak random fallbacks. */
-export function newId(): string { return globalThis.crypto.randomUUID(); }
+export function newId(): string { return crypto.randomUUID(); }
 /** Creates UTC microsecond-shaped timestamps; imported timestamps never pass through Date. */
 export function now(): string { return new Date().toISOString().replace(/(\.\d{3})Z$/, '$1000Z'); }

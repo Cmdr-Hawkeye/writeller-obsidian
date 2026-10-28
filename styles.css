@@ -5,7 +5,8 @@
 
 /* Presentation only: identities remain in YAML and backups remain in the visible Vault API. */
 .writeller-writing-note .metadata-property[data-property-key^="writeller-"] { display: none; }
-.writeller-writing-note .metadata-container:not(:has(.metadata-property:not([data-property-key^="writeller-"]))) { display: none; }
+.writeller-writing-note .writeller-technical-metadata { display: none; }
+.workspace-leaf-content[data-type="file-explorer"] .nav-folder.writeller-technical-folder { display: none; }
 
 /* A quiet, theme-native writing surface. No custom fonts, remote assets or dashboard cards. */
 .writeller-project-view { padding: 24px clamp(18px, 3.8vw, 52px); overflow: auto; }

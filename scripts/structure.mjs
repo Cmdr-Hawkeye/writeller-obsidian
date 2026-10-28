@@ -14,7 +14,7 @@ async function files(dir) {
 export async function verifySources() {
   const manifest = JSON.parse(await readFile('manifest.json', 'utf8'));
   if (!(await readFile('src/domain/version.ts', 'utf8')).includes(`export const pluginVersion = '${manifest.version}';`)) throw new Error('Plugin-/Manifestversion stimmen nicht überein');
-  for (const path of (await files('src')).filter(p => p.endsWith('.ts'))) {
+  for (const path of (await files('src')).filter(p => p.endsWith('.ts') || p.endsWith('.mjs'))) {
     const source = await readFile(path, 'utf8');
     const max = path === 'src/main.ts' ? 150 : 300;
     if (source.split('\n').length > max) throw new Error(`${path}: mehr als ${max} Zeilen`);
@@ -31,6 +31,7 @@ export async function verifyBundle(meta) {
     if (imp.external && imp.path !== 'obsidian') throw new Error(`Unerwartetes Runtime-External: ${imp.path}`);
   }
   const source = await readFile('main.js', 'utf8');
+  if (/\beval\s*\(|new\s+Function\s*\(/.test(source)) throw new Error('Bundle contains dynamic code execution');
   if (/\b(?:fetch|requestUrl)\s*\(|new (?:XMLHttpRequest|WebSocket)\s*\(|\bBuffer\.(?:from|alloc)\(|\.innerHTML\s*=/.test(source)) throw new Error('Bundle contains network, raw HTML or Node Buffer code');
 }
 if (process.argv[1] === fileURLToPath(import.meta.url)) await verifySources();

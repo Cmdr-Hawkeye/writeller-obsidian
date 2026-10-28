@@ -1,5 +1,15 @@
 # Änderungen
 
+## 0.2.4 — 28.10.2026
+
+- Community-Review: native, durchsuchbare Einstellungsdefinitionen ersetzen manuelle HTML-Überschriften; Einstellungen werden vor Speicherung validiert und bei Fehlern zurückgesetzt.
+- Ajv erzeugt statische Validatoren im Build. Kein Schema-Compiler und keine dynamische Codeausführung mehr in der Plugin-Laufzeit; unveränderter öffentlicher Vertrag und sämtliche bisherigen Erhaltungsprüfungen bleiben bestehen.
+- Sichtbarkeit technischer Ordner/Properties verwendet gezielte reversible Klassen ohne `:has` oder dynamische Stylesheets. Native DOM-Helfer, gebundene Aktionsaufrufe und sichere Zeichenprüfungen ersetzen die gemeldeten Muster.
+- Dateioperationen respektieren die Obsidian-Löschpräferenz über `FileManager.trashFile`. Gesicherte Journalstände und Frischeprüfungen bleiben erhalten.
+- Der offizielle Obsidian-Linter ist in der lokalen Prüfung und CI eingebunden; die englische Satzschreibungsregel wird für die deutsche Oberfläche ausdrücklich nicht angewandt.
+- GitHub Actions baut und attestiert `main.js`, `manifest.json` und `styles.css`. Zusätzliche ZIP-, Lizenz- und Prüfsummendownloads bleiben für manuelle Installationen verfügbar.
+- Die README beginnt mit dem Manifestnamen „Writeller“ und beschreibt den erforderlichen lokalen Vault-Zugriff.
+
 ## 0.2.3 — 27.10.2026
 
 - Über Obsidian angelegte Markdown-Dateien im Projektordner werden in der Schreibübersicht als noch nicht zugeordnet angezeigt. Eine passende Notizart wird vorgeschlagen und einmal ausdrücklich bestätigt.

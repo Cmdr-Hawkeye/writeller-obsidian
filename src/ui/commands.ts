@@ -18,7 +18,7 @@ export function registerWritingCommands(plugin: Plugin, ctx: CommandContext, act
       const allowed = actions.available() && enabled(); if (!checking && allowed) actions.run(action); return allowed;
     } });
   };
-  add('open-project', 'Schreibprojekte öffnen', actions.openView);
+  add('open-project', 'Schreibprojekte öffnen', () => actions.openView());
   add('create-project', 'Neues Schreibprojekt', () => actions.writing.createProject());
   for (const kind of writingKinds) add(`add-${kind.id}`, `${kind.singular} hinzufügen`, () => actions.writing.add(kind.id), hasProject);
   add('create-object', 'Weitere Notizart hinzufügen', () => actions.writing.pickKind(), () => advanced() && hasProject());
@@ -28,7 +28,7 @@ export function registerWritingCommands(plugin: Plugin, ctx: CommandContext, act
   add('change-object-type', 'Notizart ändern', () => actions.advanced.changeType(), () => ctx.active()?.collection === 'catalogItems');
   add('import-project', 'Projektdatei importieren', () => actions.transfer.importProject());
   add('export-project', 'Projekt exportieren', () => actions.transfer.exportProject(), hasProject);
-  add('organize-project', 'Projektdateien lesbar ordnen', actions.organize, hasProject);
+  add('organize-project', 'Projektdateien lesbar ordnen', () => actions.organize(), hasProject);
   add('copy-project', 'Projekt kopieren', () => actions.advanced.copyProject(), hasProject);
   add('transfer-object', 'Notiz in anderes Projekt kopieren', () => actions.advanced.transfer(), () => !!ctx.active() && ctx.active()?.collection !== 'project' && ctx.service.index.manifests().length > 1);
   add('add-image', 'Bild hinzufügen', () => actions.images.addImage(), hasProject);

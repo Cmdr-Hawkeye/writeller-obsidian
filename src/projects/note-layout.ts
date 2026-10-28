@@ -4,6 +4,7 @@ import { compareOrder, manuscriptOrder } from '../domain/order';
 import { sidecarPath, safePath } from '../storage/paths';
 import type { Layout } from './layout';
 import type { NameAllocator } from './names';
+import { replaceNameCharacters } from '../storage/characters';
 
 const catalogFolders: Record<string, string> = { character: 'Figuren', location: 'Orte', object: 'Gegenstände', timelineEvent: 'Ereignisse', arc: 'Handlungsbögen' };
 const folders: Partial<Record<Collection, string>> = { relationships: 'Beziehungen', notes: 'Notizen', researchItems: 'Recherche' };
@@ -13,7 +14,7 @@ export function contentFolder(entry: Entry): string {
   const known = catalogFolders[entry.record.type]; if (known) return known;
   const ext = entry.record.extensions['org.writeller.obsidian'];
   if (typeof ext === 'object' && ext !== null && !Array.isArray(ext) && typeof ext['customTypeName'] === 'string') {
-    const label = ext['customTypeName'].normalize('NFC').replace(/[\\/\x00-\x1f\x7f:*?"<>|]/g, '-').trim();
+    const label = replaceNameCharacters(ext['customTypeName'].normalize('NFC'), '-').trim();
     try { safePath(label); return `Eigene Typen/${label}`; } catch { /* Keep malformed foreign labels as data, not paths. */ }
   }
   return 'Eigene Typen';

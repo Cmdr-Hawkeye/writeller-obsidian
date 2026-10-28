@@ -1,10 +1,12 @@
+# Writeller
+
 <p align="center"><img src="docs/assets/header.svg" alt="Writeller for Obsidian — Kapitel. Szenen. Deine Geschichte." width="100%"></p>
 
 <p align="center"><a href="#deutsch">Deutsch</a> · <a href="#english">English</a> · <a href="https://www.writeller.com">writeller.com</a> · <a href="https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases">Download</a></p>
 
-<p align="center"><a href="https://github.com/Cmdr-Hawkeye/writeller-obsidian/actions/workflows/check.yml"><img src="https://github.com/Cmdr-Hawkeye/writeller-obsidian/actions/workflows/check.yml/badge.svg" alt="Automatisierte Prüfung"></a> <a href="LICENSE">MIT-Lizenz</a> · Vorschau 0.2.3 · von Benni</p>
+<p align="center"><a href="https://github.com/Cmdr-Hawkeye/writeller-obsidian/actions/workflows/check.yml"><img src="https://github.com/Cmdr-Hawkeye/writeller-obsidian/actions/workflows/check.yml/badge.svg" alt="Automatisierte Prüfung"></a> <a href="LICENSE">MIT-Lizenz</a> · Vorschau 0.2.4 · von Benni</p>
 
-# Deutsch
+## Deutsch
 
 Dein Buch wächst in **normalen Markdown-Dateien**. Writeller bringt Kapitel, Szenen, Figuren, Orte und Ideen in eine gemeinsame Schreibübersicht in [Obsidian](https://obsidian.md). Du schreibst in deinen eigenen Notizen und behältst eine lesbare Ablage.
 
@@ -27,8 +29,8 @@ Dein Buch wächst in **normalen Markdown-Dateien**. Writeller bringt Kapitel, Sz
 
 Das Plugin ist eine **Vorschau** und noch nicht im Obsidian-Community-Verzeichnis gelistet. Die Oberfläche ist derzeit Deutsch. Voraussetzung: Obsidian **1.14.5 oder neuer**; echte Mobile-Geräte sind noch nicht abgenommen.
 
-1. Den Vault sichern und das [Release 0.2.3](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.2.3) öffnen.
-2. Unter **Assets** `writeller-0.2.3.zip` herunterladen und entpacken.
+1. Den Vault sichern und das [Release 0.2.4](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.2.4) öffnen.
+2. Unter **Assets** `writeller-0.2.4.zip` herunterladen und entpacken.
 3. Den enthaltenen Ordner `writeller` nach `<Vault>/.obsidian/plugins/` kopieren. `main.js`, `manifest.json` und `styles.css` müssen direkt darin liegen.
 4. Obsidian öffnen und **Einstellungen → Community-Erweiterungen → Writeller** aktivieren. Beim Update die Plugin-Dateien ersetzen und das Plugin neu laden.
 
@@ -95,6 +97,10 @@ Mehr über Writeller: **[www.writeller.com](https://www.writeller.com)**.
 
 ## Hilfe, Entwicklung und Lizenz
 
+Zum Auffinden bestehender und verschobener Projekte ermittelt das Plugin Dateipfade im Vault und liest die Markdown-Dateien für die Identitätsprüfung. Auch nicht zugeordnete Notizen werden dabei lokal gelesen; sie werden nicht automatisch geändert. Exchange-Dateien und Projektbilder werden nach Auswahl beziehungsweise über geprüfte Projektzuordnungen gelesen. Dieser Zugriff ist für Projekttrennung, Wiederherstellung und vollständige Exporte erforderlich. Er erfolgt lokal über Obsidian; es werden keine Inhalte versendet.
+
+Ab 0.2.4 werden Schema-Validatoren während des Builds erzeugt; das Plugin verwendet keine dynamische Codeausführung zur Laufzeit. Die drei installierbaren Release-Dateien werden in GitHub Actions gebaut und mit Herkunftsnachweisen versehen. Zusätzliche ZIP-, Lizenz- und Prüfsummendateien dienen der manuellen Installation; Obsidian selbst lädt nur `main.js`, `manifest.json` und `styles.css`.
+
 | Gesucht | Hier geht es weiter |
 | --- | --- |
 | Bedienung und Details | [Handbuch](docs/handbuch.md) |
@@ -109,7 +115,7 @@ Quellcode: **[MIT](LICENSE), © 2026 Benni**. Drittanbieter-Lizenzen: [THIRD-PAR
 
 ---
 
-# English
+## English
 
 **Chapters, scenes, characters and places. Your writing project in ordinary Markdown files.**
 
@@ -134,8 +140,8 @@ The plugin is free to use and requires no account or Writeller license. It makes
 
 This plugin is **not yet listed in the Obsidian Community directory**. Minimum version: **Obsidian 1.14.5**. Actual mobile-device acceptance tests are still pending.
 
-1. Back up your vault and open [release 0.2.3](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.2.3).
-2. Download `writeller-0.2.3.zip` from **Assets** and extract it.
+1. Back up your vault and open [release 0.2.4](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.2.4).
+2. Download `writeller-0.2.4.zip` from **Assets** and extract it.
 3. Copy its `writeller` directory to `<vault>/.obsidian/plugins/`. `main.js`, `manifest.json` and `styles.css` must be directly inside that directory.
 4. Enable Writeller in Obsidian's Community plugins settings. For updates, replace the plugin files and reload the plugin.
 
@@ -170,6 +176,10 @@ The normal explorer view hides technical data and folders containing only exchan
 The adapter follows **Writeller Exchange 1.0.0**. The contract is implemented and tested in Writeller, enabling manual project exchange between Writeller and this Obsidian plugin. Legacy `*.writeller.json` archives use a different format and remain incompatible. See the [compatibility notes](docs/compatibility.md) and [verification report](docs/verification-report.md) for details.
 
 ## Help and contributing
+
+To find existing or moved projects, the plugin inventories vault file paths and reads Markdown files to check their identity metadata. This includes local reads of unassigned notes; they are not changed automatically. Exchange files and project images are read after selection or through validated project mappings. These local Obsidian API operations support project separation, recovery and complete exports. No contents are transmitted.
+
+Since 0.2.4, schema validators are generated at build time; the plugin does not dynamically execute generated code at runtime. GitHub Actions builds and attests the three installable release files. Additional ZIP, license and checksum files support manual installation; Obsidian downloads only `main.js`, `manifest.json` and `styles.css`.
 
 [German handbook](docs/handbuch.md) · [FAQ](docs/faq.md) · [Changelog](CHANGELOG.md) · [Report an issue](https://github.com/Cmdr-Hawkeye/writeller-obsidian/issues/new/choose) · [Contributing](CONTRIBUTING.md)
 

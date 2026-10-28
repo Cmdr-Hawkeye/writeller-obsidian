@@ -18,7 +18,7 @@ describe('Browserbundle ohne Node, Obsidian oder Netzwerk', () => {
     const context = { module, exports: module.exports, crypto: globalThis.crypto, TextEncoder, TextDecoder,
       Uint8Array, Uint16Array, Uint32Array, Int32Array, ArrayBuffer, DataView, atob, btoa, structuredClone,
       fetch: block, XMLHttpRequest: block, WebSocket: block, requestUrl: block };
-    runInNewContext(source, context, { timeout: 10000 });
+    runInNewContext(source, context, { timeout: 10000, contextCodeGeneration: { strings: false, wasm: false } });
     const api = module.exports as typeof BrowserApi;
     for (const name of ['readExchange', 'createAttachment', 'projectRecord']) expect(typeof Reflect.get(api, name)).toBe('function');
     const fixture = readFileSync(new URL('../fixtures/harbor.writeller-exchange.json', import.meta.url), 'utf8');

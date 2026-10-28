@@ -52,7 +52,7 @@ export function renderPlanning(parent: HTMLElement, snapshot: Snapshot, actions:
       (kind.id === 'custom' ? !writingKinds.some(k => k.type === e.record.type) : e.record.type === kind.type)));
     const group = parent.createEl('details', { cls: 'writeller-kind-group' }); group.open = items.length > 0;
     const summary = group.createEl('summary');
-    const label = summary.createEl('span', { cls: 'writeller-kind-label' }); label.createSpan({ text: kind.plural });
+    const label = summary.createSpan({ cls: 'writeller-kind-label' }); label.createSpan({ text: kind.plural });
     label.createSpan({ cls: 'writeller-count', text: String(items.length) });
     iconButton(summary, 'plus', `${kind.singular} hinzufügen`, () => actions.add(kind.id)).addEventListener('click', e => e.preventDefault());
     for (const entry of items) noteRow(group, snapshot, entry, actions);

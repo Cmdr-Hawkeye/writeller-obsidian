@@ -1,10 +1,11 @@
 import { fail } from '../domain/diagnostics';
 import { sha256 } from '../exchange/hash';
 import type { Collection } from '../domain/types';
+import { isControlCharacter } from './characters';
 
 /** Validates vault-relative, NFC paths before normalization; rejects portable filename hazards. */
 export function safePath(value: string): string {
-  if (!value || value !== value.normalize('NFC') || value.length > 900 || /[\\\x00-\x1f\x7f:*?"<>|]/.test(value) || value.startsWith('/') || value.endsWith('/')) {
+  if (!value || value !== value.normalize('NFC') || value.length > 900 || [...value].some(isControlCharacter) || /[\\:*?"<>|]/.test(value) || value.startsWith('/') || value.endsWith('/')) {
     fail('INVALID_FIELD', 'Ungültiger vaultrelativer Pfad. Sichtbaren Ordner ohne Sonderzeichen wählen.');
   }
   for (const segment of value.split('/')) {

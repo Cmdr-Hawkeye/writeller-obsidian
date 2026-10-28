@@ -9,7 +9,7 @@ import { CommandContext } from '../../src/ui/command-context';
 import { WritingCommands } from '../../src/ui/writing-commands';
 import { TransferCommands } from '../../src/ui/transfer-commands';
 import { WritingProjectView } from '../../src/ui/project-view';
-import { technicalFolderCss } from '../../src/obsidian/presentation';
+import { markTechnicalFolders } from '../../src/obsidian/visibility';
 import { exportFoldersToHide } from '../../src/projects/export-location';
 import { utf8, text } from '../../src/storage/vault-port';
 
@@ -41,7 +41,6 @@ const view = new WritingProjectView({} as WorkspaceLeaf, ctx, writing, transfer,
   inspect: async () => {}, advanced: async () => {}, organize: async () => {}, recover: async () => {}
 });
 shell.append(view.contentEl);
-const style = document.head.createEl('style'); style.textContent = technicalFolderCss(['Writeller-Daten', ...exportFoldersToHide(vault, defaultSettings)]);
 /** Renders an explorer fixture so the shipped hide-folder selector is tested in the browser. */
 function refreshTree(): void {
   tree.empty(); tree.createDiv({ cls: 'preview-tree-heading', text: 'Dateien' });
@@ -57,6 +56,7 @@ function refreshTree(): void {
       }
     }
   }
+  markTechnicalFolders(document, ['Writeller-Daten', ...exportFoldersToHide(vault, defaultSettings)]);
   // Expose a test-only assertion about bytes produced by the real export action.
   document.documentElement.dataset.nativeNoteExported = String(vault.files().filter(f => f.path.startsWith('Exporte/') && f.path.endsWith('.writeller-exchange.json')).some(f => {
     const pkg = JSON.parse(text(vault.data.get(f.path)!)) as { catalogItems?: { name: string; type: string; summary: string }[] };

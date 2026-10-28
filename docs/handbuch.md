@@ -2,11 +2,11 @@
 
 Schreibprojekte mit Kapiteln, Szenen, Figuren, Orten und Ideen in normalen Markdown-Dateien organisieren. Die Schreibübersicht führt zu deinen Notizen und zeigt Manuskript, Planung und Wortziel zusammen. Kostenlos nutzbar, ohne Konto, Writeller-Lizenz, Tracking, KI-Aufrufe oder Netzwerkzugriff des Plugins. [Writeller](https://www.writeller.com).
 
-**Entwicklungsstand 0.2.3:** Schreiboberfläche mit lesbarer Ablage, stabilen Bedienelementen bei unveränderten Hintergrundaktualisierungen und auffindbaren Exporten. Automatisierte Vertrags-, Speicher- und Oberflächentests sowie ein Browser-Testhost sind geprüft. Die native Obsidian-Abnahme dieser Version und echte Mobile-Gerätetests sind noch offen. Keine Community-Freigabe. Der manuelle Austausch folgt exakt **Writeller Exchange 1.0.0**, das in Writeller implementiert und getestet ist; Benni hat diesen aktuellen Stand am 27.10.2026 bestätigt. Das bisherige Archiv `*.writeller.json` / `writeller.project.v5` ist ein anderes Format und bleibt inkompatibel.
+**Entwicklungsstand 0.2.4:** Schreiboberfläche mit lesbarer Ablage, stabilen Bedienelementen bei unveränderten Hintergrundaktualisierungen und auffindbaren Exporten. Automatisierte Vertrags-, Speicher- und Oberflächentests sowie ein Browser-Testhost sind geprüft. Die native Obsidian-Abnahme dieser Version und echte Mobile-Gerätetests sind noch offen. Keine Community-Freigabe. Der manuelle Austausch folgt exakt **Writeller Exchange 1.0.0**, das in Writeller implementiert und getestet ist; Benni hat diesen aktuellen Stand am 27.10.2026 bestätigt. Das bisherige Archiv `*.writeller.json` / `writeller.project.v5` ist ein anderes Format und bleibt inkompatibel.
 
 ## Installation und erster Start
 
-1. Vault sichern. Aus `release/0.2.3/writeller-0.2.3.zip` den Ordner `writeller` nach `<Vault>/.obsidian/plugins/` kopieren. Bei einem Update die Plugin-Dateien ersetzen, eigene Vault-Dateien behalten. Mindestversion: **1.14.5**.
+1. Vault sichern. Aus `release/0.2.4/writeller-0.2.4.zip` den Ordner `writeller` nach `<Vault>/.obsidian/plugins/` kopieren. Bei einem Update die Plugin-Dateien ersetzen, eigene Vault-Dateien behalten. Mindestversion: **1.14.5**.
 2. Writeller in Obsidian aktivieren beziehungsweise neu laden. Über das Buchsymbol oder **Writeller: Schreibprojekte öffnen** die Übersicht öffnen.
 3. **Schreibprojekt erstellen** wählen, Titel und bei Bedarf Beschreibung und Wortziel eingeben. Das Formular legt das Projekt an und öffnet die Übersicht.
 4. **Kapitel hinzufügen**, **Szene hinzufügen**, **Figur hinzufügen** oder **Ort hinzufügen** wählen. Die Formulare fragen nach verständlichen Angaben; Szenen können direkt einem Kapitel zugeordnet werden. Anschließend öffnet sich die echte Markdown-Datei zum Schreiben.

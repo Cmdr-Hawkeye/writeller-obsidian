@@ -41,7 +41,7 @@ export default class WritellerPlugin extends Plugin {
     const present = (): void => { void this.presentation.refresh().catch(error => ctx.report(error)); };
     ctx.changed.add(present); this.register(() => ctx.changed.delete(present));
     this.addSettingTab(new WritellerSettingsTab(this.app, this, this.preferences, async () => {
-      await this.saveData(this.preferences); present(); for (const listener of ctx.changed) listener();
+      await this.saveData(this.preferences); for (const listener of ctx.changed) listener();
     }));
     const run = (action: () => Promise<void>): void => { void this.run(action); };
     const openView = async (projectId?: string): Promise<void> => {

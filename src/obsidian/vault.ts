@@ -66,11 +66,11 @@ export class ObsidianVault implements VaultPort {
     // leaves a conservative recovery conflict with the original bytes in the journal.
     return intermediate;
   }
-  /** Uses local trash only, preserving existing notes rather than permanently deleting them. */
+  /** Respects the user's deletion preference after verifying a known own rollback-created file. */
   async trash(path: string, expected: Uint8Array): Promise<void> {
     const current = await this.read(path);
     if (!current || !equalBytes(current, expected)) fail('LOCAL_CHANGED', 'Datei vor Wiederherstellung verändert.');
-    await this.app.vault.trash(this.file(path), false);
+    await this.app.fileManager.trashFile(this.file(path));
   }
   /** Uses FileManager.renameFile after fresh content/target checks; the host updates native links. */
   async move(from: string, to: string, expected: Uint8Array): Promise<void> {
@@ -84,7 +84,7 @@ export class ObsidianVault implements VaultPort {
   /** Cleans up only empty source folders after a completed user-confirmed reorganisation. */
   async removeEmptyFolder(path: string): Promise<void> {
     const folder = this.app.vault.getAbstractFileByPath(safePath(path));
-    if (folder instanceof TFolder && folder.children.length === 0) await this.app.vault.trash(folder, false);
+    if (folder instanceof TFolder && folder.children.length === 0) await this.app.fileManager.trashFile(folder);
   }
   /** Resolves current destinations relative to the source via the official MetadataCache. */
   resolveLink(link: string, source: string): string | null {

@@ -50,8 +50,8 @@ export class WritingProjectView extends ItemView {
       if (this.closed || generation !== this.generation) return;
       this.renderedKey = null; this.contentEl.empty(); this.switcher(choices, id);
       this.contentEl.createEl('p', { text: 'Dieses Projekt braucht eine Überprüfung, bevor es weiter gespeichert oder ausgetauscht werden kann.' });
-      this.contentEl.createEl('button', { text: 'Projekt prüfen' }).addEventListener('click', () => this.run(this.tools.inspect));
-      this.contentEl.createEl('button', { text: 'Unterbrochenen Vorgang wiederherstellen' }).addEventListener('click', () => this.run(this.tools.recover));
+      this.contentEl.createEl('button', { text: 'Projekt prüfen' }).addEventListener('click', () => this.run(() => this.tools.inspect()));
+      this.contentEl.createEl('button', { text: 'Unterbrochenen Vorgang wiederherstellen' }).addEventListener('click', () => this.run(() => this.tools.recover()));
       this.ctx.report(error); return;
     }
     if (this.closed || generation !== this.generation) return;
@@ -116,9 +116,9 @@ export class WritingProjectView extends ItemView {
     menu.addItem(item => item.setTitle('Projekt bearbeiten').setIcon('pencil').onClick(() => this.run(() => this.writing.details(id, `project/${id}`))));
     menu.addItem(item => item.setTitle('Projektbeschreibung öffnen').setIcon('file-text').onClick(() => this.run(() => this.ctx.open(snapshot.state.manifestPath))));
     menu.addItem(item => item.setTitle('Dateien lesbar ordnen').setIcon('folder-tree').onClick(() => this.run(() => this.tools.organize(id))));
-    menu.addItem(item => item.setTitle('Projekt prüfen').setIcon('check').onClick(() => this.run(this.tools.inspect)));
+    menu.addItem(item => item.setTitle('Projekt prüfen').setIcon('check').onClick(() => this.run(() => this.tools.inspect())));
     menu.addSeparator(); menu.addItem(item => item.setTitle('Projekt importieren').setIcon('download').onClick(() => this.run(() => this.transfer.importProject())));
-    if (this.ctx.service.settings.showTechnicalInfo) menu.addItem(item => item.setTitle('Technische Daten bearbeiten').onClick(() => this.run(this.tools.advanced)));
+    if (this.ctx.service.settings.showTechnicalInfo) menu.addItem(item => item.setTitle('Technische Daten bearbeiten').onClick(() => this.run(() => this.tools.advanced())));
     const rect = button.getBoundingClientRect(); menu.showAtPosition({ x: rect.right, y: rect.bottom });
   }
   /** Connects rows to real-note operations without deriving ownership from folders. */

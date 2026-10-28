@@ -104,7 +104,7 @@ class JsonReader {
     return this.invalid();
   }
   /** Advances over only the four whitespace characters allowed by JSON. */
-  private space(): void { while (/[\x20\x09\x0a\x0d]/.test(this.text[this.pos] ?? '\0')) this.pos++; }
+  private space(): void { while ([' ', '\t', '\n', '\r'].includes(this.text[this.pos] ?? '')) this.pos++; }
   /** Consumes one expected delimiter and reports whether it was present. */
   private take(c: string): boolean {
     if (this.text[this.pos] !== c) return false;

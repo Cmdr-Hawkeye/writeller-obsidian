@@ -1,8 +1,9 @@
 import { collisionKey, safePath } from '../storage/paths';
+import { replaceNameCharacters } from '../storage/characters';
 
 /** Converts a display title into a portable human name; identities never enter filenames. */
 export function readableName(title: string, maximum = 80): string {
-  const name = title.normalize('NFC').replace(/[\\/\x00-\x1f\x7f:*?"<>|]/g, ' – ').replace(/\s+/g, ' ').replace(/^[. ]+|[. ]+$/g, '')
+  const name = replaceNameCharacters(title.normalize('NFC'), ' – ').replace(/\s+/g, ' ').replace(/^[. ]+|[. ]+$/g, '')
     .slice(0, maximum).replace(/[\uD800-\uDBFF]$/u, '').trim() || 'Ohne Titel';
   try { safePath(name); return name; } catch { return `Notiz ${name}`; }
 }

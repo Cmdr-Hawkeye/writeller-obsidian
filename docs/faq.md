@@ -26,7 +26,7 @@ Direkt im Rechtsklickmenü eines Projekt-Unterordners gibt es außerdem passende
 
 Obsidian zeigt Austausch-JSON-Dateien im normalen Dateibaum üblicherweise nicht als Notizen. Dadurch kann ihr Ordner leer wirken, obwohl er Exportdateien enthält. Ab 0.2.2 blendet das Plugin alte Austauschordner und das aktuelle Exportziel aus, solange sie leer sind oder ausschließlich Exchange-Dateien enthalten. Eigene Markdown-Notizen, Bilder und unbekannte Dateien verhindern die Ausblendung.
 
-**Einstellungen → Writeller → Technische Informationen anzeigen** macht die Ordner wieder sichtbar. Im Dateimanager und in Sicherungen bleiben alle Dateien vorhanden. Alte wirklich leere Standardordner werden zusätzlich beim Start in den lokalen Papierkorb verschoben. Ordner mit Inhalten oder Unterordnern werden nicht entfernt.
+**Einstellungen → Writeller → Technische Informationen anzeigen** macht die Ordner wieder sichtbar. Im Dateimanager und in Sicherungen bleiben alle Dateien vorhanden. Alte wirklich leere Standardordner werden zusätzlich beim Start gemäß deiner Obsidian-Löschpräferenz entfernt. Ordner mit Inhalten oder Unterordnern werden nicht entfernt.
 
 ## Wo finde ich meinen Export zum Weitergeben?
 

@@ -3,14 +3,10 @@ import type { CommandContext } from '../ui/command-context';
 import { safePath, isBelow } from '../storage/paths';
 import { sha256 } from '../exchange/hash';
 import { exportFoldersToHide } from '../projects/export-location';
-
-/** Builds narrowly scoped explorer CSS; files stay normal, visible-vault API data on disk. */
-export function technicalFolderCss(folders: string[]): string {
-  return folders.map(folder => `.workspace-leaf-content[data-type="file-explorer"] .nav-folder:has(> .nav-folder-title[data-path=${JSON.stringify(folder)}]) { display: none; }`).join('\n');
-}
+import { markTechnicalFolders, markTechnicalMetadata } from './visibility';
 /** Reversible presentation only: no folder is deleted, hidden on disk or removed from backups. */
 export class WritingPresentation {
-  private readonly styles = new Map<Document, HTMLStyleElement>();
+  private readonly hidden = new Set<HTMLElement>();
   private readonly marked = new Set<HTMLElement>();
   private generation = 0;
   private disposed = false;
@@ -19,6 +15,8 @@ export class WritingPresentation {
   /** Updates managed editors and discovered data roots after layout/index or setting changes. */
   async refresh(): Promise<void> {
     const generation = ++this.generation, show = this.ctx.service.settings.showTechnicalInfo;
+    for (const element of this.hidden) element.removeClass('writeller-technical-folder', 'writeller-technical-metadata');
+    this.hidden.clear();
     const docs = new Set<Document>([this.ctx.app.workspace.containerEl.ownerDocument]);
     const active = new Set<HTMLElement>();
     for (const leaf of this.ctx.app.workspace.getLeavesOfType('file-explorer')) docs.add(leaf.view.containerEl.ownerDocument);
@@ -28,11 +26,11 @@ export class WritingPresentation {
       const managed = this.ctx.service.index.notes.some(n => n.path === view.file?.path) || cached?.['writeller-schema'] === 1;
       docs.add(view.containerEl.ownerDocument);
       view.containerEl.toggleClass('writeller-writing-note', !show && managed);
+      if (!show && managed) for (const element of markTechnicalMetadata(view.containerEl)) this.hidden.add(element);
       this.marked.add(view.containerEl);
       active.add(view.containerEl);
     }
     for (const element of this.marked) if (!active.has(element)) { element.removeClass('writeller-writing-note'); this.marked.delete(element); }
-    for (const [doc, style] of this.styles) if (!docs.has(doc)) { style.remove(); this.styles.delete(doc); }
     const roots = new Set<string>([this.ctx.service.settings.dataFolder, ...exportFoldersToHide(this.ctx.service.vault, this.ctx.service.settings)]);
     for (const note of this.ctx.service.index.manifests()) {
       const path = note.properties['writeller-state-path']; if (typeof path !== 'string') continue;
@@ -44,17 +42,13 @@ export class WritingPresentation {
     }
     if (this.disposed || generation !== this.generation) return;
     const folders = [...roots].filter(r => r && !this.ctx.service.index.notes.some(n => isBelow(n.path, r)));
-    for (const doc of docs) {
-      let style = this.styles.get(doc);
-      if (!style) { style = doc.createElement('style'); style.dataset.writellerPresentation = 'true'; doc.head.append(style); this.styles.set(doc, style); }
-      style.textContent = show ? '' : technicalFolderCss(folders);
-    }
+    if (!show) for (const doc of docs) for (const element of markTechnicalFolders(doc, folders)) this.hidden.add(element);
   }
-  /** Restores native visibility and removes all plugin-owned classes/styles when disabled. */
+  /** Restores native visibility and removes all plugin-owned classes when disabled. */
   dispose(): void {
     this.disposed = true; this.generation++;
     for (const element of this.marked) element.removeClass('writeller-writing-note');
-    for (const style of this.styles.values()) style.remove();
-    this.marked.clear(); this.styles.clear();
+    for (const element of this.hidden) element.removeClass('writeller-technical-folder', 'writeller-technical-metadata');
+    this.marked.clear(); this.hidden.clear();
   }
 }

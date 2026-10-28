@@ -1,6 +1,9 @@
 import { build, context } from 'esbuild';
 import { writeFile } from 'node:fs/promises';
 import { browserLibraries } from './scripts/browser-libraries.mjs';
+import { generateValidators } from './scripts/generate-validators.mjs';
+
+await generateValidators();
 
 // Browser targeting catches accidental Node dependencies before a mobile release.
 const options = {

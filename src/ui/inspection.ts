@@ -55,7 +55,7 @@ class InspectionModal extends Modal {
     this.contentEl.createEl('p', { text: `${this.projectTitle} · ${this.notes.length} Notizen · ${this.problems.length} Hinweise` });
     const list = this.contentEl.createEl('ul');
     for (const problem of this.problems) {
-      const row = list.createEl('li'); row.createEl('span', { text: this.ctx.service.settings.showTechnicalInfo ? `${problem.code}: ${problem.message}` : problem.message });
+      const row = list.createEl('li'); row.createSpan({ text: this.ctx.service.settings.showTechnicalInfo ? `${problem.code}: ${problem.message}` : problem.message });
       const destination = problem.path ?? this.pathForPointer(problem.pointer);
       if (destination) row.createEl('button', { text: 'Zur Notiz' }).addEventListener('click', () => { void this.ctx.open(destination).catch(e => this.ctx.report(e)); });
     }

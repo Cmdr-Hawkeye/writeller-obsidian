@@ -1,34 +1,40 @@
-# Writeller 0.2.3
+# Writeller 0.2.4
 
 [Deutsch](#deutsch) · [English](#english) · [writeller.com](https://www.writeller.com)
 
 ## Deutsch
 
-**Normale Obsidian-Notizen werden im Schreibprojekt erkannt.**
+**Korrekturen aus der automatisierten Community-Prüfung von 0.2.3.**
 
-- Über **Neue Notiz** angelegte Markdown-Dateien erscheinen in der Schreibübersicht unter **Noch nicht im Schreibprojekt**. Im Ordner `Figuren` wird beispielsweise **Als Figur übernehmen** angeboten.
-- Ein bestätigtes Formular ergänzt Projektidentität und Begleitdaten. Text, eigene Properties und Dateipfad bleiben erhalten. Übernommene Notizen erscheinen anschließend als reguläre Objekte in Übersicht und Export. **Andere Notizart…** lässt den Vorschlag ändern.
-- Vor dem Export weist das Plugin auf noch nicht zugeordnete Dateien hin. Du kannst zuerst die Übersicht öffnen oder ausdrücklich nur bereits zugeordnete Notizen exportieren.
-- Im nativen Rechtsklickmenü der Projekt-Unterordner gibt es passende Erstellungsaktionen, etwa **Writeller: Figur hinzufügen**. Gewöhnliche Dateien erhalten passende Übernahmeaktionen.
-- Projektgrenzen, Kapitelzuordnung und nachträgliche Dateiänderungen werden geprüft. Ordnernamen ändern keine bereits vorhandene Identität. Abbrechen verändert die gewöhnliche Datei nicht.
+- Einstellungen verwenden die native, durchsuchbare Obsidian-API mit standardisierten Überschriften und Ordnerauswahl. Ungültige oder überlappende Pfade werden weiterhin abgewiesen.
+- Die Exchange-Schemaprüfung wird beim Build vorübersetzt. Das Plugin benötigt dafür zur Laufzeit weder `eval` noch `new Function`; die Vertragsdateien bleiben unverändert.
+- Technische Ordner und Properties werden über rücknehmbare Klassen ausgeblendet. Der breite CSS-Selektor `:has` und dynamische Stylesheets entfallen.
+- Native DOM-Helfer, sichere Callback-Bindung, Web-Crypto-Zugriffe und Zeichenprüfungen entsprechen den verwendeten Obsidian-Lintregeln. Dateioperationen beachten jetzt die Löschpräferenz aus Obsidian.
+- Der offizielle Obsidian-Linter ist Teil der lokalen Prüfung und der CI. Der README-Titel entspricht dem Manifestnamen **Writeller**.
+- GitHub Actions baut das Release und attestiert die Herkunft von `main.js`, `manifest.json` und `styles.css` vor dem Hochladen.
 
-**Installation:** `writeller-0.2.3.zip` unter **Assets** herunterladen, Plugin-Dateien in `<Vault>/.obsidian/plugins/writeller/` ersetzen und das Plugin neu laden. Mindestversion: Obsidian 1.14.5.
+**Bewusst beibehalten:** Der lokale Vault-Index erkennt verwaltete Projekte und gewöhnliche Notizen innerhalb ihrer Grenzen. Das Review kann die dafür nötige Dateiauflistung weiterhin als Empfehlung melden. ZIP, Prüfsummen und Lizenzhinweise bleiben zusätzliche Downloads für manuelle Installationen; Obsidian installiert nur die Plugin-Dateien. Diese beiden Empfehlungen sind vom behobenen Source-Code-Fehler zu unterscheiden.
 
-**Prüfung:** 485 Tests in 15 Dateien und zehn Browser-Oberflächenchecks bestanden. Der Browser-Test übernimmt eine gewöhnliche Notiz als Figur und exportiert deren vollständigen Text über die tatsächliche Produktionsoberfläche. Native Desktop-/Mobile-Abnahme und Community-Verzeichnisfreigabe bleiben gesonderte offene Schritte.
+**Installation:** `writeller-0.2.4.zip` unter **Assets** herunterladen, Plugin-Dateien in `<Vault>/.obsidian/plugins/writeller/` ersetzen und das Plugin neu laden. Mindestversion: Obsidian 1.14.5. Bestehende Projekte und die bewusste Übernahme gewöhnlicher Notizen bleiben erhalten.
+
+**Prüfung:** 489 Tests in 16 Dateien und zehn Browser-Oberflächenchecks bestanden. Der Vertragstest läuft mit deaktivierter dynamischer Codeerzeugung. Native Desktop-/Mobile-Abnahme und die erneute Community-Prüfung bleiben gesonderte Schritte; dieses Release ist keine Community-Freigabe.
 
 ## English
 
-**Ordinary Obsidian notes are now detected inside writing projects.**
+**Corrections following the automated Community review of 0.2.3.**
 
-- Markdown files created with Obsidian's **New note** action appear under **Noch nicht im Schreibprojekt** (not yet part of the writing project). For example, files in `Figuren` offer **Als Figur übernehmen** (adopt as a character).
-- Confirming the form adds project identity and preservation data while retaining existing text, user properties and the file path. Adopted notes become regular project objects in the overview and exports. **Andere Notizart…** lets you choose a different type.
-- Before exporting, the plugin points out unassigned files. Review them in the overview or explicitly export only notes already assigned to the project.
-- Native project-folder menus offer typed creation, such as **Writeller: Figur hinzufügen** (add a character). Ordinary file menus offer a matching adoption action.
-- Project boundaries, chapter context and edits made after planning are checked. Folder names do not change existing identities. Cancelling leaves the ordinary file unchanged.
+- Settings use Obsidian's native searchable API, including standard headings and folder controls. Invalid or overlapping paths are still rejected.
+- Exchange schema validators are compiled during the build. The plugin needs neither `eval` nor `new Function` for validation at runtime; the contract artifacts remain unchanged.
+- Reversible classes hide technical folders and properties. Broad CSS `:has` selectors and dynamic stylesheets have been removed.
+- Native DOM helpers, bound callbacks, Web Crypto access and character checks follow the configured Obsidian lint rules. File removal now respects Obsidian's user preference.
+- The official Obsidian linter runs locally and in CI. The README title now matches the manifest name, **Writeller**.
+- GitHub Actions builds the release and attests the provenance of `main.js`, `manifest.json` and `styles.css` before upload.
 
-**Installation:** Download `writeller-0.2.3.zip` from **Assets**, replace the plugin files in `<vault>/.obsidian/plugins/writeller/` and reload the plugin. Minimum version: Obsidian 1.14.5. The plugin UI is currently German.
+**Intentionally retained:** The local vault index discovers managed projects and ordinary notes within project boundaries. The review may continue to flag the required file enumeration as a recommendation. The ZIP, checksums and license notices remain extra downloads for manual installation; Obsidian installs only the plugin files. These recommendations are separate from the corrected source-code error.
 
-**Validation:** 485 tests across 15 files and ten browser UI smoke checks passed. The browser test adopts an ordinary note as a character and exports its complete text through the production UI. Native desktop/mobile acceptance tests and Community-directory approval remain separate pending steps.
+**Installation:** Download `writeller-0.2.4.zip` from **Assets**, replace the plugin files in `<vault>/.obsidian/plugins/writeller/` and reload the plugin. Minimum version: Obsidian 1.14.5. Existing projects and explicit adoption of ordinary notes remain supported. The plugin UI is currently German.
+
+**Validation:** 489 tests across 16 files and ten browser UI smoke checks passed. The contract test runs with dynamic code generation disabled. Native desktop/mobile acceptance and the new Community review remain separate steps; this release does not imply Community approval.
 
 Writeller Exchange 1.0.0 is implemented and tested in Writeller, as confirmed by Benni on 27 October 2026. / Writeller Exchange 1.0.0 ist in Writeller implementiert und getestet, bestätigt durch Benni am 27.10.2026.
 

@@ -9,6 +9,20 @@ export class FakeVault implements VaultPort {
   writes = 0;
   failAt = Infinity;
   beforeWrite: (() => void) | null = null;
+  emptyFolders = new Set<string>();
+  /** Includes inferred parents and explicitly empty folders for collision/recovery checks. */
+  folders(): string[] {
+    const folders = new Set(this.emptyFolders);
+    for (const path of this.data.keys()) for (let at = path.indexOf('/'); at >= 0; at = path.indexOf('/', at + 1)) folders.add(path.slice(0, at));
+    return [...folders];
+  }
+  /** Models a single native folder rename, preserving arbitrary files and their basenames. */
+  async moveFolder(from: string, to: string): Promise<void> {
+    safePath(from); safePath(to); this.tick();
+    if (!this.folders().includes(from) || this.folders().some(path => collisionKey(path) === collisionKey(to)) || this.data.has(to)) fail('LOCAL_CHANGED', 'Ordnerziel belegt.');
+    for (const [path, bytes] of [...this.data]) if (path.startsWith(from + '/')) { this.data.set(to + path.slice(from.length), bytes); this.data.delete(path); }
+    for (const path of [...this.emptyFolders]) if (path === from || path.startsWith(from + '/')) { this.emptyFolders.delete(path); this.emptyFolders.add(to + path.slice(from.length)); }
+  }
   /** Lists current files rather than returning a stale cache. */
   files(): VaultFile[] { return [...this.data.keys()].map(path => ({ path, markdown: path.endsWith('.md') })); }
   /** Returns a copy to prevent accidental mutation of stored bytes. */

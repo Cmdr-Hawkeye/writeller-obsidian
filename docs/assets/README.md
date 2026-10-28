@@ -8,6 +8,7 @@ Die drei ursprünglichen PNG-Dateien wurden am 27.10.2026 mit den Produktions-UI
 | `figur-formular.png` | Produktionsformular zum Anlegen einer Figur in einem 390 Pixel breiten Fenster |
 | `schmale-ansicht.png` | Produktionsübersicht in einem 390 Pixel breiten Fenster |
 | `notiz-uebernehmen.png` | 0.2.3: gewöhnliche Markdown-Datei ohne Writeller-Metadaten wird zur bewussten Übernahme als Figur angeboten |
+| `schreibuebersicht-en.png` | 0.3.0, 28.10.2026: englische Oberfläche und übersetzte Strukturordner nach bestätigtem Wechsel, unveränderte deutsche Beispiel-Notiznamen; aus `test-results/ui/english.png` |
 | `header.svg` | eigens erstellter typografischer Repository-Header; kein nachgebildetes offizielles Markenlogo |
 
 Die Aufnahmen zeigen **keine native Obsidian-Ausführung und keinen echten Smartphone-Test**. Explorer und Host-Theme im Test sind kontrollierte Hilfen; Texte, Formulare und Schreibübersicht stammen aus dem Plugin. Es wurden keine persönlichen Vault-Inhalte verwendet. Die PNGs wurden aus `test-results/ui/` unverändert übernommen. Bei einer bewussten Aktualisierung müssen Bilder und dieser Nachweis zusammen aktualisiert werden.

@@ -6,6 +6,7 @@ Die verbindliche Eingabe ist die unveränderte `WRITELLER-EXCHANGE-SPEC.md` 1.0.
 src/
   main.ts                 Zusammensetzung und registrierte Lebenszyklen
   domain/                 Datentypen, Diagnosecodes, Identität, Reihenfolge
+  i18n/                   automatische Sprachwahl, statische Kataloge und Ordnerrollen
   exchange/               begrenzter JSON-Parser, Schema, Semantik, JCS, Hash, Bilder
   projects/               lesbare Namen/Layout, Index, Snapshot, Umordnungsplan, Fork, Reparatur
   objects/                Datensatzfabrik, deutsche Objektbegriffe, Reihenfolge, Referenzen
@@ -35,6 +36,14 @@ Semantik prüft Besitz, sammlungsbezogene IDs, Refs, POV-Typ, Waldstruktur, Zeit
 Das mitgelieferte Schema bleibt byteidentisch. Seit 0.2.4 erzeugt `scripts/generate-validators.mjs` statische Standalone-Validatoren in `.generated/`; der Ajv-Compiler wird nicht mehr im Plugin ausgeführt oder gebündelt. Der ignorierte erzeugte Code ist ein reproduzierbares Buildartefakt und wird vor Test/Build neu erstellt. TypeScript verwendet die kleine statische Deklaration in `validator-types.d.ts`. Der Kalenderprüfer wird zwischen Build und Laufzeit geteilt. Ausschließlich das Base64-Quartett-Regexp wird in der Buildkopie durch den etablierten linearen Zeichen-/Paddingfilter ersetzt, weil V8 sonst bei gültigen großen Bildern einen Regexp-Stackfehler auslösen kann. Die nachgeschaltete Prüfung erzwingt zusätzlich Länge, Padding, Padbits und vollständige Dekodierung; die akzeptierten Bildwerte werden nicht erweitert.
 
 JCS verwendet `canonicalize`, einschließlich ECMAScript-Zahlendarstellung und UTF-16-Schlüsselsortierung gemäß RFC 8785. Unabhängige RFC-Zahlen-/Sortiervektoren, SHA-Vektoren und die mitgelieferten Paket-/Datensatzhashes prüfen die Ergebnisse. SHA-256 und zufällige UUIDs verwenden Web Crypto. Es gibt keinen schwachen Fallback; fehlen sichere APIs, ist der Host nicht unterstützt.
+
+## Sprachwahl und Strukturordner ab 0.3.0
+
+`i18n/language.ts` löst `auto`, `de` und `en` auf; allein die UI-Grenze liest Obsidians `getLanguage()`. Der deterministische Standard für isolierte Domänentests ist Deutsch. `translate.ts` übersetzt ausschließlich statische Quelltextschlüssel. Getaggte Templates setzen Benutzertitel erst nach dem Lookup ein; Daten werden niemals als Übersetzungsschlüssel interpretiert. Zwei englische Kataloge bleiben jeweils unter 300 Zeilen und Einträgen. Der Build prüft statische Schlüssel und identische Platzhaltermengen. Objekt-/Statusbeschriftungen werden beim Zugriff aufgelöst; aktuelle Ansichten enthalten die Sprache im Darstellungsschlüssel. Befehle behalten ihre IDs und werden nur bei tatsächlichem Sprachwechsel neu beschriftet.
+
+`i18n/folders.ts` definiert stabile Strukturrollen. `projects/relocation.ts` kapselt Pfadabbildungen und Änderungen geparster lokaler Linkziele; `language-plan.ts` liest tatsächliche Manifeste und berechnet einen gemeinsamen Plan. Nur direkte Strukturordner und die besondere Zuordnung Ohne Kapitel/Without Chapter werden übersetzt. Titelbasierte Kapitel-/Szenenordner und benutzerdefinierte Wurzeln bleiben erhalten. Die technische Datenwurzel wird nicht verschoben. Deutsche und englische Ordner werden bei Aufnahmevorschlägen erkannt.
+
+`storage/language-journal.ts` sichert sämtliche betroffenen Originaldateien vor der ersten nativen Ordnerbewegung. `language-journal-format.ts` prüft zulässige Rollenpaare, Sicherungshashes und ausschließlich pfadbezogene Nachherbilder. Bei vorherigen nativen Umzügen belegen gesicherte Notizidentitäten die aktuellen Zustandspfade. Leere Zielordner blockieren ebenso wie Dateien. Frische Verzeichnis-/Dateiinventare und CAS schützen gegen zwischenzeitliche Änderungen. Settings werden erst mit den Zieldaten gespeichert; Speicherfehler lösen Rücknahme aus. Fremde Nachbearbeitung erzeugt einen Recovery-Konflikt und bleibt erhalten. Ein vorbereitetes Sprachjournal blockiert projektübergreifend weitere Schreib-/Snapshotvorgänge. Recovery ist über denselben Benutzerbefehl wie die bestehenden Journalarten erreichbar und liefert nach vollständiger Rücknahme die vorherigen Einstellungen zurück.
 
 ## Laufzeitabhängigkeiten
 

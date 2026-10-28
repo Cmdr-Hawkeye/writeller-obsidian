@@ -1,3 +1,4 @@
+import { tr } from '../i18n/translate';
 import type { Entry, Exchange, Ref } from '../domain/types';
 import { clone, entries, recordKey, setEntry } from '../domain/records';
 import { newId, now } from '../exchange/hash';
@@ -33,17 +34,17 @@ export function forkProject(original: Exchange, instanceId: string): { exchange:
   result.project.extensions['org.writeller.fork'] = { projectId: original.project.id };
   result.scope.projectId = projectId; result.attachments.forEach(a => { a.projectId = projectId; });
   result.producer = { system: 'obsidian', instanceId, version: pluginVersion }; result.packageId = newId(); result.exportedAt = now();
-  return { exchange: result, warnings: [warning('UNSUPPORTED_REPRESENTATION', 'Zusätzliche Angaben aus anderen Anwendungen bleiben erhalten. Darin können noch Verweise auf das ursprüngliche Projekt stehen; bitte bei Bedarf prüfen.')] };
+  return { exchange: result, warnings: [warning('UNSUPPORTED_REPRESENTATION', tr('Zusätzliche Angaben aus anderen Anwendungen bleiben erhalten. Darin können noch Verweise auf das ursprüngliche Projekt stehen; bitte bei Bedarf prüfen.'))] };
 }
 /** Copies one detached record; dependencies and linked assets require explicit graph resolution first. */
 export function transferObject(source: Exchange, entry: Entry, target: Exchange): Entry {
-  if (entry.collection === 'project') fail('INVALID_FIELD', 'Projekt über „Projekt unabhängig kopieren“ übertragen.');
+  if (entry.collection === 'project') fail('INVALID_FIELD', tr('Projekt über „Projekt unabhängig kopieren“ übertragen.'));
   const r = clone(entry.record);
   const references = ('chapterId' in r && (r.chapterId || r.parentSceneId || r.povCharacterId)) ||
     ('target' in r && r.target !== null) || ('relationshipType' in r) ||
     ('content' in r && r.content.format === 'markdown' && markdownInfo(r.content.text).links.some(l => /^(?:entity:|asset:)/.test(l.url)));
-  if (references) fail('MISSING_REFERENCE', 'Objekt hat Bezüge oder Bilder. Diese im Eigenschaften-Editor bewusst auflösen oder das gesamte Projekt unabhängig kopieren.');
-  if (source.project.id === target.project.id) fail('PROJECT_MISMATCH', 'Anderes Zielprojekt auswählen.');
+  if (references) fail('MISSING_REFERENCE', tr('Objekt hat Bezüge oder Bilder. Diese im Eigenschaften-Editor bewusst auflösen oder das gesamte Projekt unabhängig kopieren.'));
+  if (source.project.id === target.project.id) fail('PROJECT_MISMATCH', tr('Anderes Zielprojekt auswählen.'));
   r.id = newId();
   if ('projectId' in r) r.projectId = target.project.id;
   r.origin = { system: 'obsidian', instanceId: target.producer.instanceId, objectId: r.id };
@@ -53,8 +54,8 @@ export function transferObject(source: Exchange, entry: Entry, target: Exchange)
 /** Validates a type change against incoming POV references before updating the graph. */
 export function changeCatalogType(p: Exchange, id: string, type: string): void {
   const r = p.catalogItems.find(c => c.id === id);
-  if (!r) fail('MISSING_REFERENCE', 'Katalogobjekt fehlt.');
-  if (type !== 'character' && incomingReferences(p, { collection: 'catalogItems', id }).some(ref => ref.field === 'povCharacterId')) fail('MISSING_REFERENCE', 'Figur wird als POV verwendet. Szenenbezüge zuerst ausdrücklich ändern.');
+  if (!r) fail('MISSING_REFERENCE', tr('Katalogobjekt fehlt.'));
+  if (type !== 'character' && incomingReferences(p, { collection: 'catalogItems', id }).some(ref => ref.field === 'povCharacterId')) fail('MISSING_REFERENCE', tr('Figur wird als POV verwendet. Szenenbezüge zuerst ausdrücklich ändern.'));
   const entry: Entry = { collection: 'catalogItems', record: { ...r, type, updatedAt: now() } };
   setEntry(p, entry);
 }

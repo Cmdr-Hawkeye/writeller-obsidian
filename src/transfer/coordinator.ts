@@ -1,3 +1,4 @@
+import { tr } from '../i18n/translate';
 import type { Exchange, Entry, Producer } from '../domain/types';
 import { entries, recordKey, clone } from '../domain/records';
 import { fail, type Diagnostic } from '../domain/diagnostics';
@@ -17,6 +18,7 @@ import { equalBytes, utf8 } from '../storage/vault-port';
 import { safePath, isBelow } from '../storage/paths';
 import { NameAllocator } from '../projects/names';
 import { holdAnnotations } from '../mapping/annotations';
+import { assertLanguageReady } from '../storage/language-status';
 
 export interface CommitPreview { projectId: string; layout: Layout; persistence: PersistencePlan; source: Snapshot | null;
   indexFingerprint: string; warnings: Diagnostic[]; guards: Map<string, Uint8Array> }
@@ -31,11 +33,11 @@ export class TransferCoordinator {
   /** Reads a selected visible-vault JSON file with a strict suffix and complete validation. */
   async readImport(path: string): Promise<Exchange> {
     safePath(path);
-    if (path.endsWith('.writeller.json')) fail('UNSUPPORTED_VERSION', 'Dieses Projektarchiv benötigt den Writeller-Exchange-Export. Das Archiv wurde nicht verändert.');
+    if (path.endsWith('.writeller.json')) fail('UNSUPPORTED_VERSION', tr('Dieses Projektarchiv benötigt den Writeller-Exchange-Export. Das Archiv wurde nicht verändert.'));
     const bytes = await this.vault.read(path);
-    if (!bytes) fail('INVALID_FIELD', 'Ausgewählte Datei fehlt.');
+    if (!bytes) fail('INVALID_FIELD', tr('Ausgewählte Datei fehlt.'));
     const pkg = await readExchange(bytes);
-    if (!path.endsWith('.writeller-exchange.json')) fail('INVALID_FIELD', 'Exchange-Datei benötigt die Endung .writeller-exchange.json.');
+    if (!path.endsWith('.writeller-exchange.json')) fail('INVALID_FIELD', tr('Exchange-Datei benötigt die Endung .writeller-exchange.json.'));
     return pkg;
   }
   /** Selects explicit identity mode before computing conflicts; same-name matching is forbidden. */
@@ -43,11 +45,11 @@ export class TransferCoordinator {
     await validateExchange(pkg); await this.index.rebuild(); this.index.assertClean();
     if (mode === 'copy') pkg = forkProject(pkg, newId()).exchange;
     const existing = this.index.find(pkg.project.id, 'project', pkg.project.id);
-    if (mode !== 'update' && existing) fail('IDENTITY_CONFLICT', 'Diese Projekt-ID ist bereits bekannt. Aktualisieren oder unabhängig kopieren wählen.');
-    if (mode === 'update' && targetId !== pkg.project.id) fail('PROJECT_MISMATCH', 'Nur das Projekt mit exakt gleicher ID kann aktualisiert werden.');
+    if (mode !== 'update' && existing) fail('IDENTITY_CONFLICT', tr('Diese Projekt-ID ist bereits bekannt. Aktualisieren oder unabhängig kopieren wählen.'));
+    if (mode === 'update' && targetId !== pkg.project.id) fail('PROJECT_MISMATCH', tr('Nur das Projekt mit exakt gleicher ID kann aktualisiert werden.'));
     const local = mode === 'update' ? await snapshotProject(this.vault, this.index, pkg.project.id, true) : null;
     const plan = await planImport(pkg, local);
-    if (mode === 'copy') plan.warnings.push({ code: 'UNSUPPORTED_REPRESENTATION', severity: 'warning', pointer: '', message: 'Zusätzliche Angaben aus anderen Anwendungen bleiben erhalten. Darin können noch Verweise auf das ursprüngliche Projekt stehen; bitte bei Bedarf prüfen.' });
+    if (mode === 'copy') plan.warnings.push({ code: 'UNSUPPORTED_REPRESENTATION', severity: 'warning', pointer: '', message: tr('Zusätzliche Angaben aus anderen Anwendungen bleiben erhalten. Darin können noch Verweise auf das ursprüngliche Projekt stehen; bitte bei Bedarf prüfen.') });
     return plan;
   }
   /** Resolves all conflicts and produces exact file after-images for the final confirmation. */
@@ -80,8 +82,8 @@ export class TransferCoordinator {
     await this.index.rebuild(); this.index.assertClean();
     const occupied = this.vault.files().map(f => f.path);
     const layout: Layout = local ? { root: local.root, statePath: local.statePath, state: clone(local.state) } : await newLayout(pkg, this.settings, occupied);
-    if (!local && this.index.notes.some(n => n.projectId === pkg.project.id)) fail('IDENTITY_CONFLICT', 'Projektidentität ist inzwischen vorhanden. Neue Vorschau oder Aktualisierung wählen.');
-    if (!local && await this.vault.read(layout.statePath)) fail('IDENTITY_CONFLICT', 'Datenordner wird bereits von einem Projekt beansprucht. Zustand reparieren.');
+    if (!local && this.index.notes.some(n => n.projectId === pkg.project.id)) fail('IDENTITY_CONFLICT', tr('Projektidentität ist inzwischen vorhanden. Neue Vorschau oder Aktualisierung wählen.'));
+    if (!local && await this.vault.read(layout.statePath)) fail('IDENTITY_CONFLICT', tr('Datenordner wird bereits von einem Projekt beansprucht. Zustand reparieren.'));
     if (local) for (const location of layout.state.records) {
       const note = this.index.find(pkg.project.id, location.collection, location.id);
       if (note) location.notePath = note.path;
@@ -89,10 +91,10 @@ export class TransferCoordinator {
     await extendLayout(layout, pkg, occupied);
     for (const [key, path] of assignments) {
       const location = layout.state.records.find(r => recordKey(r.collection, r.id) === key);
-      if (!location) fail('MISSING_REFERENCE', 'Zuordnungsziel fehlt.');
+      if (!location) fail('MISSING_REFERENCE', tr('Zuordnungsziel fehlt.'));
       location.notePath = safePath(path);
     }
-    if (layout.state.records.some(r => isBelow(r.notePath, layout.root))) fail('PROJECT_MISMATCH', 'Datenordner darf keine verwalteten Inhaltsnotizen enthalten.');
+    if (layout.state.records.some(r => isBelow(r.notePath, layout.root))) fail('PROJECT_MISMATCH', tr('Datenordner darf keine verwalteten Inhaltsnotizen enthalten.'));
     layout.state.extensions = clone(pkg.extensions);
     const persistence = await planPersistence(this.vault, this.index, pkg, layout, local, incoming, acceptedKeys, new Set(assignments.values()));
     return { projectId: pkg.project.id, layout, persistence, source: local, indexFingerprint: await this.index.fingerprint(),
@@ -101,18 +103,19 @@ export class TransferCoordinator {
   /** Rejects any changed source, mapping, identity or sidecar after async preview work. */
   async assertFresh(preview: CommitPreview): Promise<void> {
     await this.index.rebuild(); this.index.assertClean();
-    if (await this.index.fingerprint() !== preview.indexFingerprint) fail('LOCAL_CHANGED', 'Notizen oder Identitäten seit der Vorschau geändert. Neue Vorschau erstellen.');
+    if (await this.index.fingerprint() !== preview.indexFingerprint) fail('LOCAL_CHANGED', tr('Notizen oder Identitäten seit der Vorschau geändert. Neue Vorschau erstellen.'));
     for (const [path, bytes] of preview.guards) {
       const current = await this.vault.read(path);
-      if (!current || !equalBytes(bytes, current)) fail('LOCAL_CHANGED', 'Projektbegleitdaten seit der Vorschau geändert. Neue Vorschau erstellen.');
+      if (!current || !equalBytes(bytes, current)) fail('LOCAL_CHANGED', tr('Projektbegleitdaten seit der Vorschau geändert. Neue Vorschau erstellen.'));
     }
   }
   /** Commits a confirmed preview serially through a write-ahead journal, then refreshes identity. */
   async commit(preview: CommitPreview): Promise<void> {
+    await assertLanguageReady(this.vault);
     await this.assertFresh(preview);
     if (!preview.source) {
       const base = preview.layout.state.manifestPath.slice(0, preview.layout.state.manifestPath.lastIndexOf('/'));
-      for (const folder of ['Manuskript', 'Figuren', 'Orte', 'Gegenstände', 'Ereignisse', 'Handlungsbögen', 'Notizen', 'Recherche']) await this.vault.mkdir(`${base}/${folder}`);
+      for (const folder of [tr('Manuskript'), tr('Figuren'), tr('Orte'), tr('Gegenstände'), tr('Ereignisse'), tr('Handlungsbögen'), tr('Notizen'), tr('Recherche')]) await this.vault.mkdir(`${base}/${folder}`);
     }
     await this.journal.commit(preview.layout.root, preview.projectId, preview.persistence.mutations);
     await this.index.rebuild();
@@ -130,7 +133,7 @@ export class TransferCoordinator {
       const note = this.index.find(projectId, e.collection, e.record.id);
       if (state.projection && note) state.projection.body = note.body;
       const location = snapshot.state.records.find(r => r.collection === e.collection && r.id === e.record.id);
-      if (!location) fail('STATE_MISSING', 'Objektindex fehlt. Projektzustand reparieren.');
+      if (!location) fail('STATE_MISSING', tr('Objektindex fehlt. Projektzustand reparieren.'));
       writes.push({ path: location.sidecarPath, before: await this.vault.read(location.sidecarPath), after: utf8(JSON.stringify(state, null, 2)), binary: false });
     }
     const path = new NameAllocator(this.vault.files().map(f => f.path)).allocate(safePath(this.settings.exchangeFolder), pkg.project.title, '.writeller-exchange.json');
@@ -151,7 +154,7 @@ export class TransferCoordinator {
   /** Looks up one typed entry from a current project snapshot for object commands. */
   entry(snapshot: Snapshot, key: string): Entry {
     const entry = entries(snapshot.exchange).find(e => recordKey(e.collection, e.record.id) === key);
-    if (!entry) fail('MISSING_REFERENCE', 'Objekt fehlt im aktuellen Projekt.');
+    if (!entry) fail('MISSING_REFERENCE', tr('Objekt fehlt im aktuellen Projekt.'));
     return entry;
   }
 }

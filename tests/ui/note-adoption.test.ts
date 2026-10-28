@@ -104,8 +104,8 @@ describe('gewöhnliche Notiz bewusst übernehmen und vollständig exportieren', 
   it('ergänzt den nativen Ordner- und Dateimenüs passende Schreibaktionen', async () => {
     const { ctx, writing, root, path } = await setup(), run = (action: () => Promise<void>): void => { void action(); };
     const menu = new Menu(); writingFileMenu(menu, new TFolder(`${root}/Figuren`) as unknown as import('obsidian').TFolder, ctx, writing, new LocalCommands(ctx), run);
-    menu.showAtPosition({ x: 0, y: 0 }); expect(document.querySelector('.menu')?.textContent).toContain('Writeller: Figur hinzufügen');
+    menu.showAtPosition({ x: 0, y: 0 }); expect(document.querySelector('.menu')?.textContent).toContain('Novel Planner: Figur hinzufügen');
     const fileMenu = new Menu(); writingFileMenu(fileMenu, new TFile(path) as unknown as import('obsidian').TFile, ctx, writing, new LocalCommands(ctx), run);
-    fileMenu.showAtPosition({ x: 0, y: 0 }); expect(document.querySelector('.menu')?.textContent).toContain('Writeller: Als Figur übernehmen');
+    fileMenu.showAtPosition({ x: 0, y: 0 }); expect(document.querySelector('.menu')?.textContent).toContain('Novel Planner: Als Figur übernehmen');
   });
 });

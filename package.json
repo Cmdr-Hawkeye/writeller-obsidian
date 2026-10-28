@@ -1,6 +1,6 @@
 {
   "name": "writeller-obsidian",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "private": true,
   "description": "Lokale Schreibprojekte und manueller Writeller Exchange für Obsidian.",
   "license": "MIT",
@@ -20,8 +20,8 @@
     "dev": "node esbuild.config.mjs --watch",
     "build": "node esbuild.config.mjs",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src tests scripts *.mjs --max-warnings 0 && node scripts/structure.mjs && node scripts/verify-handoff.mjs && node scripts/verify-docs.mjs",
-    "docs:check": "node scripts/verify-docs.mjs",
+    "lint": "eslint src tests scripts *.mjs --max-warnings 0 && node scripts/structure.mjs && node scripts/verify-handoff.mjs && node scripts/verify-docs.mjs && node scripts/verify-localization.mjs",
+    "docs:check": "node scripts/verify-docs.mjs && node scripts/verify-localization.mjs",
     "test": "vitest run",
     "pretest": "node scripts/generate-validators.mjs",
     "pretest:ui": "node scripts/generate-validators.mjs",

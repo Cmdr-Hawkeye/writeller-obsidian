@@ -1,5 +1,6 @@
+import { tr } from '../../src/i18n/translate';
 import type { WorkspaceLeaf } from 'obsidian';
-import { installDomHelpers, createUiApp } from '../helpers/obsidian-ui';
+import { installDomHelpers, createUiApp, setHostLanguage } from '../helpers/obsidian-ui';
 import { FakeVault } from '../helpers/fake-vault';
 import { TransferCoordinator } from '../../src/transfer/coordinator';
 import { defaultSettings } from '../../src/projects/layout';
@@ -12,6 +13,8 @@ import { WritingProjectView } from '../../src/ui/project-view';
 import { markTechnicalFolders } from '../../src/obsidian/visibility';
 import { exportFoldersToHide } from '../../src/projects/export-location';
 import { utf8, text } from '../../src/storage/vault-port';
+import { changeWritingLanguage } from '../../src/ui/language-change';
+import { folderName } from '../../src/i18n/folders';
 
 // Browser preview of the actual production components in an explicit API-fake host.
 installDomHelpers(window);
@@ -43,7 +46,7 @@ const view = new WritingProjectView({} as WorkspaceLeaf, ctx, writing, transfer,
 shell.append(view.contentEl);
 /** Renders an explorer fixture so the shipped hide-folder selector is tested in the browser. */
 function refreshTree(): void {
-  tree.empty(); tree.createDiv({ cls: 'preview-tree-heading', text: 'Dateien' });
+  tree.empty(); tree.createDiv({ cls: 'preview-tree-heading', text: tr('Dateien') });
   const parents = new Map<string, HTMLElement>([['', tree]]);
   for (const file of vault.files().sort((a, b) => a.path.localeCompare(b.path, 'de'))) {
     const parts = file.path.split('/'); let path = '';
@@ -56,7 +59,7 @@ function refreshTree(): void {
       }
     }
   }
-  markTechnicalFolders(document, ['Writeller-Daten', ...exportFoldersToHide(vault, defaultSettings)]);
+  markTechnicalFolders(document, ['Writeller-Daten', ...exportFoldersToHide(vault, service.settings)]);
   // Expose a test-only assertion about bytes produced by the real export action.
   document.documentElement.dataset.nativeNoteExported = String(vault.files().filter(f => f.path.startsWith('Exporte/') && f.path.endsWith('.writeller-exchange.json')).some(f => {
     const pkg = JSON.parse(text(vault.data.get(f.path)!)) as { catalogItems?: { name: string; type: string; summary: string }[] };
@@ -69,8 +72,15 @@ document.addEventListener('writeller-test-refresh', () => { void view.refresh().
 // Reproduces Obsidian's ordinary new-note action without pre-creating any Writeller metadata.
 document.addEventListener('writeller-test-native-note', () => {
   const root = service.index.manifests()[0]!.path.split('/').slice(0, -1).join('/');
-  void vault.create(`${root}/Figuren/Bernd das Brot.md`, utf8('Bernd kennt den Hafen.\n'), false).then(async () => {
+  void vault.create(`${root}/${folderName('character')}/Bernd das Brot.md`, utf8('Bernd kennt den Hafen.\n'), false).then(async () => {
     refreshTree(); await view.refresh(); document.documentElement.dataset.nativeNoteReady = 'true';
+  }).catch(error => ctx.report(error));
+});
+// Exercises the same host detection and confirmed folder migration as the real settings action.
+for (const locale of ['de', 'en']) document.addEventListener(`writeller-test-language-${locale}`, () => {
+  setHostLanguage(locale);
+  void changeWritingLanguage(ctx, 'auto', async () => {}).then(async () => {
+    await view.refresh(); refreshTree(); document.documentElement.dataset.previewLanguage = locale;
   }).catch(error => ctx.report(error));
 });
 document.documentElement.dataset.previewReady = 'true';

@@ -2,12 +2,14 @@
 
 Schreibprojekte mit Kapiteln, Szenen, Figuren, Orten und Ideen in normalen Markdown-Dateien organisieren. Die Schreibübersicht führt zu deinen Notizen und zeigt Manuskript, Planung und Wortziel zusammen. Kostenlos nutzbar, ohne Konto, Writeller-Lizenz, Tracking, KI-Aufrufe oder Netzwerkzugriff des Plugins. [Writeller](https://www.writeller.com).
 
-**Entwicklungsstand 0.2.4:** Schreiboberfläche mit lesbarer Ablage, stabilen Bedienelementen bei unveränderten Hintergrundaktualisierungen und auffindbaren Exporten. Automatisierte Vertrags-, Speicher- und Oberflächentests sowie ein Browser-Testhost sind geprüft. Die native Obsidian-Abnahme dieser Version und echte Mobile-Gerätetests sind noch offen. Keine Community-Freigabe. Der manuelle Austausch folgt exakt **Writeller Exchange 1.0.0**, das in Writeller implementiert und getestet ist; Benni hat diesen aktuellen Stand am 27.10.2026 bestätigt. Das bisherige Archiv `*.writeller.json` / `writeller.project.v5` ist ein anderes Format und bleibt inkompatibel.
+**Entwicklungsstand 0.3.0:** Schreiboberfläche mit lesbarer Ablage, stabilen Bedienelementen bei unveränderten Hintergrundaktualisierungen und auffindbaren Exporten. Automatisierte Vertrags-, Speicher- und Oberflächentests sowie ein Browser-Testhost sind geprüft. Die native Obsidian-Abnahme dieser Version und echte Mobile-Gerätetests sind noch offen. Dieser Prüfnachweis ersetzt keine Community-Prüfung. Der manuelle Austausch folgt exakt **Writeller Exchange 1.0.0**, das in Writeller implementiert und getestet ist; Benni hat diesen aktuellen Stand am 27.10.2026 bestätigt. Das bisherige Archiv `*.writeller.json` / `writeller.project.v5` ist ein anderes Format und bleibt inkompatibel.
 
 ## Installation und erster Start
 
-1. Vault sichern. Aus `release/0.2.4/writeller-0.2.4.zip` den Ordner `writeller` nach `<Vault>/.obsidian/plugins/` kopieren. Bei einem Update die Plugin-Dateien ersetzen, eigene Vault-Dateien behalten. Mindestversion: **1.14.5**.
-2. Writeller in Obsidian aktivieren beziehungsweise neu laden. Über das Buchsymbol oder **Writeller: Schreibprojekte öffnen** die Übersicht öffnen.
+Der Anzeigename ist **Novel Planner - by Writeller**; die interne ID `writeller` bleibt erhalten. **Sprache → Automatisch (Obsidian)** wählt Deutsch bei deutscher Obsidian-Oberfläche und sonst Englisch. Die Auswahl **Deutsch** oder **English** überschreibt dies. Strukturordner folgen nach konkreter Vorschau der Sprache. Eigene Titel, Kapitelordner, benutzerdefinierte Wurzeln und sämtliche `.md`-Dateinamen bleiben erhalten. Technische Sicherungsdaten behalten stabile Pfade. [Details und Wiederherstellung](languages.md).
+
+1. Vault sichern. Aus `release/0.3.0/writeller-0.3.0.zip` den Ordner `writeller` nach `<Vault>/.obsidian/plugins/` kopieren. Bei einem Update die Plugin-Dateien ersetzen, eigene Vault-Dateien behalten. Mindestversion: **1.14.5**.
+2. Novel Planner - by Writeller in Obsidian aktivieren beziehungsweise neu laden. Über das Buchsymbol oder **Novel Planner - by Writeller: Schreibprojekte öffnen** die Übersicht öffnen.
 3. **Schreibprojekt erstellen** wählen, Titel und bei Bedarf Beschreibung und Wortziel eingeben. Das Formular legt das Projekt an und öffnet die Übersicht.
 4. **Kapitel hinzufügen**, **Szene hinzufügen**, **Figur hinzufügen** oder **Ort hinzufügen** wählen. Die Formulare fragen nach verständlichen Angaben; Szenen können direkt einem Kapitel zugeordnet werden. Anschließend öffnet sich die echte Markdown-Datei zum Schreiben.
 
@@ -59,7 +61,7 @@ Eine `.writeller-exchange.json` in einen normalen Vault-Ordner kopieren und **Pr
 
 `Exporte` wird erst beim tatsächlichen Export angelegt. Frühere Standardordner wie `Writeller-Austausch` oder `Writeller Exchange` werden für neue Exporte auf `Exporte` umgestellt; selbst gewählte andere Ziele bleiben erhalten. Beim Plugin-Start werden diese früheren Wurzeln nur entfernt, wenn sie wirklich leer sind und keinem konfigurierten Projekt-/Datenpfad dienen. Bestehende Dateien und selbst leere Unterordner bleiben erhalten. Für Importe wird kein zusätzlicher Ablageordner benötigt.
 
-Austauschdateien und Journale enthalten private Texte und Bildbytes im Klartext. Recherchelinks werden erhalten, aber vom Plugin nicht geöffnet oder heruntergeladen. Die Oberfläche ist Deutsch; Ordner für neue Projekte, Austausch und technische Daten sind einstellbar.
+Austauschdateien und Journale enthalten private Texte und Bildbytes im Klartext. Recherchelinks werden erhalten, aber vom Plugin nicht geöffnet oder heruntergeladen. Die Oberfläche unterstützt Deutsch und Englisch; Ordner für neue Projekte, Austausch und technische Daten sind einstellbar.
 
 ## Texte, Bilder und Erhaltung
 
@@ -101,4 +103,4 @@ npm run release:prepare
 
 [Architektur](architecture.md), [Tests](testing.md), [Kompatibilität](compatibility.md), [Prüfnachweis](verification-report.md), [Releasecheck](release-checklist.md).
 
-Quellcode-Lizenz: MIT, © 2026 **Benni**. Der Autorenlink führt zu [writeller.com](https://www.writeller.com). [Drittanbieter-Lizenzen](../THIRD-PARTY-NOTICES.md) gehören zum Paket. Das Plugin enthält keinen proprietären Writeller-Anwendungscode. Die statische Plugin-Beschreibung ist zweisprachig; die Oberfläche ist derzeit Deutsch. [Sprachhinweis](faq.md).
+Quellcode-Lizenz: MIT, © 2026 **Benni**. Der Autorenlink führt zu [writeller.com](https://www.writeller.com). [Drittanbieter-Lizenzen](../THIRD-PARTY-NOTICES.md) gehören zum Paket. Das Plugin enthält keinen proprietären Writeller-Anwendungscode. Die statische Plugin-Beschreibung ist zweisprachig; die Oberfläche unterstützt Deutsch und Englisch. [Sprachhinweis](faq.md).

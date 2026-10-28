@@ -10,7 +10,7 @@ Aktiviere das Plugin in Obsidian unter **Einstellungen → Community-Erweiterung
 
 ## Wo starte ich ein Schreibprojekt?
 
-Über das Buchsymbol oder **Writeller: Schreibprojekte öffnen**. Lege ein Projekt an und füge Kapitel und Szenen hinzu. Figuren, Orte und Ideen findest du im Planungsbereich. Alle Titel öffnen echte Markdown-Dateien. Du benötigst keine technische Objekt-ID.
+Über das Buchsymbol oder **Novel Planner - by Writeller: Schreibprojekte öffnen**. Lege ein Projekt an und füge Kapitel und Szenen hinzu. Figuren, Orte und Ideen findest du im Planungsbereich. Alle Titel öffnen echte Markdown-Dateien. Du benötigst keine technische Objekt-ID.
 
 ## Wird „Neue Notiz“ im Obsidian-Dateibaum erkannt?
 
@@ -26,7 +26,7 @@ Direkt im Rechtsklickmenü eines Projekt-Unterordners gibt es außerdem passende
 
 Obsidian zeigt Austausch-JSON-Dateien im normalen Dateibaum üblicherweise nicht als Notizen. Dadurch kann ihr Ordner leer wirken, obwohl er Exportdateien enthält. Ab 0.2.2 blendet das Plugin alte Austauschordner und das aktuelle Exportziel aus, solange sie leer sind oder ausschließlich Exchange-Dateien enthalten. Eigene Markdown-Notizen, Bilder und unbekannte Dateien verhindern die Ausblendung.
 
-**Einstellungen → Writeller → Technische Informationen anzeigen** macht die Ordner wieder sichtbar. Im Dateimanager und in Sicherungen bleiben alle Dateien vorhanden. Alte wirklich leere Standardordner werden zusätzlich beim Start gemäß deiner Obsidian-Löschpräferenz entfernt. Ordner mit Inhalten oder Unterordnern werden nicht entfernt.
+**Einstellungen → Novel Planner - by Writeller → Technische Informationen anzeigen** macht die Ordner wieder sichtbar. Im Dateimanager und in Sicherungen bleiben alle Dateien vorhanden. Alte wirklich leere Standardordner werden zusätzlich beim Start gemäß deiner Obsidian-Löschpräferenz entfernt. Ordner mit Inhalten oder Unterordnern werden nicht entfernt.
 
 ## Wo finde ich meinen Export zum Weitergeben?
 
@@ -38,7 +38,7 @@ Das Plugin verwendet denselben Vault-Dateiweg auf Desktop und Mobile. Ein native
 
 Für diesen Text bietet Obsidians `manifest.json` derzeit nur **ein statisches Feld `description`** und keine sprachabhängigen Varianten. Deshalb ist die kurze Beschreibung zweisprachig. Der Anzeigename des Autors ist **Benni**, der Autorenlink führt zu **[writeller.com](https://www.writeller.com)**. [Offizielle Manifest-Dokumentation](https://docs.obsidian.md/Reference/Manifest).
 
-Die eigentliche Plugin-Oberfläche ist derzeit Deutsch. Die GitHub-Startseite enthält Deutsch und Englisch direkt auf derselben Seite; die englische Fassung erklärt die wichtigsten Begriffe. Eine vollständig nach Obsidian-Sprache umschaltende Oberfläche ist in dieser Version nicht implementiert.
+Ab 0.3.0 unterstützt die gesamte Plugin-Oberfläche Deutsch und Englisch. **Sprache → Automatisch (Obsidian)** verwendet Deutsch bei deutscher Obsidian-Oberfläche und sonst Englisch. Eine ausdrückliche Auswahl von **Deutsch** oder **English** überschreibt dies. Strukturordner folgen nach bestätigter Vorschau der Sprache; `.md`-Dateinamen bleiben erhalten. [Sprachen und Ordnerwechsel](languages.md).
 
 ## Wozu gibt es `records`, `journal` und `state.json`?
 

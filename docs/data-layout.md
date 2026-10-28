@@ -1,5 +1,7 @@
 # Lokales Datenlayout, Version 1
 
+Ab 0.3.0 können sichtbare Strukturordner nach bestätigter Vorschau zwischen Deutsch und Englisch wechseln. `.md`-Dateinamen und IDs bleiben erhalten; nur lokale Pfadzuordnungen und Linkziele folgen den Ordnern. Technische Datenwurzeln und ältere Journale werden nicht umbenannt. Der zusätzliche lokale Journaltyp `language` liegt unter `<Datenordner>/language-changes/<Vorgang>/journal.json`, sichert Originaldateien und pfadbezogene Vorher-/Nachherstände und wird vom normalen Recovery-Befehl erkannt. Ein unvollständiger Wechsel blockiert weitere Projektoperationen. Der bestehende Projektzustand bleibt Version 1. [Sprachen und Ordnerwechsel](languages.md).
+
 Dies ist ein eigener lokaler Vertrag, kein Bestandteil des plattformneutralen Exchange-Formats. Unbekannte Versionsnummern werden blockiert. Migrationstests prüfen v1-Laden, Besitz und die Ablehnung nicht implementierter Versionen.
 
 Lokale JSON-Hüllen haben eigene Speicherbudgets: 512 MiB Datei, 72 Ebenen, 32 MiB Einzelstring und 256 MiB Stringwerte. Die zusätzlichen Ebenen und mehrfach erhaltenen Partnerrecords dürfen gültige Exchange-Daten nicht schon am öffentlichen 64-/25-MiB-Budget scheitern lassen. Jeder geplante Begleitdatensatz wird vor dem Schreiben erneut unter den lokalen Grenzen gelesen; das Plugin schreibt keine anschließend unlesbare Zustandsdatei. Sehr viele Partner mit großen Textständen können diese praktischen Speichergrenzen erreichen; der Vorgang blockiert dann vor den Zieländerungen.

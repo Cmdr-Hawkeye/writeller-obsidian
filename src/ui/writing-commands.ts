@@ -1,3 +1,4 @@
+import { tr } from '../i18n/translate';
 import { Notice } from 'obsidian';
 import { createProject, createRecord } from '../objects/factory';
 import { writingKinds, kindFor, namedChoices } from '../objects/kinds';
@@ -11,6 +12,7 @@ import { writingForm, type FormField, type FormValues } from './form';
 import { choose } from './dialogs';
 import type { CommandContext } from './command-context';
 import { suggestNote } from '../projects/note-discovery';
+import { language } from '../i18n/language';
 
 /** Everyday writing actions: familiar nouns, contextual project selection and ordinary Markdown notes. */
 export class WritingCommands {
@@ -18,36 +20,36 @@ export class WritingCommands {
   constructor(private readonly ctx: CommandContext) {}
   /** Creates a book/project from one labelled form and opens its working overview. */
   async createProject(): Promise<void> {
-    const values = await writingForm(this.ctx.app, 'Neues Schreibprojekt', [
-      { key: 'title', label: 'Projekttitel', required: true, placeholder: 'Zum Beispiel: Mein erstes Buch' },
-      { key: 'description', label: 'Worum geht es?', kind: 'area', placeholder: 'Eine kurze Idee für deine Geschichte. Optional.' },
-      { key: 'wordTarget', label: 'Schreibziel in Wörtern', kind: 'number', description: 'Optional. Das Ziel lässt sich später ändern.' }
-    ], 'Projekt erstellen', validateWriting);
+    const values = await writingForm(this.ctx.app, tr('Neues Schreibprojekt'), [
+      { key: 'title', label: tr('Projekttitel'), required: true, placeholder: tr('Zum Beispiel: Mein erstes Buch') },
+      { key: 'description', label: tr('Worum geht es?'), kind: 'area', placeholder: tr('Eine kurze Idee für deine Geschichte. Optional.') },
+      { key: 'wordTarget', label: tr('Schreibziel in Wörtern'), kind: 'number', description: tr('Optional. Das Ziel lässt sich später ändern.') }
+    ], tr('Projekt erstellen'), validateWriting);
     if (!values) return;
-    const pkg = createProject(values['title']!.trim()); pkg.project.languageCode = 'de'; pkg.project.description = values['description'] ?? '';
+    const pkg = createProject(values['title']!.trim()); pkg.project.languageCode = language(); pkg.project.description = values['description'] ?? '';
     pkg.project.wordTarget = wordGoal(values['wordTarget']);
     await this.ctx.save(await this.ctx.service.previewSave(pkg, null));
-    await this.ctx.openProjectView?.(pkg.project.id); new Notice('Dein Schreibprojekt ist bereit.');
+    await this.ctx.openProjectView?.(pkg.project.id); new Notice(tr('Dein Schreibprojekt ist bereit.'));
   }
   /** Offers familiar object types for toolbar/context actions instead of a technical collection picker. */
   async pickKind(assignPath?: string): Promise<void> {
     const suggestion = assignPath ? suggestNote(this.ctx.service.index, assignPath) : null;
-    const kind = await choose(this.ctx.app, 'Was möchtest du hinzufügen?', writingKinds.filter(k => !assignPath || k.id !== 'relationship').map(k => ({ label: k.singular, value: k.id })));
+    const kind = await choose(this.ctx.app, tr('Was möchtest du hinzufügen?'), writingKinds.filter(k => !assignPath || k.id !== 'relationship').map(k => ({ label: k.singular, value: k.id })));
     if (kind) await this.add(kind, suggestion?.projectId, suggestion?.chapterId, assignPath);
   }
   /** Adds one selected writing object, with visible chapter context and collision-safe readable paths. */
   async add(kindId: string, projectId?: string, chapterId?: string | null, assignPath?: string): Promise<void> {
     const kind = writingKinds.find(k => k.id === kindId); if (!kind) return;
     const snapshot = await this.ctx.project(projectId); if (!snapshot) return;
-    const pkg = snapshot.exchange, fields: FormField[] = [{ key: 'title', label: kind.collection === 'catalogItems' ? 'Name' : 'Titel', value: assignPath?.split('/').at(-1)?.replace(/\.md$/i, '') ?? '', required: true,
-      ...(assignPath ? { description: 'Der vorhandene Text und deine eigenen Eigenschaften bleiben erhalten. Die Datei bleibt an ihrem Ort.' } : {}) }];
-    if (!assignPath && ['chapters', 'catalogItems'].includes(kind.collection)) fields.push({ key: 'summary', label: 'Kurzbeschreibung', kind: 'area', placeholder: 'Optional. Du kannst die Notiz anschließend frei bearbeiten.' });
+    const pkg = snapshot.exchange, fields: FormField[] = [{ key: 'title', label: kind.collection === 'catalogItems' ? tr('Name') : tr('Titel'), value: assignPath?.split('/').at(-1)?.replace(/\.md$/i, '') ?? '', required: true,
+      ...(assignPath ? { description: tr('Der vorhandene Text und deine eigenen Eigenschaften bleiben erhalten. Die Datei bleibt an ihrem Ort.') } : {}) }];
+    if (!assignPath && ['chapters', 'catalogItems'].includes(kind.collection)) fields.push({ key: 'summary', label: tr('Kurzbeschreibung'), kind: 'area', placeholder: tr('Optional. Du kannst die Notiz anschließend frei bearbeiten.') });
     if (kind.id === 'scene') fields.push(chapterField(pkg, chapterId !== undefined ? chapterId : this.chapterContext(pkg.project.id, pkg.scenes) ?? pkg.chapters.at(-1)?.id ?? null));
-    if (kind.id === 'research') fields.push({ key: 'uri', label: 'Quelle oder Link', placeholder: 'Optional. Es wird nichts automatisch heruntergeladen.' });
-    if (kind.id === 'character') fields.push({ key: 'roleFunction', label: 'Rolle in der Geschichte', placeholder: 'Optional.' }, { key: 'motivation', label: 'Was treibt die Figur an?', placeholder: 'Optional.' });
-    if (kind.id === 'custom') fields.push({ key: 'typeName', label: 'Eigene Objektart', placeholder: 'Zum Beispiel: Organisation', required: true });
+    if (kind.id === 'research') fields.push({ key: 'uri', label: tr('Quelle oder Link'), placeholder: tr('Optional. Es wird nichts automatisch heruntergeladen.') });
+    if (kind.id === 'character') fields.push({ key: 'roleFunction', label: tr('Rolle in der Geschichte'), placeholder: tr('Optional.') }, { key: 'motivation', label: tr('Was treibt die Figur an?'), placeholder: tr('Optional.') });
+    if (kind.id === 'custom') fields.push({ key: 'typeName', label: tr('Eigene Objektart'), placeholder: tr('Zum Beispiel: Organisation'), required: true });
     if (kind.id === 'relationship') fields.push(...this.relationshipFields(entries(pkg)));
-    const action = `${kind.singular} ${assignPath ? 'übernehmen' : 'hinzufügen'}`;
+    const action = assignPath ? tr`${kind.singular} übernehmen` : tr`${kind.singular} hinzufügen`;
     const values = await writingForm(this.ctx.app, `${action} · ${pkg.project.title}`, fields, action, validateWriting);
     if (!values) return;
     const type = kind.type ?? (kind.id === 'custom' ? customType(values['typeName']!, pkg.catalogItems) : undefined);
@@ -74,8 +76,8 @@ export class WritingCommands {
   async details(projectId?: string, key?: string): Promise<void> {
     const active = this.ctx.active(), snapshot = await this.ctx.project(projectId ?? active?.projectId); if (!snapshot) return;
     const entry = clone(this.ctx.service.entry(snapshot, key ?? (active?.projectId === snapshot.state.projectId ? recordKey(active.collection, active.id) : `project/${snapshot.state.projectId}`)));
-    if ('status' in entry.record && entry.record.status === 'locked') new Notice('Diese Notiz ist als abgeschlossen markiert. Du kannst sie bewusst weiter bearbeiten.');
-    const values = await writingForm(this.ctx.app, detailHeading(entry), detailFields(entry, snapshot.exchange), 'Änderungen speichern', validateWriting);
+    if ('status' in entry.record && entry.record.status === 'locked') new Notice(tr('Diese Notiz ist als abgeschlossen markiert. Du kannst sie bewusst weiter bearbeiten.'));
+    const values = await writingForm(this.ctx.app, detailHeading(entry), detailFields(entry, snapshot.exchange), tr('Änderungen speichern'), validateWriting);
     if (!values) return;
     applyDetails(entry, values, snapshot.exchange); setEntry(snapshot.exchange, entry);
     await this.ctx.save(await this.ctx.service.previewSave(snapshot.exchange, snapshot));
@@ -89,33 +91,33 @@ export class WritingCommands {
   /** Preserves an ordinary existing note's body and user properties during explicit assignment. */
   private async assign(entry: Entry, path?: string): Promise<{ paths: Map<string, string>; guards: Map<string, Uint8Array> }> {
     const result = { paths: new Map<string, string>(), guards: new Map<string, Uint8Array>() }; if (!path) return result;
-    const bytes = await this.ctx.service.vault.read(path); if (!bytes) fail('LOCAL_CHANGED', 'Die ausgewählte Notiz fehlt.');
+    const bytes = await this.ctx.service.vault.read(path); if (!bytes) fail('LOCAL_CHANGED', tr('Die ausgewählte Notiz fehlt.'));
     const source = new TextDecoder().decode(bytes);
-    if (parseManaged(path, source)) fail('IDENTITY_CONFLICT', 'Diese Notiz gehört bereits zu einem Schreibprojekt.');
+    if (parseManaged(path, source)) fail('IDENTITY_CONFLICT', tr('Diese Notiz gehört bereits zu einem Schreibprojekt.'));
     if ('content' in entry.record) entry.record.content.text = splitNote(source).body;
     else if ('summary' in entry.record) entry.record.summary = splitNote(source).body;
-    else fail('UNSUPPORTED_REPRESENTATION', 'Für bestehende Notizen bitte eine Notizart mit frei bearbeitbarem Text wählen.');
+    else fail('UNSUPPORTED_REPRESENTATION', tr('Für bestehende Notizen bitte eine Notizart mit frei bearbeitbarem Text wählen.'));
     result.paths.set(recordKey(entry.collection, entry.record.id), path); result.guards.set(path, bytes); return result;
   }
   /** Selects both relationship endpoints by readable type/title while hidden values remain typed refs. */
   private relationshipFields(all: Entry[]): FormField[] {
-    const options = namedChoices(all.filter(e => e.collection !== 'relationships'), e => `${e.collection === 'project' ? 'Projekt' : kindFor(e).singular} · ${title(e.record)}`)
+    const options = namedChoices(all.filter(e => e.collection !== 'relationships'), e => `${e.collection === 'project' ? tr('Projekt') : kindFor(e).singular} · ${title(e.record)}`)
       .map(c => ({ label: c.label, value: recordKey(c.value.collection, c.value.record.id) }));
-    return [{ key: 'source', label: 'Von', kind: 'select', required: true, value: options[0]?.value ?? '', options },
-      { key: 'target', label: 'Zu', kind: 'select', required: true, value: options[1]?.value ?? options[0]?.value ?? '', options },
-      { key: 'relationshipType', label: 'Art der Beziehung', value: 'kennt', required: true }];
+    return [{ key: 'source', label: tr('Von'), kind: 'select', required: true, value: options[0]?.value ?? '', options },
+      { key: 'target', label: tr('Zu'), kind: 'select', required: true, value: options[1]?.value ?? options[0]?.value ?? '', options },
+      { key: 'relationshipType', label: tr('Art der Beziehung'), value: tr('kennt'), required: true }];
   }
 }
 /** Validates common new/edit form inputs while the user's typed text remains in the dialog. */
 function validateWriting(values: FormValues): void {
-  if (!values['title']?.trim() || [...values['title']].length > 500) fail('INVALID_FIELD', 'Bitte einen Titel mit höchstens 500 Zeichen eingeben.');
+  if (!values['title']?.trim() || [...values['title']].length > 500) fail('INVALID_FIELD', tr('Bitte einen Titel mit höchstens 500 Zeichen eingeben.'));
   wordGoal(values['wordTarget']);
-  if (values['typeName'] && [...values['typeName']].length > 100) fail('INVALID_FIELD', 'Die Objektart darf höchstens 100 Zeichen lang sein.');
+  if (values['typeName'] && [...values['typeName']].length > 100) fail('INVALID_FIELD', tr('Die Objektart darf höchstens 100 Zeichen lang sein.'));
 }
 /** Resolves form values against the selected project, so arbitrary IDs cannot forge a relationship. */
 function refFor(key: string | undefined, all: Entry[]): Ref {
   const entry = all.find(e => recordKey(e.collection, e.record.id) === key);
-  if (!entry || entry.collection === 'relationships') fail('MISSING_REFERENCE', 'Bitte beide Beziehungspartner auswählen.');
+  if (!entry || entry.collection === 'relationships') fail('MISSING_REFERENCE', tr('Bitte beide Beziehungspartner auswählen.'));
   return { collection: entry.collection, id: entry.record.id };
 }
 /** Uses a readable type label for users and a stable namespaced code solely inside Exchange data. */

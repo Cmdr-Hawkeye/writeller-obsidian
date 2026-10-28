@@ -15,6 +15,10 @@ export interface VaultPort {
   trash(path: string, expected: Uint8Array): Promise<void>;
   /** Moves a checked managed file with the host's normal link-update behaviour; collisions block. */
   move(from: string, to: string, expected: Uint8Array): Promise<void>;
+  /** Lists visible folders including empty folders; used only by structural language changes. */
+  folders?(): string[];
+  /** Renames an entire checked structural folder without changing any contained file basename. */
+  moveFolder?(from: string, to: string): Promise<void>;
   /** Removes an empty owned organisation folder only; never recursively removes contents. */
   removeEmptyFolder?(path: string): Promise<void>;
   /** Resolves a local link via the host metadata API relative to the source file. */

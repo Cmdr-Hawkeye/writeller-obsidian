@@ -5,22 +5,25 @@ import { sidecarPath, safePath } from '../storage/paths';
 import type { Layout } from './layout';
 import type { NameAllocator } from './names';
 import { replaceNameCharacters } from '../storage/characters';
+import { folderName, type FolderRole } from '../i18n/folders';
+import { language, type Language } from '../i18n/language';
 
-const catalogFolders: Record<string, string> = { character: 'Figuren', location: 'Orte', object: 'Gegenstände', timelineEvent: 'Ereignisse', arc: 'Handlungsbögen' };
-const folders: Partial<Record<Collection, string>> = { relationships: 'Beziehungen', notes: 'Notizen', researchItems: 'Recherche' };
-/** Selects an ordinary German writing folder, including unknown and custom catalog types. */
-export function contentFolder(entry: Entry): string {
-  if (entry.collection !== 'catalogItems') return folders[entry.collection] ?? 'Manuskript';
-  const known = catalogFolders[entry.record.type]; if (known) return known;
+const catalogFolders: Record<string, FolderRole> = { character: 'character', location: 'location', object: 'object', timelineEvent: 'timelineEvent', arc: 'arc' };
+const folders: Partial<Record<Collection, FolderRole>> = { relationships: 'relationships', notes: 'notes', researchItems: 'researchItems' };
+/** Selects a localized structural role, including unknown and custom catalog types. */
+export function contentFolder(entry: Entry, locale = language()): string {
+  if (entry.collection !== 'catalogItems') return folderName(folders[entry.collection] ?? 'manuscript', locale);
+  const known = catalogFolders[entry.record.type]; if (known) return folderName(known, locale);
   const ext = entry.record.extensions['org.writeller.obsidian'];
   if (typeof ext === 'object' && ext !== null && !Array.isArray(ext) && typeof ext['customTypeName'] === 'string') {
     const label = replaceNameCharacters(ext['customTypeName'].normalize('NFC'), '-').trim();
-    try { safePath(label); return `Eigene Typen/${label}`; } catch { /* Keep malformed foreign labels as data, not paths. */ }
+    try { safePath(label); return `${folderName('custom', locale)}/${label}`; } catch { /* Keep malformed foreign labels as data, not paths. */ }
   }
-  return 'Eigene Typen';
+  return folderName('custom', locale);
 }
 /** Adds missing note paths in manuscript order, preserving existing paths and all record identities. */
 export async function appendLocations(layout: Layout, pkg: Exchange, names: NameAllocator): Promise<void> {
+  const locale: Language = layout.language ?? language(), manuscript = folderName('manuscript', locale);
   const base = layout.state.manifestPath.slice(0, layout.state.manifestPath.lastIndexOf('/'));
   const locations = new Map(layout.state.records.map(r => [recordKey(r.collection, r.id), r.notePath]));
   const chapterDirs = new Map<string, string>(), sceneDirs = new Map<string, string>();
@@ -33,7 +36,7 @@ export async function appendLocations(layout: Layout, pkg: Exchange, names: Name
   await add({ collection: 'project', record: pkg.project }, layout.state.manifestPath);
   for (const [index, chapter] of [...pkg.chapters].sort(compareOrder).entries()) {
     const existing = locations.get(`chapters/${chapter.id}`);
-    const folder = existing ? existing.slice(0, existing.lastIndexOf('/')) : names.allocate(`${base}/Manuskript`, `${String(index + 1).padStart(2, '0')} - ${chapter.title}`);
+    const folder = existing ? existing.slice(0, existing.lastIndexOf('/')) : names.allocate(`${base}/${manuscript}`, `${String(index + 1).padStart(2, '0')} - ${chapter.title}`);
     chapterDirs.set(chapter.id, folder);
     if (!existing) await add({ collection: 'chapters', record: chapter }, names.allocate(folder, chapter.title, '.md'));
   }
@@ -41,12 +44,12 @@ export async function appendLocations(layout: Layout, pkg: Exchange, names: Name
   for (const scene of manuscriptOrder(pkg)) {
     const existing = locations.get(`scenes/${scene.id}`), group = `${scene.chapterId ?? ''}/${scene.parentSceneId ?? ''}`;
     const number = (siblingOrder.get(group) ?? 0) + 1; siblingOrder.set(group, number);
-    const folder = scene.parentSceneId ? sceneDirs.get(scene.parentSceneId)! : scene.chapterId ? chapterDirs.get(scene.chapterId)! : `${base}/Manuskript/Ohne Kapitel`;
+    const folder = scene.parentSceneId ? sceneDirs.get(scene.parentSceneId)! : scene.chapterId ? chapterDirs.get(scene.chapterId)! : `${base}/${manuscript}/${folderName('unassigned', locale)}`;
     const path = existing ?? names.allocate(folder, `${String(number).padStart(2, '0')} - ${scene.title}`, '.md');
     sceneDirs.set(scene.id, path.replace(/\.md$/, ''));
     if (!existing) await add({ collection: 'scenes', record: scene }, path);
   }
   for (const entry of entries(pkg).filter(e => !['project', 'chapters', 'scenes'].includes(e.collection))) {
-    if (!locations.has(recordKey(entry.collection, entry.record.id))) await add(entry, names.allocate(safePath(`${base}/${contentFolder(entry)}`), title(entry.record), '.md'));
+    if (!locations.has(recordKey(entry.collection, entry.record.id))) await add(entry, names.allocate(safePath(`${base}/${contentFolder(entry, locale)}`), title(entry.record), '.md'));
   }
 }

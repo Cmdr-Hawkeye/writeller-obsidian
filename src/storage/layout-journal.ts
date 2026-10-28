@@ -1,3 +1,4 @@
+import { tr } from '../i18n/translate';
 import type { OrganizePlan } from '../projects/organize-plan';
 import type { VaultPort } from './vault-port';
 import { text, utf8 } from './vault-port';
@@ -30,7 +31,7 @@ export class LayoutJournalService {
       for (const m of plan.moves) {
         const current = await this.vault.read(m.from), before = parseManaged(m.from, text(m.bytes));
         const live = current ? parseManaged(m.from, text(current)) : null;
-        if (!current || !before || !live || live.projectId !== before.projectId || live.collection !== before.collection || live.id !== before.id) fail('LOCAL_CHANGED', 'Die Zuordnung einer Notiz hat sich während des Umordnens geändert.');
+        if (!current || !before || !live || live.projectId !== before.projectId || live.collection !== before.collection || live.id !== before.id) fail('LOCAL_CHANGED', tr('Die Zuordnung einer Notiz hat sich während des Umordnens geändert.'));
         // FileManager may already have updated this note's links after a prior rename.
         // Moving retains those bytes; the final known-before/known-after checks below
         // prevent an unrelated content edit from being overwritten by projection writes.
@@ -38,11 +39,11 @@ export class LayoutJournalService {
       }
       for (const m of journal.moves) {
         const current = await this.vault.read(m.to), hash = current ? await sha256(current) : null;
-        if (hash !== m.hash && hash !== journal.writes.find(w => w.path === m.to)?.afterHash) fail('LOCAL_CHANGED', 'Die Notizdarstellung wurde während des Umordnens geändert. Die Originale bleiben gesichert.');
+        if (hash !== m.hash && hash !== journal.writes.find(w => w.path === m.to)?.afterHash) fail('LOCAL_CHANGED', tr('Die Notizdarstellung wurde während des Umordnens geändert. Die Originale bleiben gesichert.'));
       }
       for (const w of plan.writes) {
         const current = await this.vault.read(w.path), hash = current ? await sha256(current) : null;
-        if (!current || hash !== await sha256(w.before) && hash !== await sha256(w.after)) fail('LOCAL_CHANGED', 'Eine Notiz wurde während des Umordnens verändert. Die Originalsicherung bleibt erhalten.');
+        if (!current || hash !== await sha256(w.before) && hash !== await sha256(w.after)) fail('LOCAL_CHANGED', tr('Eine Notiz wurde während des Umordnens verändert. Die Originalsicherung bleibt erhalten.'));
         if (hash !== await sha256(w.after)) await this.vault.compareAndSwap(w.path, text(current), text(w.after));
       }
       await this.status(path, journal, 'committed');

@@ -1,3 +1,4 @@
+import { tr } from '../i18n/translate';
 import { fail } from '../domain/diagnostics';
 import type { JsonValue, JsonObject } from '../domain/types';
 
@@ -6,10 +7,10 @@ export const limits: JsonLimits = { bytes: 128 * 1024 ** 2, depth: 64, string: 8
 /** Decodes strict UTF-8 and bounded JSON. Duplicate keys, invalid scalars and unsafe integers fail. */
 export function parseJson(input: Uint8Array | string, budget: JsonLimits = limits): JsonValue {
   const bytes = typeof input === 'string' ? new TextEncoder().encode(input) : input;
-  if (bytes.byteLength > budget.bytes) fail('LIMIT_EXCEEDED', 'JSON-Datei überschreitet das Bytebudget.');
+  if (bytes.byteLength > budget.bytes) fail('LIMIT_EXCEEDED', tr('JSON-Datei überschreitet das Bytebudget.'));
   let text: string;
   try { text = typeof input === 'string' ? input : new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(bytes); }
-  catch { fail('INVALID_JSON', 'Ungültiges UTF-8.'); }
+  catch { fail('INVALID_JSON', tr('Ungültiges UTF-8.')); }
   return new JsonReader(text.replace(/^\uFEFF/, ''), budget).read();
 }
 /** Own-key JSON object guard shared by schema and portable-state boundaries. */
@@ -33,7 +34,7 @@ class JsonReader {
     this.space();
     const c = this.text[this.pos];
     if (c === '{' || c === '[') {
-      if (depth + 1 > this.budget.depth) fail('LIMIT_EXCEEDED', 'JSON überschreitet das Tiefenbudget.', pointer);
+      if (depth + 1 > this.budget.depth) fail('LIMIT_EXCEEDED', tr('JSON überschreitet das Tiefenbudget.'), pointer);
       return c === '{' ? this.object(depth + 1, pointer) : this.array(depth + 1, pointer);
     }
     if (c === '"') return this.string(pointer, false);
@@ -45,7 +46,7 @@ class JsonReader {
     this.pos += match[0].length;
     const number = Number(match[0]);
     if (!Number.isFinite(number) || (Number.isInteger(number) && !Number.isSafeInteger(number))) {
-      fail('INVALID_FIELD', 'Zahl ist nicht sicher als Binary64 darstellbar.', pointer);
+      fail('INVALID_FIELD', tr('Zahl ist nicht sicher als Binary64 darstellbar.'), pointer);
     }
     return number;
   }
@@ -58,7 +59,7 @@ class JsonReader {
     while (true) {
       this.space();
       const key = this.string(pointer, true);
-      if (Object.hasOwn(result, key)) fail('INVALID_JSON', 'Doppelter JSON-Schlüssel.', pointer);
+      if (Object.hasOwn(result, key)) fail('INVALID_JSON', tr('Doppelter JSON-Schlüssel.'), pointer);
       this.space();
       if (!this.take(':')) this.invalid();
       result[key] = this.value(depth, `${pointer}/${key.replace(/~/g, '~0').replace(/\//g, '~1')}`);
@@ -93,9 +94,9 @@ class JsonReader {
         if (typeof result !== 'string' || /[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/u.test(result)) this.invalid();
         const count = new TextEncoder().encode(result).length;
         if (key || !/^\/attachments\/\d+\/data$/.test(pointer)) {
-          if (count > this.budget.string) fail('LIMIT_EXCEEDED', 'Einzelstring überschreitet das Budget.', pointer);
+          if (count > this.budget.string) fail('LIMIT_EXCEEDED', tr('Einzelstring überschreitet das Budget.'), pointer);
           if (!key) this.stringBytes += count;
-          if (this.stringBytes > this.budget.strings) fail('LIMIT_EXCEEDED', 'JSON-Stringbudget überschritten.');
+          if (this.stringBytes > this.budget.strings) fail('LIMIT_EXCEEDED', tr('JSON-Stringbudget überschritten.'));
         }
         return result;
       }
@@ -111,5 +112,5 @@ class JsonReader {
     this.pos++; return true;
   }
   /** Emits a content-free syntax error without echoing private input. */
-  private invalid(): never { return fail('INVALID_JSON', 'Ungültige JSON-Syntax oder Unicode-Zeichen.'); }
+  private invalid(): never { return fail('INVALID_JSON', tr('Ungültige JSON-Syntax oder Unicode-Zeichen.')); }
 }

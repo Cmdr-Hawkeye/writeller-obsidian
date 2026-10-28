@@ -1,3 +1,4 @@
+import { tr } from '../i18n/translate';
 import type { Collection } from '../domain/types';
 import { identityKey } from '../domain/records';
 import { type Diagnostic, ExchangeError } from '../domain/diagnostics';
@@ -35,7 +36,7 @@ export class ProjectIndex {
         if (!note) continue;
         notes.push(note);
         const key = identityKey(note.projectId, note.collection, note.id);
-        if (keys.has(key)) problems.push({ path: note.path, code: 'DUPLICATE_ID', severity: 'error', pointer: '', message: 'Zwei Dateien beanspruchen dieselbe Identität. Kopie entfernen oder unabhängig kopieren.' });
+        if (keys.has(key)) problems.push({ path: note.path, code: 'DUPLICATE_ID', severity: 'error', pointer: '', message: tr('Zwei Dateien beanspruchen dieselbe Identität. Kopie entfernen oder unabhängig kopieren.') });
         keys.set(key, note.path);
       } catch (error) {
         if (!(error instanceof ExchangeError)) throw error;

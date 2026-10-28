@@ -1,5 +1,14 @@
 # Änderungen
 
+## 0.3.0 — 28.10.2026
+
+- Neuer Anzeigename **Novel Planner - by Writeller**. Plugin-ID `writeller`, Befehls-IDs und bestehende Projektidentitäten bleiben erhalten.
+- Deutsch und Englisch für Oberfläche, Formulare, Befehle und Meldungen. Automatische Auswahl über die Obsidian-Sprache; jederzeit durch Deutsch oder English überschreibbar.
+- Strukturordner folgen nach konkreter Vorschau der Sprache. Notizdateinamen, eigene Titel, Kapitelordner und benutzerdefinierte Wurzeln bleiben erhalten. Erkennung gewöhnlicher Notizen versteht beide Ordnersprachen.
+- Gesicherter Ordnerwechsel über native FileManager-Operationen mit Frische-/Kollisionsprüfung, dauerhaften Originalen und Wiederherstellung. Zielordner werden nicht still zusammengeführt. Technische Erhaltungsdaten behalten stabile Pfade.
+- Modulare Übersetzungskataloge mit Prüfung sämtlicher statischer Texte und Platzhalter; dynamische Objekt-/Statusnamen aktualisieren sich ohne Neustart. Bereits offene Projektansichten folgen dem Wechsel.
+- Deutsche und englische Anleitung, neue englische Browser-Vorschau und Regressionen für Hin-/Rückwechsel, Fachhashes, gewöhnliche Dateien, Abbruch, Speicherfehler und Recovery.
+
 ## 0.2.4 — 28.10.2026
 
 - Community-Review: native, durchsuchbare Einstellungsdefinitionen ersetzen manuelle HTML-Überschriften; Einstellungen werden vor Speicherung validiert und bei Fehlern zurückgesetzt.

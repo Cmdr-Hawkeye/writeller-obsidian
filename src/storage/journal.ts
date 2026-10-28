@@ -1,3 +1,4 @@
+import { tr } from '../i18n/translate';
 import { fail } from '../domain/diagnostics';
 import { newId, sha256 } from '../exchange/hash';
 import type { VaultPort } from './vault-port';
@@ -7,6 +8,8 @@ import { loadJournal, type Journal, type JournalEntry } from './journal-format';
 import { isObject } from '../exchange/parser';
 import { parseLocalJson } from './local-json';
 import { LayoutJournalService } from './layout-journal';
+import { LanguageJournalService } from './language-journal';
+import type { Settings } from '../projects/layout';
 
 export interface Mutation { path: string; before: Uint8Array | null; after: Uint8Array; binary: boolean }
 /** Sequential write-ahead journal; the prepared marker precedes every target mutation. */
@@ -21,7 +24,7 @@ export class JournalService {
     for (const c of writes) {
       safePath(c.path);
       const key = collisionKey(c.path);
-      if (paths.has(key)) fail('IDENTITY_CONFLICT', 'Schreibplan enthält kollidierende Pfade.');
+      if (paths.has(key)) fail('IDENTITY_CONFLICT', tr('Schreibplan enthält kollidierende Pfade.'));
       paths.add(key);
     }
     const id = newId(), folder = safePath(`${root}/journal/${id}`), path = `${folder}/journal.json`;
@@ -36,7 +39,7 @@ export class JournalService {
       let pendingPath: string | null = null, pendingHash: string | null = null;
       if (c.path === `${root}/state.json`) {
         const state = parseLocalJson(text(c.after));
-        if (!isObject(state) || state['projectId'] !== projectId) fail('PROJECT_MISMATCH', 'Geplanter Zustand gehört nicht zum Projekt.');
+        if (!isObject(state) || state['projectId'] !== projectId) fail('PROJECT_MISMATCH', tr('Geplanter Zustand gehört nicht zum Projekt.'));
         state['pendingJournal'] = id;
         const pending = utf8(JSON.stringify(state, null, 2));
         pendingPath = `${folder}/${i}-pending.bin`; pendingHash = await sha256(pending);
@@ -62,10 +65,11 @@ export class JournalService {
     return id;
   }
   /** Recovers after crashes, including a crash after a target write but before any progress marker. */
-  async recover(path: string, projectId: string): Promise<{ conflicts: string[] }> {
+  async recover(path: string, projectId: string): Promise<{ conflicts: string[]; settings?: Settings }> {
     const bytes = await this.vault.read(safePath(path));
     const header = bytes ? parseLocalJson(text(bytes)) : null;
     if (isObject(header) && header['kind'] === 'layout') return new LayoutJournalService(this.vault).recover(path, projectId);
+    if (isObject(header) && header['kind'] === 'language' && projectId === 'language') return new LanguageJournalService(this.vault).recover(path);
     const journal = await loadJournal(this.vault, path, projectId);
     if (journal.status === 'committed' || journal.status === 'rolledBack') return { conflicts: [] };
     const conflicts: string[] = [];
@@ -78,8 +82,8 @@ export class JournalService {
   /** Reads and compares existence/content immediately before a write; never treats a collision as new. */
   private async assertBefore(change: Mutation): Promise<void> {
     const current = await this.vault.read(change.path);
-    if (current === null ? change.before !== null : change.before === null || !equalBytes(current, change.before)) fail('LOCAL_CHANGED', 'Datei seit der Vorschau geändert. Vorschau erneut erstellen.');
-    if (!change.before && this.vault.files().some(f => collisionKey(f.path) === collisionKey(change.path))) fail('IDENTITY_CONFLICT', 'Dateipfad ist bereits belegt.');
+    if (current === null ? change.before !== null : change.before === null || !equalBytes(current, change.before)) fail('LOCAL_CHANGED', tr('Datei seit der Vorschau geändert. Vorschau erneut erstellen.'));
+    if (!change.before && this.vault.files().some(f => collisionKey(f.path) === collisionKey(change.path))) fail('IDENTITY_CONFLICT', tr('Dateipfad ist bereits belegt.'));
   }
   /** Existing text uses synchronous compare-and-swap; existing binary assets are immutable. */
   private async apply(change: Mutation): Promise<void> {
@@ -88,7 +92,7 @@ export class JournalService {
     if (parent) await this.vault.mkdir(parent);
     if (!change.before) await this.vault.create(change.path, change.after, change.binary);
     else {
-      if (change.binary) fail('INVALID_ASSET', 'Vorhandene Bildbytes werden nicht überschrieben. Neues Asset aufnehmen.');
+      if (change.binary) fail('INVALID_ASSET', tr('Vorhandene Bildbytes werden nicht überschrieben. Neues Asset aufnehmen.'));
       await this.vault.compareAndSwap(change.path, text(change.before), text(change.after));
     }
   }

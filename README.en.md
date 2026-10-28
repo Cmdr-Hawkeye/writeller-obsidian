@@ -1,12 +1,12 @@
-# Writeller
+# Novel Planner - by Writeller
 
 **Chapters, scenes, characters and places. Your writing project in ordinary Markdown files.**
 
 [Deutsch](README.md#deutsch) · [Both languages](README.md) · [Download](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases) · [writeller.com](https://www.writeller.com)
 
-![Writing workspace with a manuscript and planning notes](docs/assets/schreibuebersicht.png)
+![Writing workspace with a manuscript and planning notes](docs/assets/schreibuebersicht-en.png)
 
-*Screenshot of the production UI modules in a browser test host with synthetic project data and an explicit Obsidian API substitute. This is not a native Obsidian or mobile-device acceptance test. The current plugin UI is German.*
+*Screenshot of the production UI modules in a browser test host with synthetic project data and an explicit Obsidian API substitute. This is not a native Obsidian or mobile-device acceptance test. The interface supports English and German.*
 
 ## What you can do
 
@@ -21,40 +21,40 @@ The plugin is free to use and requires no account or Writeller license. It makes
 
 ## Install the preview
 
-This plugin is **not yet listed in the Obsidian Community directory**. Minimum version: **Obsidian 1.14.5**. Actual mobile-device acceptance tests are still pending.
+The following steps describe manual installation from the GitHub release. Minimum version: **Obsidian 1.14.5**. Actual mobile-device acceptance tests are still pending.
 
-1. Back up your vault and open [release 0.2.4](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.2.4).
-2. Download `writeller-0.2.4.zip` from **Assets** and extract it.
+1. Back up your vault and open [release 0.3.0](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.3.0).
+2. Download `writeller-0.3.0.zip` from **Assets** and extract it.
 3. Copy its `writeller` directory to `<vault>/.obsidian/plugins/`. `main.js`, `manifest.json` and `styles.css` must be directly inside that directory.
-4. Enable Writeller in Obsidian's Community plugins settings. For updates, replace the plugin files and reload the plugin.
+4. Enable Novel Planner - by Writeller in Obsidian's Community plugins settings. For updates, replace the plugin files and reload the plugin.
 
 GitHub's automatic “Source code” archive is not the installable plugin ZIP.
 
 ## Start writing
 
-Click the **book icon**, choose **Schreibprojekt erstellen** (create a writing project), and enter a title. Add a **Kapitel** (chapter), then a **Szene** (scene). The plugin opens the actual note so you can write immediately. **Figur** means character; **Ort** means location. Titles in the overview open your notes.
+Click the **book icon**, choose **Create writing project**, and enter a title. Use **Add chapter**, **Add Scene**, **Add Character** or **Add Location** to build your project. Titles in the overview open the actual Markdown notes.
 
 ```text
-Schreibprojekte/My first book/
+Writing Projects/My first book/
   My first book.md
-  Manuskript/01 - Arrival/01 - Fog in the harbor.md
-  Figuren/Lina.md
-  Orte/Old harbor.md
+  Manuscript/01 - Arrival/01 - Fog in the harbor.md
+  Characters/Lina.md
+  Locations/Old harbor.md
 ```
 
-Folder and command labels are currently German. The bilingual description in Obsidian's plugin list does not mean the entire interface is translated. Obsidian's manifest has one static description field; it does not expose per-language descriptions. [Manifest documentation](https://docs.obsidian.md/Reference/Manifest).
+The interface and structural folders follow your language preference: **Automatic (Obsidian)** chooses German for German Obsidian installations and English otherwise. You can select **Deutsch** or **English** in the plugin settings. Folder changes show a preview; Markdown file names, user titles and project identities are preserved. Custom root names and hidden recovery-data paths remain stable. [Language and folder details](docs/languages.md). Obsidian's manifest description is one static bilingual field. [Manifest documentation](https://docs.obsidian.md/Reference/Manifest).
 
 ## Create notes directly in Obsidian
 
-You can also use Obsidian's ordinary **New note** action. Markdown files inside a project folder appear under **Noch nicht im Schreibprojekt** (not yet part of the writing project). For example, a file in `Figuren` offers **Als Figur übernehmen** (adopt as a character). Confirm the form once; existing text, user properties and the file path are preserved. The note then becomes part of the project and its exports. **Andere Notizart…** lets you choose another type.
+You can also use Obsidian's ordinary **New note** action. Markdown files inside a project folder appear under **Not yet in the writing project**. For example, a file in `Characters` offers **Adopt as Character**. Confirm the form once; existing text, user properties and the file path are preserved. The note then becomes part of the project and its exports. **Another note type…** lets you choose another type.
 
-Before exporting, the plugin points out unassigned files so you can review them first or explicitly export only the already assigned notes. Folder context menus also offer direct typed creation, such as **Writeller: Figur hinzufügen** (add a character).
+Before exporting, the plugin points out unassigned files so you can review them first or explicitly export only the already assigned notes. Folder context menus also offer direct typed creation, such as **Novel Planner: Add Character**.
 
 ## Where are exports and technical files?
 
-Exports go to `Exporte/<title>.writeller-exchange.json`. A twelve-second message shows the exact vault-relative path after a successful save. Existing files are never replaced. Import files can be placed in any ordinary vault folder.
+Exports go to `Exports/<title>.writeller-exchange.json`. A twelve-second message shows the exact vault-relative path after a successful save. Existing files are never replaced. Import files can be placed in any ordinary vault folder.
 
-The normal explorer view hides technical data and folders containing only exchange exports. Enable **Technische Informationen anzeigen** in Writeller settings to reveal them. A folder containing ordinary notes, images or other files remains visible. **Back up the entire vault, including `Writeller-Daten`; hiding a folder does not remove its files.**
+The normal explorer view hides technical data and folders containing only exchange exports. Enable **Show technical information** in Novel Planner settings to reveal them. A folder containing ordinary notes, images or other files remains visible. **Back up the entire vault, including `Writeller-Daten`; hiding a folder does not remove its files.**
 
 The adapter follows **Writeller Exchange 1.0.0**. The contract is implemented and tested in Writeller, enabling manual project exchange between Writeller and this Obsidian plugin. Legacy `*.writeller.json` archives use a different format and remain incompatible. See the [compatibility notes](docs/compatibility.md) and [verification report](docs/verification-report.md) for details.
 

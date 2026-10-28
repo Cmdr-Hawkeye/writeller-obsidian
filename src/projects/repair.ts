@@ -1,3 +1,4 @@
+import { tr } from '../i18n/translate';
 import type { Exchange, Entry } from '../domain/types';
 import { clone, entries, recordKey, setEntry } from '../domain/records';
 import { fail, warning, type Diagnostic } from '../domain/diagnostics';
@@ -19,13 +20,13 @@ import { encodeBase64 } from '../exchange/images';
 export async function previewRepair(service: TransferCoordinator, original: Exchange): Promise<CommitPreview> {
   await service.index.rebuild(); service.index.assertClean();
   const projectId = original.project.id, manifest = service.index.find(projectId, 'project', projectId);
-  if (!manifest) fail('STATE_MISSING', 'Passendes Projektmanifest fehlt. Als neues Projekt oder unabhängige Kopie importieren.');
+  if (!manifest) fail('STATE_MISSING', tr('Passendes Projektmanifest fehlt. Als neues Projekt oder unabhängige Kopie importieren.'));
   const hint = manifest.properties['writeller-state-path'];
-  if (typeof hint !== 'string') fail('STATE_MISSING', 'Zustandspfad im Manifest zuerst aus einer Sicherung wiederherstellen.');
+  if (typeof hint !== 'string') fail('STATE_MISSING', tr('Zustandspfad im Manifest zuerst aus einer Sicherung wiederherstellen.'));
   const statePath = safePath(hint), root = statePath.slice(0, -11), dataFolder = root.slice(0, root.lastIndexOf('/'));
   await assertNoPending(service.vault, root, projectId);
   const layout = await newLayout(original, { ...service.settings, dataFolder });
-  if (layout.statePath !== statePath) fail('PROJECT_MISMATCH', 'Originaldatei und Zustandspfad gehören nicht zusammen.');
+  if (layout.statePath !== statePath) fail('PROJECT_MISMATCH', tr('Originaldatei und Zustandspfad gehören nicht zusammen.'));
   try { layout.state = await loadProjectState(service.vault, statePath, projectId); }
   catch { /* Explicit original-based repair creates v1 state; damaged bytes remain journal-backed. */ }
   const sources = new Map<string, Uint8Array>(), states = new Map<string, RecordState>(), warnings: Diagnostic[] = [];
@@ -35,7 +36,7 @@ export async function previewRepair(service: TransferCoordinator, original: Exch
   for (const asset of layout.state.assets) {
     if (pkg.attachments.some(a => a.id === asset.id)) continue;
     const bytes = await service.vault.read(asset.path);
-    if (!bytes || await sha256(bytes) !== asset.id) fail('STATE_MISSING', 'Zusätzlich erhaltene Bilddatei fehlt oder ist verändert. Passendes Original auswählen.');
+    if (!bytes || await sha256(bytes) !== asset.id) fail('STATE_MISSING', tr('Zusätzlich erhaltene Bilddatei fehlt oder ist verändert. Passendes Original auswählen.'));
     sources.set(asset.path, bytes);
     pkg.attachments.push({ id: asset.id, projectId, mimeType: asset.mimeType, width: asset.width, height: asset.height, data: encodeBase64(bytes) });
   }
@@ -49,8 +50,8 @@ export async function previewRepair(service: TransferCoordinator, original: Exch
       try { stored = await decodeRecordState(text(bytes), note.collection, note.id, projectId); }
       catch { /* Damaged sidecars can only be replaced by a full matching original below. */ }
     }
-    if (!stored && !fromOriginal) fail('STATE_MISSING', 'Original enthält nicht alle fehlenden Begleitdatensätze. Weitere passende Sicherung wählen.');
-    if (stored && fromOriginal && jcs(stored.record.origin) !== jcs(fromOriginal.record.origin)) fail('IDENTITY_CONFLICT', 'Original und erhaltener Datensatz haben unterschiedliche Origins.');
+    if (!stored && !fromOriginal) fail('STATE_MISSING', tr('Original enthält nicht alle fehlenden Begleitdatensätze. Weitere passende Sicherung wählen.'));
+    if (stored && fromOriginal && jcs(stored.record.origin) !== jcs(fromOriginal.record.origin)) fail('IDENTITY_CONFLICT', tr('Original und erhaltener Datensatz haben unterschiedliche Origins.'));
     const entry = fromOriginal ?? { collection: note.collection, record: stored!.record } as Entry;
     if (!stored) {
       const projected = projectRecord(entry, { entityPath: k => {
@@ -59,7 +60,7 @@ export async function previewRepair(service: TransferCoordinator, original: Exch
       stored = { stateVersion: 1, collection: note.collection, id: note.id, record: clone(entry.record), lastAcceptedRecord: null,
         knownHashes: { accepted: null, exported: [] }, peerBaselines: [], projection: projected.projection };
       await acceptRecord(stored, entry.record, original.producer);
-      warnings.push(warning('STATE_MISSING', 'Vollständiger Begleitdatensatz aus Original rekonstruiert. Aktuelle Notiz bleibt maßgeblich.'));
+      warnings.push(warning('STATE_MISSING', tr('Vollständiger Begleitdatensatz aus Original rekonstruiert. Aktuelle Notiz bleibt maßgeblich.')));
     }
     const current = await reverseBody(applyProperties(stored.record, note.properties), note.body, stored.projection, {
       entityUrl: link => {
@@ -67,7 +68,7 @@ export async function previewRepair(service: TransferCoordinator, original: Exch
         return target?.projectId === projectId ? `entity:${target.collection}/${target.id}` : null;
       }, assetHash: link => layout.state.assets.find(a => a.path === service.vault.resolveLink(link, note.path))?.id ?? null
     });
-    if (await recordHash(current.record) !== await recordHash(stored.record)) warnings.push(warning('CONTENT_CONFLICT', 'Notiz weicht vom Reparaturoriginal ab. Aktueller Notizinhalt wird erhalten; Originalbasis bleibt getrennt.'));
+    if (await recordHash(current.record) !== await recordHash(stored.record)) warnings.push(warning('CONTENT_CONFLICT', tr('Notiz weicht vom Reparaturoriginal ab. Aktueller Notizinhalt wird erhalten; Originalbasis bleibt getrennt.')));
     states.set(key, stored); setEntry(pkg, { collection: note.collection, record: current.record } as Entry);
     sources.set(note.path, utf8(note.source));
     const location = layout.state.records.find(r => recordKey(r.collection, r.id) === key);

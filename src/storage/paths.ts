@@ -1,3 +1,4 @@
+import { tr } from '../i18n/translate';
 import { fail } from '../domain/diagnostics';
 import { sha256 } from '../exchange/hash';
 import type { Collection } from '../domain/types';
@@ -6,11 +7,11 @@ import { isControlCharacter } from './characters';
 /** Validates vault-relative, NFC paths before normalization; rejects portable filename hazards. */
 export function safePath(value: string): string {
   if (!value || value !== value.normalize('NFC') || value.length > 900 || [...value].some(isControlCharacter) || /[\\:*?"<>|]/.test(value) || value.startsWith('/') || value.endsWith('/')) {
-    fail('INVALID_FIELD', 'Ungültiger vaultrelativer Pfad. Sichtbaren Ordner ohne Sonderzeichen wählen.');
+    fail('INVALID_FIELD', tr('Ungültiger vaultrelativer Pfad. Sichtbaren Ordner ohne Sonderzeichen wählen.'));
   }
   for (const segment of value.split('/')) {
     if (!segment || segment === '.' || segment === '..' || segment.startsWith('.') || /[. ]$/.test(segment) ||
-      /^(?:con|prn|aux|nul|conin\$|conout\$|clock\$|com[0-9¹²³]|lpt[0-9¹²³])[ .]*(?:\.|$)/i.test(segment)) fail('INVALID_FIELD', 'Unsicherer oder reservierter Dateiname.');
+      /^(?:con|prn|aux|nul|conin\$|conout\$|clock\$|com[0-9¹²³]|lpt[0-9¹²³])[ .]*(?:\.|$)/i.test(segment)) fail('INVALID_FIELD', tr('Unsicherer oder reservierter Dateiname.'));
   }
   return value;
 }

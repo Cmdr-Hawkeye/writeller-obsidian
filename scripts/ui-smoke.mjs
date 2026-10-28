@@ -88,6 +88,25 @@ try {
     });
     if (!properties) throw new Error('Technische/benutzereigene Properties nicht korrekt getrennt');
     checks.push('Technische Properties ausblendbar; eigene Eigenschaften bleiben sichtbar und wiederherstellbar');
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.evaluate(() => globalThis.document.dispatchEvent(new globalThis.Event('writeller-test-language-en')));
+    await page.locator('.modal').getByRole('button', { name: 'Übernehmen', exact: true }).click();
+    await page.waitForSelector('html[data-preview-language="en"]');
+    await page.getByRole('button', { name: 'Add Character', exact: true }).waitFor();
+    if (!await page.locator('.nav-folder-title[data-path="Writing Projects"]').isVisible() || await page.locator('.nav-folder-title[data-path="Schreibprojekte"]').count()) throw new Error('Projektwurzel folgt nicht der englischen Sprache');
+    await page.getByText('Nebel am Hafen', { exact: true }).first().waitFor();
+    await page.screenshot({ path: `${root}/english.png`, fullPage: true });
+    checks.push('Obsidian-Sprache Englisch übersetzt Oberfläche und Strukturordner bei unveränderten Notiznamen');
+    await page.getByRole('button', { name: 'Add Character', exact: true }).click();
+    await page.getByLabel('Role in the story', { exact: true }).waitFor();
+    await page.locator('.modal').getByRole('button', { name: 'Cancel', exact: true }).click();
+    checks.push('Englisches Produktionsformular mit verständlichen Beschriftungen und Abbruch');
+    await page.evaluate(() => globalThis.document.dispatchEvent(new globalThis.Event('writeller-test-language-de')));
+    await page.locator('.modal').getByRole('button', { name: 'Apply', exact: true }).click();
+    await page.waitForSelector('html[data-preview-language="de"]');
+    await page.getByRole('button', { name: 'Figur hinzufügen', exact: true }).waitFor();
+    if (!await page.locator('.nav-folder-title[data-path="Schreibprojekte"]').isVisible()) throw new Error('Rückwechsel stellt deutsche Projektstruktur nicht wieder her');
+    checks.push('Bestätigter Rückwechsel stellt deutsche Oberfläche und Ordner wieder her');
   } finally { await new Promise(resolve => server.close(resolve)); }
   if (errors.length) throw new Error(errors.join('\n'));
   const external = requests.filter(url => !url.startsWith('http://127.0.0.1:'));

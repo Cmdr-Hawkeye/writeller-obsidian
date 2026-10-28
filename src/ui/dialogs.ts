@@ -1,3 +1,4 @@
+import { tr } from '../i18n/translate';
 import { App, FuzzySuggestModal, Modal, Setting } from 'obsidian';
 
 export interface Choice<T> { label: string; value: T }
@@ -33,14 +34,14 @@ class InputModal extends Modal {
   /** Creates native form controls with visible labels and a persistent error region. */
   override onOpen(): void {
     this.titleEl.setText(this.title);
-    const field = new Setting(this.contentEl).setName(this.multiline ? 'Vollständige JSON-Daten' : 'Eingabe');
+    const field = new Setting(this.contentEl).setName(this.multiline ? tr('Vollständige JSON-Daten') : tr('Eingabe'));
     if (this.multiline) field.addTextArea(input => { input.setValue(this.value).onChange(v => { this.value = v; }); input.inputEl.rows = 18; input.inputEl.addClass('writeller-json'); });
     else field.addText(input => { input.setValue(this.value).onChange(v => { this.value = v; }); input.inputEl.focus(); });
     const error = this.contentEl.createEl('p', { attr: { role: 'alert' } });
-    new Setting(this.contentEl).addButton(button => button.setButtonText('Übernehmen').setCta().onClick(async () => {
+    new Setting(this.contentEl).addButton(button => button.setButtonText(tr('Übernehmen')).setCta().onClick(async () => {
       try { await this.validate(this.value); this.accepted = true; this.done(this.value); this.close(); }
-      catch (e) { error.setText(e instanceof Error ? e.message : 'Eingabe prüfen.'); }
-    })).addButton(button => button.setButtonText('Abbrechen').onClick(() => this.close()));
+      catch (e) { error.setText(e instanceof Error ? e.message : tr('Eingabe prüfen.')); }
+    })).addButton(button => button.setButtonText(tr('Abbrechen')).onClick(() => this.close()));
   }
   /** Clears modal-owned DOM and resolves cancellation. */
   override onClose(): void { this.contentEl.empty(); if (!this.accepted) this.done(null); }
@@ -59,8 +60,8 @@ export class PreviewModal extends Modal {
     this.titleEl.setText(this.title);
     const list = this.contentEl.createEl('ul');
     for (const line of this.lines) list.createEl('li', { text: line });
-    new Setting(this.contentEl).addButton(button => button.setButtonText('Übernehmen').setCta().onClick(() => { this.accepted = true; this.done(true); this.close(); }))
-      .addButton(button => button.setButtonText('Abbrechen').onClick(() => this.close()));
+    new Setting(this.contentEl).addButton(button => button.setButtonText(tr('Übernehmen')).setCta().onClick(() => { this.accepted = true; this.done(true); this.close(); }))
+      .addButton(button => button.setButtonText(tr('Abbrechen')).onClick(() => this.close()));
   }
   /** Removes owned UI and resolves Escape as cancellation. */
   override onClose(): void { this.contentEl.empty(); if (!this.accepted) this.done(false); }

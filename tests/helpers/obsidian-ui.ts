@@ -155,7 +155,15 @@ export class PluginSettingTab {
   containerEl = document.createElement('div');
   /** Receives controlled dependencies. */
   constructor(readonly app: unknown, readonly plugin: unknown) {}
+  /** Native search/render hooks are intentionally no-ops in the controlled API fake. */
+  update(): void {}
 }
+/** Controlled host-language seam for installation and override tests. */
+export let testHostLanguage = 'de';
+/** Returns a synthetic locale, never the user's actual application configuration. */
+export function getLanguage(): string { return testHostLanguage; }
+/** Changes only the isolated test host's language. */
+export function setHostLanguage(value: string): void { testHostLanguage = value; }
 /** Minimal menu row. */
 class MenuItem {
   label = '';

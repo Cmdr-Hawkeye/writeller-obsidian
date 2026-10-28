@@ -1,12 +1,12 @@
 # Releaseverfahren
 
-Repository: [Cmdr-Hawkeye/writeller-obsidian](https://github.com/Cmdr-Hawkeye/writeller-obsidian). Releaseverfahren für **0.2.4**; ein öffentliches GitHub-Release und eine Community-Verzeichnisfreigabe sind getrennte Schritte.
+Repository: [Cmdr-Hawkeye/writeller-obsidian](https://github.com/Cmdr-Hawkeye/writeller-obsidian). Releaseverfahren für **0.3.0**; ein öffentliches GitHub-Release und eine Community-Verzeichnisfreigabe sind getrennte Schritte.
 
 ## Lokale technische Gates
 
 - `npm ci` aus dem Lockfile.
 - `npm run check`: Typen, Lint, Modulgrenzen, Handoff-Integrität, lokale Dokumentationslinks, Tests und Build.
-- `npm run test:ui`: zehn Prüfungen im Browser-Testhost, einschließlich gewöhnlicher Notiz → Figur → Export; Bilder ausdrücklich als Vorschau mit API-Ersatz kennzeichnen.
+- `npm run test:ui`: 13 Prüfungen im Browser-Testhost, einschließlich gewöhnlicher Notiz → Figur → Export; Bilder ausdrücklich als Vorschau mit API-Ersatz kennzeichnen.
 - `npm audit` und `npm run audit:dependencies`.
 - `npm run licenses`: Drittanbieterhinweise und maschinenlesbare Lizenzliste.
 - `node scripts/reproducible.mjs`: zweimal identische Bundlebytes.
@@ -19,7 +19,7 @@ Die lokalen Skripte veröffentlichen nichts. `release-status.json` beschreibt di
 
 Der Anzeigename **Benni**, die MIT-Nennung **© 2026 Benni** und der Autorenlink **https://www.writeller.com** sind in den Root-Dateien gesetzt. GitHub-Kontoname und sichtbarer Plugin-Autor dürfen unterschiedlich sein. Optionale Umgebungsvariablen `RELEASE_AUTHOR`, `RELEASE_AUTHOR_URL` und `RELEASE_COPYRIGHT_HOLDER` können Releasewerte überschreiben. Der Copyrightstandard wird aus `LICENSE` gelesen. `fundingUrl` ist nicht gesetzt.
 
-Eine sprachabhängige Manifest-Beschreibung ist in der aktuellen offiziellen Obsidian-Schnittstelle nicht definiert; der Text ist deshalb kurz und zweisprachig. Die Plugin-Oberfläche bleibt Deutsch. [Manifest-Dokumentation](https://docs.obsidian.md/Reference/Manifest).
+Eine sprachabhängige Manifest-Beschreibung ist in der aktuellen offiziellen Obsidian-Schnittstelle nicht definiert; der Text ist deshalb kurz und zweisprachig. Die Oberfläche unterstützt Deutsch und Englisch; siehe [Sprachwahl](languages.md). [Manifest-Dokumentation](https://docs.obsidian.md/Reference/Manifest).
 
 ## GitHub-Release
 
@@ -50,8 +50,8 @@ Für das isolierte native Testprofil entscheidet der Benutzer selbst über Obsid
 
 ## Community-Verzeichnis
 
-Erst nach entsprechender Abnahme über das [Community-Portal](https://community.obsidian.md) einreichen. Die [offizielle Anleitung](https://docs.obsidian.md/Plugins/Releasing/Submit%20your%20plugin) verlangt öffentlich zugänglichen Quellcode, Root-README, Lizenz, Manifest und Releaseassets. Dieses Repository ist noch kein bestätigter Verzeichniseintrag. Vor der Einreichung die aktuellen Regeln erneut prüfen.
+Erst nach entsprechender Abnahme über das [Community-Portal](https://community.obsidian.md) einreichen. Die [offizielle Anleitung](https://docs.obsidian.md/Plugins/Releasing/Submit%20your%20plugin) verlangt öffentlich zugänglichen Quellcode, Root-README, Lizenz, Manifest und Releaseassets. Der aktuelle Veröffentlichungsstatus wird im Community-Portal kontrolliert. Vor der Einreichung die aktuellen Regeln erneut prüfen.
 
 ## Lokales Update
 
-Vault sichern, Plugin-Dateien aus `writeller-0.2.4.zip` in `.obsidian/plugins/writeller` ersetzen und das Plugin neu laden. Die Erweiterungsliste muss **0.2.4 · Benni** anzeigen. Bisherige Projektdateien werden nicht automatisch umbenannt. **Dateinamen vereinfachen** bietet eine Vorschau. Frühere Standard-Exportziele werden auf `Exporte` umgestellt; wirklich leere alte Wurzeln werden aufgeräumt. Reine Austausch-/Exportordner werden standardmäßig ausgeblendet und können über die technische Anzeigeeinstellung eingeblendet werden.
+Vault sichern, Plugin-Dateien aus `writeller-0.3.0.zip` in `.obsidian/plugins/writeller` ersetzen und das Plugin neu laden. Die Erweiterungsliste muss **Novel Planner - by Writeller · 0.3.0 · Benni** anzeigen. Bisherige Projektdateien werden nicht automatisch umbenannt. **Dateinamen vereinfachen** bietet eine Vorschau. Frühere Standard-Exportziele werden auf `Exporte` umgestellt; wirklich leere alte Wurzeln werden aufgeräumt. Reine Austausch-/Exportordner werden standardmäßig ausgeblendet und können über die technische Anzeigeeinstellung eingeblendet werden.

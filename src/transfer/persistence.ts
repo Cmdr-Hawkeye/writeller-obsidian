@@ -1,3 +1,4 @@
+import { tr } from '../i18n/translate';
 import type { Exchange } from '../domain/types';
 import { entries, recordKey, clone, title } from '../domain/records';
 import { fail, type Diagnostic } from '../domain/diagnostics';
@@ -27,14 +28,14 @@ export async function planPersistence(vault: VaultPort, index: ProjectIndex, pkg
     const path = safePath(state.assets.find(a => a.id === asset.id)?.path ?? `${layout.root}/assets/${asset.id}.${asset.mimeType === 'image/png' ? 'png' : 'jpg'}`);
     if (!state.assets.some(a => a.id === asset.id)) state.assets.push({ id: asset.id, path, mimeType: asset.mimeType, width: asset.width, height: asset.height });
     const existing = await vault.read(path), bytes = decodeBase64(asset.data);
-    if (existing && await sha256(existing) !== asset.id) fail('INVALID_ASSET', 'Vorhandene Assetdatei ist verändert. Original reparieren.');
+    if (existing && await sha256(existing) !== asset.id) fail('INVALID_ASSET', tr('Vorhandene Assetdatei ist verändert. Original reparieren.'));
     if (!existing) mutations.push({ path, before: null, after: bytes, binary: true });
   }
   for (const e of entries(pkg)) {
     const key = recordKey(e.collection, e.record.id), location = locations.get(key);
-    if (!location) fail('STATE_MISSING', 'Schreibplan enthält keine Objektzuordnung.');
+    if (!location) fail('STATE_MISSING', tr('Schreibplan enthält keine Objektzuordnung.'));
     const path = await sidecarPath(layout.root, e.collection, e.record.id);
-    if (path !== location.sidecarPath) fail('PROJECT_MISMATCH', 'Begleitpfad gehört nicht zur Projektidentität.');
+    if (path !== location.sidecarPath) fail('PROJECT_MISMATCH', tr('Begleitpfad gehört nicht zur Projektidentität.'));
     const prior = local?.records.get(key);
     const stored = prior && jcs(prior.record.origin) === jcs(e.record.origin) ? prior : undefined;
     const recordState: RecordState = stored ? clone(stored) : { stateVersion: 1, collection: e.collection, id: e.record.id,
@@ -48,7 +49,7 @@ export async function planPersistence(vault: VaultPort, index: ProjectIndex, pkg
     const note = index.find(pkg.project.id, e.collection, e.record.id);
     if (note) location.notePath = note.path;
     const before = await vault.read(location.notePath), oldSource = note?.source ?? (before ? text(before) : '');
-    if (before && !note && !assignedPaths.has(location.notePath)) fail('IDENTITY_CONFLICT', 'Geplanter Notizpfad ist durch eine fremde Datei belegt. Kein Überschreiben.');
+    if (before && !note && !assignedPaths.has(location.notePath)) fail('IDENTITY_CONFLICT', tr('Geplanter Notizpfad ist durch eine fremde Datei belegt. Kein Überschreiben.'));
     const unchanged = stored && await recordHash(e.record) === await recordHash(stored.record) && stored.projection?.body === note?.body && jcs(projected.projection) === jcs(stored.projection);
     const source = unchanged ? oldSource : renderNote(recordProperties(e.collection, e.record, pkg.project.id, layout.statePath), projected.projection.body, oldSource);
     recordState.record = clone(e.record);
@@ -56,7 +57,7 @@ export async function planPersistence(vault: VaultPort, index: ProjectIndex, pkg
     if (incoming && acceptedKeys.has(key)) {
       const received = entries(incoming).find(r => r.collection === e.collection && r.record.id === e.record.id)?.record;
       if (received) {
-        if (jcs(received.origin) !== jcs(recordState.record.origin)) fail('IDENTITY_CONFLICT', 'Abweichende Origin darf nicht als gemeinsame Basis gespeichert werden.');
+        if (jcs(received.origin) !== jcs(recordState.record.origin)) fail('IDENTITY_CONFLICT', tr('Abweichende Origin darf nicht als gemeinsame Basis gespeichert werden.'));
         await acceptRecord(recordState, received, incoming.producer);
       }
     }
@@ -65,7 +66,7 @@ export async function planPersistence(vault: VaultPort, index: ProjectIndex, pkg
     const sideBefore = await vault.read(path), sideAfter = utf8(JSON.stringify(recordState, null, 2));
     // Never commit a sidecar that a restart could not read under local state budgets.
     await decodeRecordState(text(sideAfter), e.collection, e.record.id, pkg.project.id);
-    if (sideBefore && !local) fail('IDENTITY_CONFLICT', 'Datenordner enthält bereits Begleitdaten. Explizite Reparatur verwenden.');
+    if (sideBefore && !local) fail('IDENTITY_CONFLICT', tr('Datenordner enthält bereits Begleitdaten. Explizite Reparatur verwenden.'));
     if (!sideBefore || text(sideBefore) !== text(sideAfter)) mutations.push({ path, before: sideBefore, after: sideAfter, binary: false });
   }
   const before = await vault.read(layout.statePath);

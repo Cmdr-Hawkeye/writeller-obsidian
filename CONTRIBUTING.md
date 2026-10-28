@@ -34,7 +34,7 @@ Keine impliziten Manuskriptänderungen, stillen Konfliktentscheidungen oder Netz
 
 Beschreibe das konkrete Problem, das neue Verhalten und die passenden Prüfungen. Bei Oberflächenänderungen eine Aufnahme mit synthetischen Daten beifügen und angeben, ob sie aus Obsidian oder dem Browser-Testhost stammt. Ein bestandener Fake-Test ist kein Geräteabnahmetest.
 
-Benutzeroberfläche und primäre Dokumentation sind derzeit Deutsch; englische Ergänzungen sind möglich. Mit einem Beitrag erklärst du dich damit einverstanden, ihn unter der [MIT-Lizenz](LICENSE) dieses Projekts bereitzustellen. Lizenzen und Herkunft fremder Abhängigkeiten müssen erhalten bleiben.
+Die Benutzeroberfläche unterstützt Deutsch und Englisch; primäre Entwicklungsdokumentation ist Deutsch. Neue sichtbare Texte benötigen englische Katalogeinträge einschließlich unveränderter Platzhalter. `scripts/verify-localization.mjs` prüft die Abdeckung; weitere Sprachen lassen sich modular ergänzen. Mit einem Beitrag erklärst du dich damit einverstanden, ihn unter der [MIT-Lizenz](LICENSE) dieses Projekts bereitzustellen. Lizenzen und Herkunft fremder Abhängigkeiten müssen erhalten bleiben.
 
 ## Aufbau der Dokumentation
 

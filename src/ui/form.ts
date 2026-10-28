@@ -1,3 +1,4 @@
+import { tr } from '../i18n/translate';
 import { App, Modal, Setting, type ButtonComponent } from 'obsidian';
 
 export interface FormField { key: string; label: string; value?: string; kind?: 'text' | 'area' | 'select' | 'number';
@@ -19,13 +20,13 @@ class WritingForm extends Modal {
     const error = this.contentEl.createEl('p', { cls: 'writeller-form-error', attr: { role: 'alert', 'aria-live': 'polite' } });
     let button: ButtonComponent;
     for (const field of this.fields) this.field(field, () => button?.buttonEl.click());
-    new Setting(this.contentEl).addButton(b => b.setButtonText('Abbrechen').onClick(() => this.close())).addButton(b => {
+    new Setting(this.contentEl).addButton(b => b.setButtonText(tr('Abbrechen')).onClick(() => this.close())).addButton(b => {
       button = b; b.setButtonText(this.submitLabel).setCta().onClick(() => {
         if (this.submitting) return;
         try {
-          for (const field of this.fields) if (field.required && !this.values[field.key]?.trim()) throw new Error(`Bitte „${field.label}“ ausfüllen.`);
+          for (const field of this.fields) if (field.required && !this.values[field.key]?.trim()) throw new Error(tr`Bitte „${field.label}“ ausfüllen.`);
           this.validate(this.values); this.submitting = true; b.setDisabled(true); this.accepted = true; this.done(this.values); this.close();
-        } catch (e) { error.setText(e instanceof Error ? e.message : 'Bitte Eingabe prüfen.'); }
+        } catch (e) { error.setText(e instanceof Error ? e.message : tr('Bitte Eingabe prüfen.')); }
       });
     });
     this.contentEl.querySelector<HTMLInputElement>('input')?.focus();
@@ -53,6 +54,6 @@ class WritingForm extends Modal {
   override onClose(): void { this.contentEl.empty(); if (!this.accepted) this.done(null); }
 }
 /** Opens an ordinary writing form; validation never grants automatic approval to overwrite files. */
-export function writingForm(app: App, heading: string, fields: FormField[], submit = 'Speichern', validate: (values: FormValues) => void = () => {}): Promise<FormValues | null> {
+export function writingForm(app: App, heading: string, fields: FormField[], submit = tr('Speichern'), validate: (values: FormValues) => void = () => {}): Promise<FormValues | null> {
   return new Promise(resolve => new WritingForm(app, heading, fields, submit, resolve, validate).open());
 }

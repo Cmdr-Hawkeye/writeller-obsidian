@@ -1,3 +1,4 @@
+import { tr } from '../i18n/translate';
 import type { Collection, Entry, Exchange, ExchangeRecord, Ref } from '../domain/types';
 import { newId, now } from '../exchange/hash';
 import { fail } from '../domain/diagnostics';
@@ -21,11 +22,11 @@ export function createRecord(collection: Collection, projectId: string, instance
       storyDateEnd: null, estimatedWordTarget: null, tensionLevel: null, emotionalTone: null, goal: null, conflict: null, outcome: null }; break;
     case 'catalogItems': {
       const type = options.type ?? 'character';
-      if (!catalogTypes.includes(type as typeof catalogTypes[number]) && !/^custom:[a-z][a-z0-9-]*(?:\.[a-z][a-z0-9-]*)+$/.test(type)) fail('INVALID_FIELD', 'Eigenen Typ als custom:namensraum.name angeben.');
+      if (!catalogTypes.includes(type as typeof catalogTypes[number]) && !/^custom:[a-z][a-z0-9-]*(?:\.[a-z][a-z0-9-]*)+$/.test(type)) fail('INVALID_FIELD', tr('Eigenen Typ als custom:namensraum.name angeben.'));
       record = { ...child, name: title, type, summary: '', status: 'idea', fields: {} }; break;
     }
     case 'relationships':
-      if (!options.source || !options.target) fail('MISSING_REFERENCE', 'Für eine Beziehung beide typisierten Endpunkte auswählen.');
+      if (!options.source || !options.target) fail('MISSING_REFERENCE', tr('Für eine Beziehung beide typisierten Endpunkte auswählen.'));
       record = { ...child, source: options.source, target: options.target, relationshipType: 'relatedTo', label: title,
         description: null, strength: null, direction: 'directed', validFromStoryTime: null, validToStoryTime: null }; break;
     case 'notes': record = { ...child, title, target: null, content: { format: 'plain', text: '' }, source: 'manual', sourceSuggestionId: null }; break;

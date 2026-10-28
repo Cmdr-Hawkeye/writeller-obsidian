@@ -1,3 +1,4 @@
+import { tr } from '../i18n/translate';
 import type { Exchange } from '../domain/types';
 import { parseJson } from './parser';
 import { assertSchema } from './schema';
@@ -12,11 +13,11 @@ export async function validateExchange(value: unknown): Promise<Exchange> {
   let serialized: string | undefined;
   try {
     serialized = JSON.stringify(value, (_key: string, field: unknown) => {
-      if (field === undefined || typeof field === 'bigint' || typeof field === 'function' || typeof field === 'symbol' || typeof field === 'number' && !Number.isFinite(field)) fail('INVALID_FIELD', 'Wert ist kein endlicher JSON-Datentyp.');
+      if (field === undefined || typeof field === 'bigint' || typeof field === 'function' || typeof field === 'symbol' || typeof field === 'number' && !Number.isFinite(field)) fail('INVALID_FIELD', tr('Wert ist kein endlicher JSON-Datentyp.'));
       return field;
     });
-  } catch { fail('INVALID_FIELD', 'Wert ist kein vollständiger JSON-Baum.'); }
-  if (serialized === undefined) fail('INVALID_FIELD', 'JSON-Objekt fehlt.');
+  } catch { fail('INVALID_FIELD', tr('Wert ist kein vollständiger JSON-Baum.')); }
+  if (serialized === undefined) fail('INVALID_FIELD', tr('JSON-Objekt fehlt.'));
   const parsed = parseJson(serialized);
   assertSchema(parsed); assertSemantics(parsed); await assertImages(parsed.attachments);
   return parsed;

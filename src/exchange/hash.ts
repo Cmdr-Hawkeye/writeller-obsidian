@@ -1,3 +1,4 @@
+import { tr } from '../i18n/translate';
 import canonicalize from 'canonicalize';
 import type { ExchangeRecord } from '../domain/types';
 import { fail } from '../domain/diagnostics';
@@ -5,7 +6,7 @@ import { fail } from '../domain/diagnostics';
 /** RFC 8785 serialization of validated JSON; rejects non-JSON rather than dropping it. */
 export function jcs(value: unknown): string {
   const result = canonicalize(value);
-  if (result === undefined) fail('INVALID_FIELD', 'Kein kanonisierbarer JSON-Wert.');
+  if (result === undefined) fail('INVALID_FIELD', tr('Kein kanonisierbarer JSON-Wert.'));
   return result;
 }
 /** Web Crypto SHA-256; fails closed when the host lacks secure cryptographic APIs. */

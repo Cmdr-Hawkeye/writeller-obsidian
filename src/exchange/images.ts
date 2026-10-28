@@ -1,3 +1,4 @@
+import { tr } from '../i18n/translate';
 import { decode as decodePng } from 'fast-png';
 import decodeJpeg from 'jpeg-js/lib/decoder';
 import { boundedPng } from './png';
@@ -7,22 +8,22 @@ import { sha256 } from './hash';
 
 /** Inspects an explicitly selected local image and returns a complete validated public attachment. */
 export async function createAttachment(bytes: Uint8Array, projectId: string): Promise<Attachment> {
-  if (bytes.length > 2 * 1024 ** 2) fail('LIMIT_EXCEEDED', 'Bild überschreitet 2 MiB. Vor Aufnahme bewusst vorbereiten.');
+  if (bytes.length > 2 * 1024 ** 2) fail('LIMIT_EXCEEDED', tr('Bild überschreitet 2 MiB. Vor Aufnahme bewusst vorbereiten.'));
   let header: { width: number; height: number }, mimeType: Attachment['mimeType'];
   try {
     mimeType = bytes[0] === 137 ? 'image/png' : 'image/jpeg';
     header = mimeType === 'image/png' ? pngHeader(bytes) : jpegHeader(bytes);
-  } catch { fail('INVALID_ASSET', 'Nur vollständig dekodierbare PNG-/JPEG-Bilder aufnehmen.'); }
+  } catch { fail('INVALID_ASSET', tr('Nur vollständig dekodierbare PNG-/JPEG-Bilder aufnehmen.')); }
   const image: Attachment = { id: await sha256(bytes), projectId, mimeType, ...header, data: encodeBase64(bytes) };
   await assertImages([image]); return image;
 }
 
 /** Strict RFC 4648 decoder rejects whitespace, missing padding and nonzero pad bits. */
 export function decodeBase64(value: string): Uint8Array {
-  if (value.length % 4 || !/^[A-Za-z0-9+/]*={0,2}$/.test(value)) fail('INVALID_ASSET', 'Ungültige Base64-Bilddaten.');
+  if (value.length % 4 || !/^[A-Za-z0-9+/]*={0,2}$/.test(value)) fail('INVALID_ASSET', tr('Ungültige Base64-Bilddaten.'));
   let binary: string;
-  try { binary = atob(value); } catch { fail('INVALID_ASSET', 'Ungültiges Base64-Padding.'); }
-  if (btoa(binary) !== value) fail('INVALID_ASSET', 'Nicht kanonische Base64-Paddingbits.');
+  try { binary = atob(value); } catch { fail('INVALID_ASSET', tr('Ungültiges Base64-Padding.')); }
+  if (btoa(binary) !== value) fail('INVALID_ASSET', tr('Nicht kanonische Base64-Paddingbits.'));
   return Uint8Array.from(binary, c => c.charCodeAt(0));
 }
 /** Encodes bytes without Buffer or large apply/spread argument lists. */
@@ -35,11 +36,11 @@ export function encodeBase64(bytes: Uint8Array): string {
 export async function assertImages(attachments: Attachment[]): Promise<void> {
   let total = 0;
   for (const image of attachments) {
-    if (image.data.length > Math.ceil(2 * 1024 ** 2 / 3) * 4) fail('LIMIT_EXCEEDED', 'Bild überschreitet 2 MiB.');
+    if (image.data.length > Math.ceil(2 * 1024 ** 2 / 3) * 4) fail('LIMIT_EXCEEDED', tr('Bild überschreitet 2 MiB.'));
     const bytes = decodeBase64(image.data);
     total += bytes.length;
-    if (bytes.length > 2 * 1024 ** 2 || total > 64 * 1024 ** 2 || attachments.length > 256) fail('LIMIT_EXCEEDED', 'Bildbudget überschritten.');
-    if (await sha256(bytes) !== image.id) fail('INVALID_ASSET', 'Bildhash stimmt nicht mit den Bytes überein.');
+    if (bytes.length > 2 * 1024 ** 2 || total > 64 * 1024 ** 2 || attachments.length > 256) fail('LIMIT_EXCEEDED', tr('Bildbudget überschritten.'));
+    if (await sha256(bytes) !== image.id) fail('INVALID_ASSET', tr('Bildhash stimmt nicht mit den Bytes überein.'));
     assertImageBytes(bytes, image);
   }
 }
@@ -54,7 +55,7 @@ export function assertImageBytes(bytes: Uint8Array, image: Pick<Attachment, 'mim
     });
     if (decoded.width !== image.width || decoded.height !== image.height || !decoded.data.length) throw new Error();
     if ('palette' in decoded && decoded.palette && decoded.data.some(v => v >= decoded.palette!.length)) throw new Error();
-  } catch { fail('INVALID_ASSET', 'Bild ist beschädigt, animiert oder hat unzulässige Dimensionen.'); }
+  } catch { fail('INVALID_ASSET', tr('Bild ist beschädigt, animiert oder hat unzulässige Dimensionen.')); }
 }
 /** PNG chunk framing rejects animation and trailing/polyglot data; CRC is checked by decoder. */
 function pngHeader(bytes: Uint8Array): { width: number; height: number } {

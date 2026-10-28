@@ -1,4 +1,5 @@
-import { Plugin, MarkdownView, Notice } from 'obsidian';
+import { tr } from './i18n/translate';
+import { Plugin, MarkdownView, Notice, getLanguage, setTooltip } from 'obsidian';
 import { TransferCoordinator } from './transfer/coordinator';
 import { ObsidianVault } from './obsidian/vault';
 import { WritingPresentation } from './obsidian/presentation';
@@ -17,6 +18,8 @@ import { organizeProject } from './ui/organize-command';
 import { isObject } from './exchange/parser';
 import { pendingJournals } from './storage/recovery-index';
 import { upgradeExportFolder, cleanupLegacyExportFolders } from './projects/export-location';
+import { resolveLanguage, setLanguage, language } from './i18n/language';
+import { changeWritingLanguage } from './ui/language-change';
 
 /** Composition root: small writing services, native view, registered events and explicit cleanup. */
 export default class WritellerPlugin extends Plugin {
@@ -31,8 +34,13 @@ export default class WritellerPlugin extends Plugin {
     if (isObject(loaded)) {
       for (const key of ['projectFolder', 'dataFolder', 'exchangeFolder'] as const) if (typeof loaded[key] === 'string') this.preferences[key] = loaded[key];
       if (typeof loaded['showTechnicalInfo'] === 'boolean') this.preferences.showTechnicalInfo = loaded['showTechnicalInfo'];
+      if (loaded['folderLanguage'] === 'de' || loaded['folderLanguage'] === 'en') {
+        this.preferences.folderLanguage = loaded['folderLanguage'];
+        if (loaded['language'] === 'de' || loaded['language'] === 'en' || loaded['language'] === 'auto') this.preferences.language = loaded['language'];
+      } else this.preferences.folderLanguage = 'de'; // Earlier releases had a German-only UI, not a user language preference.
     }
-    try { validateSettings(this.preferences); } catch { this.preferences = { ...defaultSettings }; new Notice('Die gespeicherten Ordner konnten nicht verwendet werden. Bestehende Projekte bleiben über ihre Projektnotizen erhalten.'); }
+    setLanguage(this.preferences.folderLanguage ?? resolveLanguage(this.preferences.language, getLanguage()));
+    try { validateSettings(this.preferences); } catch { this.preferences = { ...defaultSettings }; new Notice(tr('Die gespeicherten Ordner konnten nicht verwendet werden. Bestehende Projekte bleiben über ihre Projektnotizen erhalten.')); }
     if (upgradeExportFolder(this.preferences)) await this.saveData(this.preferences);
     const service = new TransferCoordinator(new ObsidianVault(this.app), this.preferences);
     const ctx = this.context = new CommandContext(this.app, service), writing = new WritingCommands(ctx), advanced = new LocalCommands(ctx);
@@ -40,9 +48,10 @@ export default class WritellerPlugin extends Plugin {
     this.presentation = new WritingPresentation(ctx); this.register(() => this.presentation.dispose());
     const present = (): void => { void this.presentation.refresh().catch(error => ctx.report(error)); };
     ctx.changed.add(present); this.register(() => ctx.changed.delete(present));
-    this.addSettingTab(new WritellerSettingsTab(this.app, this, this.preferences, async () => {
+    const settingsTab = new WritellerSettingsTab(this.app, this, this.preferences, async () => {
       await this.saveData(this.preferences); for (const listener of ctx.changed) listener();
-    }));
+    }, async preference => { await this.run(async () => { await changeWritingLanguage(ctx, preference, async () => { await this.saveData(this.preferences); }); }); });
+    this.addSettingTab(settingsTab);
     const run = (action: () => Promise<void>): void => { void this.run(action); };
     const openView = async (projectId?: string): Promise<void> => {
       if (projectId) ctx.selectedProjectId = projectId;
@@ -55,16 +64,24 @@ export default class WritellerPlugin extends Plugin {
     this.registerView(projectViewType, leaf => new WritingProjectView(leaf, ctx, writing, transfer, run, {
       inspect: () => inspection.show(), advanced: () => advanced.properties(), organize: id => organizeProject(ctx, id), recover: () => transfer.recoverImport()
     }));
-    registerWritingCommands(this, ctx, { writing, advanced, transfer, images, inspection, openView: () => openView(), organize: () => organizeProject(ctx), run, available: () => this.ready && !this.busy });
-    this.addRibbonIcon('book-open-text', 'Schreibprojekte öffnen', () => run(() => openView()));
+    const actions = { writing, advanced, transfer, images, inspection, openView: () => openView(), organize: () => organizeProject(ctx), run, available: () => this.ready && !this.busy };
+    let removeCommands = registerWritingCommands(this, ctx, actions);
+    const ribbon = this.addRibbonIcon('book-open-text', tr('Schreibprojekte öffnen'), () => run(() => openView()));
+    let labelsLanguage = language();
+    const relabel = (): void => { if (labelsLanguage === language()) return; labelsLanguage = language(); removeCommands(); removeCommands = registerWritingCommands(this, ctx, actions); setTooltip(ribbon, tr('Schreibprojekte öffnen')); settingsTab.update(); };
+    ctx.changed.add(relabel); this.register(() => ctx.changed.delete(relabel));
+    ctx.savePreferences = async () => { setLanguage(this.preferences.folderLanguage ?? resolveLanguage(this.preferences.language, getLanguage())); await this.saveData(this.preferences); relabel(); };
     const status = this.addStatusBarItem(); this.registerDomEvent(status, 'click', () => run(() => openView()));
     registerWritingEvents(this, ctx, writing, advanced, inspection, this.presentation, status, run, () => this.ready && !this.busy);
     this.app.workspace.onLayoutReady(() => {
       void service.index.rebuild().then(async () => {
         await cleanupLegacyExportFolders(service.vault, this.preferences);
-        this.ready = true; inspection.updateStatus(status); await this.presentation.refresh();
+        this.ready = true;
+        const needsLanguageSetup = !isObject(loaded) || !loaded['folderLanguage'] || this.preferences.folderLanguage !== resolveLanguage(this.preferences.language, getLanguage());
+        if (needsLanguageSetup && !(await pendingJournals(service.vault)).length) await this.run(async () => { await changeWritingLanguage(ctx, this.preferences.language, async () => { await this.saveData(this.preferences); }, true); });
+        inspection.updateStatus(status); await this.presentation.refresh();
         ctx.pendingRecovery = (await pendingJournals(service.vault)).length > 0;
-        if (ctx.pendingRecovery) new Notice('Ein Vorgang wurde unterbrochen. Unter „Writeller: Unterbrochenen Vorgang wiederherstellen“ kannst du ihn prüfen.', 12000);
+        if (ctx.pendingRecovery) new Notice(tr('Ein Vorgang wurde unterbrochen. Unter „Novel Planner: Unterbrochenen Vorgang wiederherstellen“ kannst du ihn prüfen.'), 12000);
       }).catch(error => ctx.report(error));
     });
   }

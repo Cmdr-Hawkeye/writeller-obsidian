@@ -1,41 +1,37 @@
-# Writeller 0.2.4
+# Novel Planner - by Writeller 0.3.0
 
 [Deutsch](#deutsch) · [English](#english) · [writeller.com](https://www.writeller.com)
 
 ## Deutsch
 
-**Korrekturen aus der automatisierten Community-Prüfung von 0.2.3.**
+**Neuer Name, Deutsch und Englisch, übersetzte Projektordner.**
 
-- Einstellungen verwenden die native, durchsuchbare Obsidian-API mit standardisierten Überschriften und Ordnerauswahl. Ungültige oder überlappende Pfade werden weiterhin abgewiesen.
-- Die Exchange-Schemaprüfung wird beim Build vorübersetzt. Das Plugin benötigt dafür zur Laufzeit weder `eval` noch `new Function`; die Vertragsdateien bleiben unverändert.
-- Technische Ordner und Properties werden über rücknehmbare Klassen ausgeblendet. Der breite CSS-Selektor `:has` und dynamische Stylesheets entfallen.
-- Native DOM-Helfer, sichere Callback-Bindung, Web-Crypto-Zugriffe und Zeichenprüfungen entsprechen den verwendeten Obsidian-Lintregeln. Dateioperationen beachten jetzt die Löschpräferenz aus Obsidian.
-- Der offizielle Obsidian-Linter ist Teil der lokalen Prüfung und der CI. Der README-Titel entspricht dem Manifestnamen **Writeller**.
-- GitHub Actions baut das Release und attestiert die Herkunft von `main.js`, `manifest.json` und `styles.css` vor dem Hochladen.
+- Der Anzeigename lautet jetzt **Novel Planner - by Writeller**. Die interne ID `writeller` und bestehende Installationen, Einstellungen und Projektidentitäten bleiben erhalten.
+- **Automatisch (Obsidian)** wählt Deutsch bei deutscher Obsidian-Oberfläche und sonst Englisch. Unter **Sprache** kannst du jederzeit **Deutsch** oder **English** auswählen.
+- Oberfläche, Formulare, Befehle und Meldungen folgen der Sprache. Bereits offene Projektansichten und Objekt-/Statusbegriffe werden aktualisiert.
+- Strukturordner werden nach einer konkreten Vorschau übersetzt, etwa `Schreibprojekte` → `Writing Projects`, `Figuren` → `Characters` und `Manuskript` → `Manuscript`.
+- Sämtliche `.md`-Dateinamen, eigene Projekt-/Kapiteltitel und benutzerdefinierte Ablagewurzeln bleiben erhalten. Auch gewöhnliche Notizen und andere Dateien in diesen Ordnern ziehen mit demselben Namen um. Lokale Linkziele und interne Zuordnungen werden angepasst.
+- Zielordner werden nicht still zusammengeführt. Ein gesicherter Ordnerwechsel lässt sich nach einem Abbruch über **Unterbrochenen Vorgang wiederherstellen** prüfen. Fremde Nachbearbeitung wird nicht überschrieben. Technische Erhaltungsdaten behalten stabile Pfade.
 
-**Bewusst beibehalten:** Der lokale Vault-Index erkennt verwaltete Projekte und gewöhnliche Notizen innerhalb ihrer Grenzen. Das Review kann die dafür nötige Dateiauflistung weiterhin als Empfehlung melden. ZIP, Prüfsummen und Lizenzhinweise bleiben zusätzliche Downloads für manuelle Installationen; Obsidian installiert nur die Plugin-Dateien. Diese beiden Empfehlungen sind vom behobenen Source-Code-Fehler zu unterscheiden.
+**Update:** `writeller-0.3.0.zip` unter **Assets** herunterladen, die Plugin-Dateien in `<Vault>/.obsidian/plugins/writeller/` ersetzen und das Plugin neu laden. Keine Neuinstallation nötig. Mindestversion: Obsidian 1.14.5.
 
-**Installation:** `writeller-0.2.4.zip` unter **Assets** herunterladen, Plugin-Dateien in `<Vault>/.obsidian/plugins/writeller/` ersetzen und das Plugin neu laden. Mindestversion: Obsidian 1.14.5. Bestehende Projekte und die bewusste Übernahme gewöhnlicher Notizen bleiben erhalten.
-
-**Prüfung:** 489 Tests in 16 Dateien und zehn Browser-Oberflächenchecks bestanden. Der Vertragstest läuft mit deaktivierter dynamischer Codeerzeugung. Native Desktop-/Mobile-Abnahme und die erneute Community-Prüfung bleiben gesonderte Schritte; dieses Release ist keine Community-Freigabe.
+**Prüfung:** 514 Tests in 18 Dateien und 13 Browser-Oberflächenchecks bestanden. Der Ordner-Hin-/Rückwechsel erhält sämtliche Fachhashes der unabhängigen Projekt-Fixture und alle Markdown-Dateinamen. Native Desktop-/Mobile-Abnahme und die Community-Prüfung von 0.3.0 bleiben gesonderte Schritte.
 
 ## English
 
-**Corrections following the automated Community review of 0.2.3.**
+**New name, English and German, translated project folders.**
 
-- Settings use Obsidian's native searchable API, including standard headings and folder controls. Invalid or overlapping paths are still rejected.
-- Exchange schema validators are compiled during the build. The plugin needs neither `eval` nor `new Function` for validation at runtime; the contract artifacts remain unchanged.
-- Reversible classes hide technical folders and properties. Broad CSS `:has` selectors and dynamic stylesheets have been removed.
-- Native DOM helpers, bound callbacks, Web Crypto access and character checks follow the configured Obsidian lint rules. File removal now respects Obsidian's user preference.
-- The official Obsidian linter runs locally and in CI. The README title now matches the manifest name, **Writeller**.
-- GitHub Actions builds the release and attests the provenance of `main.js`, `manifest.json` and `styles.css` before upload.
+- The display name is now **Novel Planner - by Writeller**. The internal ID remains `writeller`, retaining existing installations, settings and project identities.
+- **Automatic (Obsidian)** selects German for German Obsidian installations and English otherwise. Choose **Deutsch** or **English** in **Language** to override detection.
+- The interface, forms, commands and messages follow the selected language. Open project views and object/status labels update as well.
+- Structural folders are translated after a concrete preview, including `Schreibprojekte` → `Writing Projects`, `Figuren` → `Characters` and `Manuskript` → `Manuscript`.
+- All `.md` basenames, user-authored project/chapter titles and custom root names are preserved. Ordinary notes and other files inside structural folders move with the same names. Local link targets and internal path mappings are updated.
+- Occupied folders are never silently merged. Backups allow **Recover interrupted operation** to handle interrupted changes while retaining foreign post-edits. Technical preservation data keeps stable paths.
 
-**Intentionally retained:** The local vault index discovers managed projects and ordinary notes within project boundaries. The review may continue to flag the required file enumeration as a recommendation. The ZIP, checksums and license notices remain extra downloads for manual installation; Obsidian installs only the plugin files. These recommendations are separate from the corrected source-code error.
+**Update:** Download `writeller-0.3.0.zip` from **Assets**, replace the plugin files in `<vault>/.obsidian/plugins/writeller/` and reload the plugin. Reinstallation is unnecessary. Minimum version: Obsidian 1.14.5.
 
-**Installation:** Download `writeller-0.2.4.zip` from **Assets**, replace the plugin files in `<vault>/.obsidian/plugins/writeller/` and reload the plugin. Minimum version: Obsidian 1.14.5. Existing projects and explicit adoption of ordinary notes remain supported. The plugin UI is currently German.
+**Validation:** 514 tests across 18 files and 13 browser UI checks passed. The folder roundtrip preserves every domain hash of the independent project fixture and all Markdown basenames. Native desktop/mobile acceptance and the Community review of 0.3.0 remain separate steps.
 
-**Validation:** 489 tests across 16 files and ten browser UI smoke checks passed. The contract test runs with dynamic code generation disabled. Native desktop/mobile acceptance and the new Community review remain separate steps; this release does not imply Community approval.
+The public **Writeller Exchange 1.0.0** contract is unchanged. / Der öffentliche **Writeller Exchange 1.0.0**-Vertrag bleibt unverändert.
 
-Writeller Exchange 1.0.0 is implemented and tested in Writeller, as confirmed by Benni on 27 October 2026. / Writeller Exchange 1.0.0 ist in Writeller implementiert und getestet, bestätigt durch Benni am 27.10.2026.
-
-[README](https://github.com/Cmdr-Hawkeye/writeller-obsidian) · [Changelog](https://github.com/Cmdr-Hawkeye/writeller-obsidian/blob/main/CHANGELOG.md)
+[Language and folder details](https://github.com/Cmdr-Hawkeye/writeller-obsidian/blob/main/docs/languages.md) · [Changelog](https://github.com/Cmdr-Hawkeye/writeller-obsidian/blob/main/CHANGELOG.md)

@@ -1,3 +1,4 @@
+import { tr } from '../i18n/translate';
 import type { ExchangeRecord, JsonObject } from '../domain/types';
 import { clone } from '../domain/records';
 import { fail } from '../domain/diagnostics';
@@ -6,20 +7,20 @@ import { fail } from '../domain/diagnostics';
 export function applyProperties(record: ExchangeRecord, props: JsonObject): ExchangeRecord {
   const result = clone(record);
   const title = props['writeller-title'];
-  if (typeof title !== 'string') fail('INVALID_FIELD', 'writeller-title fehlt oder ist kein Text.');
+  if (typeof title !== 'string') fail('INVALID_FIELD', tr('writeller-title fehlt oder ist kein Text.'));
   if ('name' in result) result.name = title;
   else if ('title' in result) result.title = title;
-  else if (title !== (result.label ?? result.relationshipType)) fail('UNSUPPORTED_REPRESENTATION', 'Beziehungstitel über label oder relationshipType im Eigenschaften-Editor ändern.');
+  else if (title !== (result.label ?? result.relationshipType)) fail('UNSUPPORTED_REPRESENTATION', tr('Beziehungstitel über label oder relationshipType im Eigenschaften-Editor ändern.'));
   if ('status' in result) result.status = requiredString(props, 'writeller-status');
   if ('type' in result) result.type = requiredString(props, 'writeller-type');
   if ('orderIndex' in result) {
     const value = props['writeller-order'];
-    if (typeof value !== 'number' || !Number.isFinite(value)) fail('INVALID_FIELD', 'writeller-order muss eine Zahl sein.');
+    if (typeof value !== 'number' || !Number.isFinite(value)) fail('INVALID_FIELD', tr('writeller-order muss eine Zahl sein.'));
     result.orderIndex = value;
   }
   if ('content' in result) {
     const format = props['writeller-content-format'];
-    if (format !== 'plain' && format !== 'markdown') fail('INVALID_FIELD', 'Inhaltsformat ausdrücklich als plain oder markdown angeben.');
+    if (format !== 'plain' && format !== 'markdown') fail('INVALID_FIELD', tr('Inhaltsformat ausdrücklich als plain oder markdown angeben.'));
     result.content.format = format;
   }
   if ('parentSceneId' in result) {
@@ -32,12 +33,12 @@ export function applyProperties(record: ExchangeRecord, props: JsonObject): Exch
 /** Rejects property coercion rather than converting objects, booleans or null to strings. */
 function requiredString(props: JsonObject, key: string): string {
   const value = props[key];
-  if (typeof value !== 'string') fail('INVALID_FIELD', 'Verwaltete Texteigenschaft ist ungültig.');
+  if (typeof value !== 'string') fail('INVALID_FIELD', tr('Verwaltete Texteigenschaft ist ungültig.'));
   return value;
 }
 /** Nullable scene references must be present explicitly, including null. */
 function nullableString(props: JsonObject, key: string): string | null {
   const value = props[key];
-  if (value !== null && typeof value !== 'string') fail('INVALID_FIELD', 'Szenenbezug muss eine ID oder null sein.');
+  if (value !== null && typeof value !== 'string') fail('INVALID_FIELD', tr('Szenenbezug muss eine ID oder null sein.'));
   return value;
 }

@@ -18,7 +18,7 @@ import { equalBytes, utf8 } from '../storage/vault-port';
 import { safePath, isBelow } from '../storage/paths';
 import { NameAllocator } from '../projects/names';
 import { holdAnnotations } from '../mapping/annotations';
-import { assertLanguageReady } from '../storage/language-status';
+import { assertStructureReady } from '../storage/operation-status';
 
 export interface CommitPreview { projectId: string; layout: Layout; persistence: PersistencePlan; source: Snapshot | null;
   indexFingerprint: string; warnings: Diagnostic[]; guards: Map<string, Uint8Array> }
@@ -111,7 +111,7 @@ export class TransferCoordinator {
   }
   /** Commits a confirmed preview serially through a write-ahead journal, then refreshes identity. */
   async commit(preview: CommitPreview): Promise<void> {
-    await assertLanguageReady(this.vault);
+    await assertStructureReady(this.vault);
     await assertNoPending(this.vault, preview.layout.root, preview.projectId);
     await this.assertFresh(preview);
     if (!preview.source) {

@@ -72,6 +72,6 @@ export class CommandContext {
       for (const d of error.diagnostics) this.problemCodes.add(d.code);
       new Notice(error.diagnostics.map(d => this.service.settings.showTechnicalInfo ? `${d.code}: ${d.message}` : d.message).join('\n'), 12000);
     }
-    else new Notice(tr('Vorgang fehlgeschlagen. Projekt prüfen; bei begonnenem Schreiben „Import wiederherstellen“ ausführen.'), 12000);
+    else new Notice(tr('Vorgang fehlgeschlagen. Projekt prüfen; falls nötig „Unterbrochenen Vorgang wiederherstellen“ ausführen.'), 12000);
   }
 }

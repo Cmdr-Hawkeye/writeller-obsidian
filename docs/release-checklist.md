@@ -7,7 +7,7 @@ Repository: [Cmdr-Hawkeye/writeller-obsidian](https://github.com/Cmdr-Hawkeye/wr
 - `npm ci` aus dem Lockfile.
 - `npm run check`: Typen, Lint, Modulgrenzen, Handoff-Integrität, lokale Dokumentationslinks, Tests und Build.
 - `npm run test:ui`: 13 Prüfungen im Browser-Testhost, einschließlich gewöhnlicher Notiz → Figur → Export; Bilder ausdrücklich als Vorschau mit API-Ersatz kennzeichnen.
-- `npm audit` und `npm run audit:dependencies`.
+- `npm run audit:release` und `npm run audit:dependencies`; rohe Entwicklungsbefunde und die eng begrenzte Ausnahme stehen in [development-audit.md](development-audit.md).
 - `npm run licenses`: Drittanbieterhinweise und maschinenlesbare Lizenzliste.
 - `node scripts/reproducible.mjs`: zweimal identische Bundlebytes.
 - `node scripts/release.mjs --publish-ready`: Versionen, Autorenlink und Copyrightnennung prüfen; ZIP und SHA-256-Summen erzeugen.

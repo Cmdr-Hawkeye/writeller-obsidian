@@ -2,7 +2,7 @@
   "Zuerst ein Schreibprojekt erstellen oder importieren.": "Create or import a writing project first.",
   "Für welches Schreibprojekt?": "Which writing project?",
   "Notiz fehlt nach dem Vorgang. Projekt neu prüfen.": "Note is missing after the operation. Check the project again.",
-  "Vorgang fehlgeschlagen. Projekt prüfen; bei begonnenem Schreiben „Import wiederherstellen“ ausführen.": "Operation failed. Check the project; if writing had started, use Recover interrupted operation.",
+  "Vorgang fehlgeschlagen. Projekt prüfen; falls nötig „Unterbrochenen Vorgang wiederherstellen“ ausführen.": "Operation failed. Check the project; if needed, use Recover interrupted operation.",
   "Schreibprojekte öffnen": "Open writing projects",
   "Neues Schreibprojekt": "New writing project",
   "{0} hinzufügen": "Add {0}",
@@ -215,5 +215,18 @@
   "{0} · {1} Notizen · {2} Hinweise": "{0} · {1} notes · {2} notices",
   "{0} · Austausch {1}": "{0} · Exchange {1}", "Ausgabedatei: {0}": "Output file: {0}",
   "Objekte: {0}; Bilder: {1}.": "Objects: {0}; images: {1}.", "{0} · Vorgang {1}": "{0} · Operation {1}",
-  "Bild": "Image", "{0} übernehmen": "Adopt {0}", "Dateien": "Files", "Speichern…": "Saving…"
+  "Bild": "Image", "{0} übernehmen": "Adopt {0}", "Dateien": "Files", "Speichern…": "Saving…",
+  "Projekt löschen": "Delete project",
+  "„{0}“ löschen?": "Delete “{0}”?",
+  "Löschen vorbereiten…": "Preparing deletion…",
+  "Projekt wird gelöscht…": "Deleting project…",
+  "Projektnamen zur Bestätigung eingeben": "Enter the project name to confirm",
+  "{0} zugeordnete Notizen und ihre Projektdaten werden gelöscht. Nicht zugeordnete Dateien und vorhandene Exporte bleiben erhalten.": "{0} assigned notes and their project data will be deleted. Unassigned files and existing exports will be kept.",
+  "Löschen folgt deiner Obsidian-Einstellung für gelöschte Dateien. Bei einer Unterbrechung bleiben Originale zur Wiederherstellung gesichert.": "Deletion follows your Obsidian deleted-file setting. If interrupted, originals are retained for recovery.",
+  "Bitte den Projektnamen genau wie oben eingeben.": "Please enter the project name exactly as shown above.",
+  "„{0}“ wurde gelöscht.": "“{0}” was deleted.",
+  "Im Projektdatenordner liegt eine Notiz eines anderen Projekts. Vor dem Löschen verschieben.": "The project data folder contains a note from another project. Move it before deleting.",
+  "Die Löschsicherung überschreitet 512 MiB. Projekt extern sichern und manuell entfernen.": "The deletion backup exceeds 512 MiB. Back up the project externally and remove it manually.",
+  "Die Sicherung zum Löschen ist beschädigt. Gesicherte Originale prüfen.": "The deletion backup is damaged. Check the saved originals.",
+  "Ein Projekt wurde noch nicht vollständig gelöscht. Zuerst den unterbrochenen Vorgang wiederherstellen.": "A project deletion is incomplete. Recover the interrupted operation first."
 }

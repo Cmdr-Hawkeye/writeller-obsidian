@@ -76,7 +76,7 @@ export class ObsidianVault implements VaultPort {
     // leaves a conservative recovery conflict with the original bytes in the journal.
     return intermediate;
   }
-  /** Respects the user's deletion preference after verifying a known own rollback-created file. */
+  /** Respects the user's deletion preference after verifying a confirmed owned file. */
   async trash(path: string, expected: Uint8Array): Promise<void> {
     const current = await this.read(path);
     if (!current || !equalBytes(current, expected)) fail('LOCAL_CHANGED', tr('Datei vor Wiederherstellung verändert.'));

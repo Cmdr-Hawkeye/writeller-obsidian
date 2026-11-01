@@ -20,7 +20,7 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm run audit:dependencies
-      - run: npm audit
+      - run: npm run audit:release
       - run: npm run licenses
       - run: node scripts/reproducible.mjs
       - run: node scripts/release.mjs

@@ -23,8 +23,8 @@ The plugin is free to use and requires no account or Writeller license. It makes
 
 The following steps describe manual installation from the GitHub release. Minimum version: **Obsidian 1.14.5**. Actual mobile-device acceptance tests are still pending.
 
-1. Back up your vault and open [release 0.3.1](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.3.1).
-2. Download `writeller-0.3.1.zip` from **Assets** and extract it.
+1. Back up your vault and open [release 0.3.2](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.3.2).
+2. Download `writeller-0.3.2.zip` from **Assets** and extract it.
 3. Copy its `writeller` directory to `<vault>/.obsidian/plugins/`. `main.js`, `manifest.json` and `styles.css` must be directly inside that directory.
 4. Enable Novel Planner - by Writeller in Obsidian's Community plugins settings. For updates, replace the plugin files and reload the plugin.
 
@@ -51,6 +51,8 @@ You can also use Obsidian's ordinary **New note** action. Markdown files inside 
 Before exporting, the plugin points out unassigned files so you can review them first or explicitly export only the already assigned notes. Folder context menus also offer direct typed creation, such as **Novel Planner: Add Character**.
 
 ## Where are exports and technical files?
+
+To delete a project, open **More project actions (⋯) → Delete project** in the writing overview, or run **Delete project** from the command palette. Enter the exact project name to confirm. Assigned notes and private project data are removed using your Obsidian deleted-file preference. Unassigned files, existing exports and other projects are kept; folders containing them remain. If interrupted, use **Recover interrupted operation** to restore the originals. Temporary recovery copies are removed after completion. There is no plugin undo for a completed deletion; restore from your trash or an export if needed.
 
 Exports go to `Exports/<title>.writeller-exchange.json`. A twelve-second message shows the exact vault-relative path after a successful save. Existing files are never replaced. Import files can be placed in any ordinary vault folder.
 

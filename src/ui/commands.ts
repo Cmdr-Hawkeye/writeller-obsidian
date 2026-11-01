@@ -7,6 +7,7 @@ import type { LocalCommands } from './local-commands';
 import type { TransferCommands } from './transfer-commands';
 import type { ImageCommands } from './image-commands';
 import type { Inspection } from './inspection';
+import { deleteProject } from './delete-project';
 
 export interface CommandActions { writing: WritingCommands; advanced: LocalCommands; transfer: TransferCommands; images: ImageCommands;
   inspection: Inspection; openView(): Promise<void>; organize(): Promise<void>; run(action: () => Promise<void>): void; available(): boolean }
@@ -33,6 +34,7 @@ export function registerWritingCommands(plugin: Plugin, ctx: CommandContext, act
   add('export-project', tr('Projekt exportieren'), () => actions.transfer.exportProject(), hasProject);
   add('organize-project', tr('Projektdateien lesbar ordnen'), () => actions.organize(), hasProject);
   add('copy-project', tr('Projekt kopieren'), () => actions.advanced.copyProject(), hasProject);
+  add('delete-project', tr('Projekt löschen'), () => deleteProject(ctx), hasProject);
   add('transfer-object', tr('Notiz in anderes Projekt kopieren'), () => actions.advanced.transfer(), () => !!ctx.active() && ctx.active()?.collection !== 'project' && ctx.service.index.manifests().length > 1);
   add('add-image', tr('Bild hinzufügen'), () => actions.images.addImage(), hasProject);
   add('inspect-project', tr('Projekt auf Probleme prüfen'), () => actions.inspection.show(), () => hasProject() || ctx.service.index.problems.length > 0);

@@ -10,6 +10,7 @@ import { parseLocalJson } from './local-json';
 import { LayoutJournalService } from './layout-journal';
 import { LanguageJournalService } from './language-journal';
 import type { Settings } from '../projects/layout';
+import { DeletionJournalService } from './deletion-journal';
 
 export interface Mutation { path: string; before: Uint8Array | null; after: Uint8Array; binary: boolean }
 /** Sequential write-ahead journal; the prepared marker precedes every target mutation. */
@@ -68,6 +69,7 @@ export class JournalService {
   async recover(path: string, projectId: string): Promise<{ conflicts: string[]; settings?: Settings }> {
     const bytes = await this.vault.read(safePath(path));
     const header = bytes ? parseLocalJson(text(bytes)) : null;
+    if (isObject(header) && header['kind'] === 'deletion') return new DeletionJournalService(this.vault).recover(path, projectId);
     if (isObject(header) && header['kind'] === 'layout') return new LayoutJournalService(this.vault).recover(path, projectId);
     if (isObject(header) && header['kind'] === 'language' && projectId === 'language') return new LanguageJournalService(this.vault).recover(path);
     const journal = await loadJournal(this.vault, path, projectId);

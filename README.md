@@ -4,7 +4,7 @@
 
 <p align="center"><a href="#deutsch">Deutsch</a> · <a href="#english">English</a> · <a href="https://www.writeller.com">writeller.com</a> · <a href="https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases">Download</a></p>
 
-<p align="center"><a href="https://github.com/Cmdr-Hawkeye/writeller-obsidian/actions/workflows/check.yml"><img src="https://github.com/Cmdr-Hawkeye/writeller-obsidian/actions/workflows/check.yml/badge.svg" alt="Automatisierte Prüfung"></a> <a href="LICENSE">MIT-Lizenz</a> · Vorschau 0.3.1 · von Benni</p>
+<p align="center"><a href="https://github.com/Cmdr-Hawkeye/writeller-obsidian/actions/workflows/check.yml"><img src="https://github.com/Cmdr-Hawkeye/writeller-obsidian/actions/workflows/check.yml/badge.svg" alt="Automatisierte Prüfung"></a> <a href="LICENSE">MIT-Lizenz</a> · Vorschau 0.3.2 · von Benni</p>
 
 ## Deutsch
 
@@ -27,10 +27,12 @@ Dein Buch wächst in **normalen Markdown-Dateien**. Writeller bringt Kapitel, Sz
 
 ## Installieren
 
+**Projekt löschen:** In der Schreibübersicht **Weitere Projektaktionen (⋯) → Projekt löschen** wählen und den Projektnamen zur Bestätigung eingeben. Entfernt werden zugeordnete Notizen und technische Projektdaten nach Obsidians Löschpräferenz. Nicht zugeordnete Dateien, vorhandene Exporte und andere Projekte bleiben erhalten. [Ablauf und Wiederherstellung](docs/handbuch.md#projekt-löschen).
+
 Die folgende Anleitung beschreibt die manuelle Installation aus dem GitHub-Release. Die Oberfläche unterstützt Deutsch und Englisch. Voraussetzung: Obsidian **1.14.5 oder neuer**; echte Mobile-Geräte sind noch nicht abgenommen.
 
-1. Den Vault sichern und das [Release 0.3.1](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.3.1) öffnen.
-2. Unter **Assets** `writeller-0.3.1.zip` herunterladen und entpacken.
+1. Den Vault sichern und das [Release 0.3.2](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.3.2) öffnen.
+2. Unter **Assets** `writeller-0.3.2.zip` herunterladen und entpacken.
 3. Den enthaltenen Ordner `writeller` nach `<Vault>/.obsidian/plugins/` kopieren. `main.js`, `manifest.json` und `styles.css` müssen direkt darin liegen.
 4. Obsidian öffnen und **Einstellungen → Community-Erweiterungen → Novel Planner - by Writeller** aktivieren. Beim Update die Plugin-Dateien ersetzen und das Plugin neu laden.
 
@@ -137,14 +139,16 @@ Quellcode: **[MIT](LICENSE), © 2026 Benni**. Drittanbieter-Lizenzen: [THIRD-PAR
 - Add relationships and your own catalog types.
 - Import or export project files manually with a preview and explicit conflict decisions.
 
+**Delete a project:** Choose **More project actions (⋯) → Delete project** in the writing overview and enter the project name to confirm. Assigned notes and private project data are removed using your Obsidian deleted-file preference. Unassigned files, existing exports and other projects are kept. Interrupted deletions can be recovered through **Recover interrupted operation**. Completed deletions have no plugin undo; use your trash or a saved export if needed.
+
 The plugin is free to use and requires no account or Writeller license. It makes no network, tracking or AI calls. Technical preservation data stays in your vault.
 
 ## Install the preview
 
 The following steps describe manual installation from the GitHub release. Minimum version: **Obsidian 1.14.5**. Actual mobile-device acceptance tests are still pending.
 
-1. Back up your vault and open [release 0.3.1](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.3.1).
-2. Download `writeller-0.3.1.zip` from **Assets** and extract it.
+1. Back up your vault and open [release 0.3.2](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.3.2).
+2. Download `writeller-0.3.2.zip` from **Assets** and extract it.
 3. Copy its `writeller` directory to `<vault>/.obsidian/plugins/`. `main.js`, `manifest.json` and `styles.css` must be directly inside that directory.
 4. Enable Novel Planner - by Writeller in Obsidian's Community plugins settings. For updates, replace the plugin files and reload the plugin.
 

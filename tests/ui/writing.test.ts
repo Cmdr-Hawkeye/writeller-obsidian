@@ -94,7 +94,7 @@ describe('Schreiboberfläche im DOM-/API-Fake', () => {
     registerWritingCommands(plugin, ctx, { writing, advanced: new LocalCommands(ctx), transfer: new TransferCommands(ctx), images: new ImageCommands(ctx), inspection: new Inspection(ctx),
       openView: async () => {}, organize: async () => {}, run: action => { void action(); }, available: () => true });
     const visible = commands.filter(c => c.checkCallback(true)).map(c => c.name);
-    for (const name of ['Kapitel hinzufügen', 'Szene hinzufügen', 'Figur hinzufügen', 'Ort hinzufügen', 'Schreibprojekte öffnen']) expect(visible).toContain(name);
+    for (const name of ['Kapitel hinzufügen', 'Szene hinzufügen', 'Figur hinzufügen', 'Ort hinzufügen', 'Schreibprojekte öffnen', 'Projekt löschen']) expect(visible).toContain(name);
     expect(visible).not.toContain('Technische Daten bearbeiten'); expect(visible).not.toContain('Unterbrochenen Vorgang wiederherstellen');
     ctx.pendingRecovery = true; expect(commands.find(c => c.id === 'recover-import')?.checkCallback(true)).toBe(true);
   });

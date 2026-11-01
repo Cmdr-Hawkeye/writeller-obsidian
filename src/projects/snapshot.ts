@@ -13,7 +13,7 @@ import { holdAnnotations } from '../mapping/annotations';
 import { projectJournalHeader } from '../storage/journal-header';
 import { loadLayoutJournal } from '../storage/layout-journal-format';
 import { pluginVersion } from '../domain/version';
-import { assertLanguageReady } from '../storage/language-status';
+import { assertStructureReady } from '../storage/operation-status';
 import type { ProjectIndex } from './index';
 import { loadProjectState, decodeRecordState } from '../storage/state';
 import type { ProjectState, RecordState } from '../storage/state-types';
@@ -25,7 +25,7 @@ export interface Snapshot { exchange: Exchange; state: ProjectState; statePath: 
   records: Map<string, RecordState>; fingerprint: string; files: Map<string, Uint8Array>; warnings: Diagnostic[] }
 /** Reconstructs a consistent project from current notes plus loss-preserving sidecars. */
 export async function snapshotProject(vault: VaultPort, index: ProjectIndex, projectId: string, allowDangling = false, assetOriginals = new Map<string, Uint8Array>(), editorKey: string | null = null, displayOnly = false): Promise<Snapshot> {
-  await assertLanguageReady(vault);
+  await assertStructureReady(vault);
   if (displayOnly) await index.refresh(); else await index.rebuild(); index.assertClean();
   const manifest = index.find(projectId, 'project', projectId);
   if (!manifest) fail('STATE_MISSING', tr('Projektmanifest fehlt. Original-Import reparieren oder Manifest wiederherstellen.'));

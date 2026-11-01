@@ -1,7 +1,7 @@
 import { tr } from '../i18n/translate';
 import { App, Modal, Setting, type ButtonComponent } from 'obsidian';
 
-export interface FormField { key: string; label: string; value?: string; kind?: 'text' | 'area' | 'select' | 'number';
+export interface FormField { key: string; label: string; value?: string; kind?: 'text' | 'area' | 'select' | 'number' | 'message';
   description?: string; placeholder?: string; required?: boolean; options?: { label: string; value: string }[] }
 export type FormValues = Record<string, string>;
 /** Native, labelled writing form; Enter submits text fields and Escape cancels without writes. */
@@ -11,7 +11,7 @@ class WritingForm extends Modal {
   private submitting = false;
   /** Receives fields and a validator; persistence stays outside this reusable form. */
   constructor(app: App, private readonly heading: string, private readonly fields: FormField[], private readonly submitLabel: string,
-    private readonly done: (values: FormValues | null) => void, private readonly validate: (values: FormValues) => void) {
+    private readonly done: (values: FormValues | null) => void, private readonly validate: (values: FormValues) => void, private readonly destructive: boolean) {
     super(app); this.values = Object.fromEntries(fields.map(f => [f.key, f.value ?? '']));
   }
   /** Builds restrained native inputs using text only, with an accessible persistent error region. */
@@ -28,11 +28,13 @@ class WritingForm extends Modal {
           this.validate(this.values); this.submitting = true; b.setDisabled(true); this.accepted = true; this.done(this.values); this.close();
         } catch (e) { error.setText(e instanceof Error ? e.message : tr('Bitte Eingabe prüfen.')); }
       });
+      if (this.destructive) b.setDestructive();
     });
     this.contentEl.querySelector<HTMLInputElement>('input')?.focus();
   }
   /** Creates one clearly labelled field; option values may be IDs but labels remain readable. */
   private field(field: FormField, submit: () => void): void {
+    if (field.kind === 'message') { this.contentEl.createEl('p', { text: field.label }); return; }
     const row = new Setting(this.contentEl).setName(field.label);
     if (field.description) row.setDesc(field.description);
     const value = this.values[field.key] ?? '';
@@ -54,6 +56,6 @@ class WritingForm extends Modal {
   override onClose(): void { this.contentEl.empty(); if (!this.accepted) this.done(null); }
 }
 /** Opens an ordinary writing form; validation never grants automatic approval to overwrite files. */
-export function writingForm(app: App, heading: string, fields: FormField[], submit = tr('Speichern'), validate: (values: FormValues) => void = () => {}): Promise<FormValues | null> {
-  return new Promise(resolve => new WritingForm(app, heading, fields, submit, resolve, validate).open());
+export function writingForm(app: App, heading: string, fields: FormField[], submit = tr('Speichern'), validate: (values: FormValues) => void = () => {}, destructive = false): Promise<FormValues | null> {
+  return new Promise(resolve => new WritingForm(app, heading, fields, submit, resolve, validate, destructive).open());
 }

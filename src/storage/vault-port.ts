@@ -11,7 +11,7 @@ export interface VaultPort {
   create(path: string, bytes: Uint8Array, binary: boolean): Promise<void>;
   /** Atomically compares text in Vault.process; throws LOCAL_CHANGED on mismatch. */
   compareAndSwap(path: string, before: string, after: string): Promise<void>;
-  /** Moves an owned recovery-created file into local trash after a fresh byte check. */
+  /** Removes a confirmed owned file after a fresh byte check, respecting native trash preferences. */
   trash(path: string, expected: Uint8Array): Promise<void>;
   /** Moves a checked managed file with the host's normal link-update behaviour; collisions block. */
   move(from: string, to: string, expected: Uint8Array): Promise<void>;

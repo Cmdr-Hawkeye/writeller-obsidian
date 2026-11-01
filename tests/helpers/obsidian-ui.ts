@@ -69,6 +69,8 @@ class Button {
   setButtonText(value: string): this { this.buttonEl.textContent = value; return this; }
   /** Marks the primary native action. */
   setCta(): this { this.buttonEl.classList.add('mod-cta'); return this; }
+  /** Mirrors native destructive action styling for deletion confirmations. */
+  setDestructive(): this { this.buttonEl.classList.add('mod-warning'); return this; }
   /** Prevents duplicate submissions while saving. */
   setDisabled(value: boolean): this { this.buttonEl.disabled = value; return this; }
   /** Attaches an explicit user action. */

@@ -13,6 +13,7 @@ import { discoverNotes } from '../projects/note-discovery';
 import { renderUnassigned } from './unassigned-notes';
 import { viewRevision } from '../projects/view-revision';
 import { RefreshQueue } from './refresh-queue';
+import { deleteProject } from './delete-project';
 
 export const projectViewType = 'writeller-writing-project';
 export interface ProjectViewTools { inspect(): Promise<void>; advanced(): Promise<void>; organize(projectId: string): Promise<void>; recover(): Promise<void> }
@@ -137,6 +138,7 @@ export class WritingProjectView extends ItemView {
     menu.addItem(item => item.setTitle(tr('Projekt prüfen')).setIcon('check').onClick(() => this.run(() => this.tools.inspect())));
     menu.addSeparator(); menu.addItem(item => item.setTitle(tr('Projekt importieren')).setIcon('download').onClick(() => this.run(() => this.transfer.importProject())));
     if (this.ctx.service.settings.showTechnicalInfo) menu.addItem(item => item.setTitle(tr('Technische Daten bearbeiten')).onClick(() => this.run(() => this.tools.advanced())));
+    menu.addSeparator(); menu.addItem(item => item.setTitle(tr('Projekt löschen')).setIcon('trash-2').onClick(() => this.run(() => deleteProject(this.ctx, id))));
     const rect = button.getBoundingClientRect(); menu.showAtPosition({ x: rect.right, y: rect.bottom });
   }
   /** Connects rows to real-note operations without deriving ownership from folders. */

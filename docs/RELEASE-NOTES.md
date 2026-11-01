@@ -1,39 +1,35 @@
-# Novel Planner - by Writeller 0.3.1
+# Novel Planner - by Writeller 0.3.2
 
 [Deutsch](#deutsch) · [English](#english) · [writeller.com](https://www.writeller.com)
 
 ## Deutsch
 
-**Schnellere Bedienung bei wachsenden Vaults und Journalhistorien.**
+**Schreibprojekte gezielt löschen.**
 
-- Unveränderte Ansichten lesen keine Projektdateien erneut. Überlappende Aktualisierungen teilen sich ihre Arbeit; Buttons und Fokus bleiben erhalten.
-- Der Anzeigeindex liest gezielt geänderte Notizen. Die Prüfung vor dem Schreiben liest die Quellen weiterhin frisch und erkennt Änderungen, Duplikate und belegte Ziele.
-- Abgeschlossene Journale lösen nicht mehr bei jedem Klick eine vollständige Prüfung aller historischen Sicherungsbytes aus. Ihre Abschluss-/Besitzmetadaten bleiben geprüft; ausdrückliche Wiederherstellung prüft die Originalbackups weiterhin vollständig.
-- Bereits vollständig geprüfte Bilder müssen nach erneuter Hash- und Metadatenprüfung nicht immer wieder dekodiert werden.
-- Längeres Speichern erhält eine vorübergehende Rückmeldung. Nach Formularbestätigung kann der Host zuerst zeichnen; unveränderte Editorpuffer werden nicht unnötig gespeichert.
+- In der Schreibübersicht **Weitere Projektaktionen (⋯) → Projekt löschen** wählen. Auch über die Befehlspalette erreichbar.
+- Der Dialog zeigt Projektname und Umfang. Zur Bestätigung den genauen Projektnamen eingeben.
+- Zugeordnete Markdown-Notizen, auch nach Verschieben, und die privaten Projektdaten werden nach Obsidians Einstellung für gelöschte Dateien entfernt. Andere Projekte, nicht zugeordnete Dateien und vorhandene Exporte bleiben erhalten. Nur leere Ordner werden aufgeräumt.
+- Vor dem ersten Entfernen werden die Originale gesichert und die Quellen erneut geprüft. Eine unterbrochene Löschung lässt sich über **Unterbrochenen Vorgang wiederherstellen** zurücknehmen; nachträglich fremd bearbeitete Dateien bleiben erhalten.
+- Temporäre Sicherungen werden nach Abschluss ebenfalls über Obsidians Löschpräferenz entfernt. Eine abgeschlossene Löschung hat keinen eigenen Rückgängig-Befehl; Papierkorb oder vorhandenen Export verwenden.
 
-**Messung:** Bei bereits geöffneter Ansicht mit 1.000 fremden Notizen und 16 weiteren gespeicherten Vorgängen sinken die Dateilesen beim Öffnen eines Figurenformulars von **2.321 auf 66**, beim Speichern samt Ansicht von **5.672 auf 1.332** und bei fünf unveränderten Aktualisierungen von **11.655 auf 0**. Das ist ein kontrollierter Vergleich der Produktionsmodule, keine native Obsidian-Zeitmessung oder garantierte Beschleunigung in Sekunden.
+**Update:** `writeller-0.3.2.zip` unter Assets herunterladen und die Plugin-Dateien in `<Vault>/.obsidian/plugins/writeller/` ersetzen. Einstellungen in `data.json` behalten und Obsidian neu laden. Mindestversion: Obsidian 1.14.5.
 
-**Update:** `writeller-0.3.1.zip` unter Assets herunterladen und die Plugin-Dateien in `<Vault>/.obsidian/plugins/writeller/` ersetzen. Obsidian neu laden. Projektdateien und Einstellungen behalten. Der Anzeigename, die interne ID `writeller` und die Sprachwahl bleiben unverändert. Mindestversion: Obsidian 1.14.5.
-
-**Prüfung:** 528 Tests in 21 Dateien und 13 Browserchecks bestanden. Native Desktop-/Mobile-Performanceabnahme bleibt offen.
+Die neuen Lösch- und Wiederherstellungsfälle sind in isolierten Speicher-/DOM-Tests geprüft. Native Desktop-/Mobile-Abnahme bleibt offen.
 
 ## English
 
-**Faster interaction as vaults and journal history grow.**
+**Delete writing projects explicitly.**
 
-- Unchanged views no longer reread project files. Overlapping refreshes share work while preserving buttons and focus.
-- The display index reads changed notes selectively. Before writing, fresh source reads still detect edits, duplicate identities and occupied targets.
-- Completed journals no longer trigger repeated validation of all historical backup bytes on every click. Completion/ownership metadata remains checked; explicit recovery still fully validates original backups.
-- Fully validated images can skip repeated decoding after their hash and exact metadata have been verified again.
-- Longer saves show temporary activity feedback. The host can paint after form confirmation, and unchanged editor buffers are not saved unnecessarily.
+- Choose **More project actions (⋯) → Delete project** in the writing overview, or use the command palette.
+- The confirmation shows the project name and scope. Enter the exact project name to continue.
+- Assigned Markdown notes, including moved notes, and private project data are removed using your Obsidian deleted-file preference. Other projects, unassigned files and existing exports are kept. Only empty folders are cleaned up.
+- All originals are backed up and fresh source checks run before removal. Use **Recover interrupted operation** after an interruption; externally edited files are preserved.
+- Temporary backups are removed after completion using the same native deleted-file preference. Completed deletions have no plugin undo; use your trash or a saved export.
 
-**Measurement:** With an already open view, 1,000 unrelated notes and 16 additional saved operations, file reads drop from **2,321 to 66** when opening a character form, from **5,672 to 1,332** when saving and refreshing, and from **11,655 to 0** for five unchanged refreshes. This controlled production-module comparison is not a native Obsidian timing or a guaranteed wall-clock speedup.
+**Update:** Download `writeller-0.3.2.zip` from Assets, replace the plugin files in `<vault>/.obsidian/plugins/writeller/`, retain settings in `data.json` and reload Obsidian. Minimum: Obsidian 1.14.5.
 
-**Update:** Download `writeller-0.3.1.zip` from Assets, replace the plugin files in `<vault>/.obsidian/plugins/writeller/` and reload Obsidian. Retain project files and settings. The display name, internal ID `writeller` and language preference are unchanged. Minimum: Obsidian 1.14.5.
-
-**Validation:** 528 tests across 21 files and 13 browser checks passed. Native desktop/mobile performance acceptance remains pending.
+Deletion and recovery cases are covered by isolated storage/DOM tests. Native desktop/mobile acceptance remains pending.
 
 The public Writeller Exchange 1.0.0 contract is unchanged. / Der öffentliche Writeller Exchange 1.0.0-Vertrag bleibt unverändert.
 
-[Performance analysis](https://github.com/Cmdr-Hawkeye/writeller-obsidian/blob/main/docs/performance.md) · [Changelog](https://github.com/Cmdr-Hawkeye/writeller-obsidian/blob/main/CHANGELOG.md)
+[Changelog](https://github.com/Cmdr-Hawkeye/writeller-obsidian/blob/main/CHANGELOG.md)

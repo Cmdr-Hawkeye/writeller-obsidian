@@ -76,6 +76,14 @@ try {
     await page.getByLabel('Name', { exact: true }).fill('Neue Figur'); await page.screenshot({ path: `${root}/mobile-form.png`, fullPage: true });
     await page.locator('.modal').getByRole('button', { name: 'Abbrechen', exact: true }).click();
     checks.push('Schmales Formular erreichbar und ohne Datensatzanlage abbrechbar');
+    await page.getByRole('button', { name: 'Weitere Projektaktionen', exact: true }).click();
+    await page.locator('.menu').getByRole('button', { name: 'Projekt löschen', exact: true }).click();
+    await page.getByLabel('Projektnamen zur Bestätigung eingeben', { exact: true }).waitFor();
+    if (await page.evaluate(() => globalThis.document.documentElement.scrollWidth > globalThis.innerWidth)) throw new Error('Löschbestätigung läuft auf schmalem Fenster horizontal über');
+    await page.screenshot({ path: `${root}/delete-project-narrow.png`, fullPage: true });
+    await page.locator('.modal').getByRole('button', { name: 'Abbrechen', exact: true }).click();
+    await page.getByRole('button', { name: 'Figur hinzufügen', exact: true }).waitFor();
+    checks.push('Projektlöschung auf schmalem Fenster mit Namensbestätigung erreichbar und ohne Löschung abbrechbar');
     const properties = await page.evaluate(() => {
       const doc = globalThis.document, host = doc.createElement('div'); host.className = 'writeller-writing-note';
       const container = doc.createElement('div'); container.className = 'metadata-container'; host.append(container);
@@ -107,7 +115,10 @@ try {
     await page.getByRole('button', { name: 'Figur hinzufügen', exact: true }).waitFor();
     if (!await page.locator('.nav-folder-title[data-path="Schreibprojekte"]').isVisible()) throw new Error('Rückwechsel stellt deutsche Projektstruktur nicht wieder her');
     checks.push('Bestätigter Rückwechsel stellt deutsche Oberfläche und Ordner wieder her');
-  } finally { await new Promise(resolve => server.close(resolve)); }
+  } finally {
+    // Close browser keep-alive connections too, including when a UI assertion fails.
+    await page.close(); server.closeAllConnections(); await new Promise(resolve => server.close(resolve));
+  }
   if (errors.length) throw new Error(errors.join('\n'));
   const external = requests.filter(url => !url.startsWith('http://127.0.0.1:'));
   if (external.length) throw new Error('Externer Request in der UI-Testumgebung');

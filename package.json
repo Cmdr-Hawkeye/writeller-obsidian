@@ -1,6 +1,6 @@
 {
   "name": "writeller-obsidian",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "private": true,
   "description": "Lokale Schreibprojekte und manueller Writeller Exchange für Obsidian.",
   "license": "MIT",
@@ -28,7 +28,8 @@
     "test:ui": "node scripts/ui-smoke.mjs",
     "bench:performance": "node scripts/performance.mjs",
     "check": "npm run typecheck && npm run lint && npm test && npm run build",
-    "release:prepare": "npm run check && npm audit && npm run licenses && node scripts/reproducible.mjs && node scripts/release.mjs && node scripts/verify-release.mjs",
+    "release:prepare": "npm run check && npm run audit:release && npm run licenses && node scripts/reproducible.mjs && node scripts/release.mjs && node scripts/verify-release.mjs",
+    "audit:release": "node scripts/audit.mjs",
     "licenses": "node scripts/licenses.mjs",
     "audit:dependencies": "npm audit --omit=dev"
   },

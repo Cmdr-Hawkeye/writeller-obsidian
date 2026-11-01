@@ -1,5 +1,13 @@
 # Änderungen
 
+## 0.3.2 — 01.11.2026
+
+- „Projekt löschen“ im Projektmenü und in der Befehlspalette, auf Deutsch und Englisch. Der Dialog nennt das Projekt und den Umfang; zur Bestätigung ist der genaue Projektname erforderlich.
+- Entfernt zugeordnete Notizen, auch nach Verschieben, sowie die eigenen Austausch-/Bild-/Historiedaten. Andere Projekte, unzugeordnete Dateien und vorhandene Exporte bleiben erhalten. Nur leere Projektordner werden aufgeräumt.
+- Frische Quellen-/Identitätsprüfung und vollständige Originalsicherung vor der ersten Löschung. Native Dateioperationen respektieren Obsidians Löschpräferenz. Unterbrechungen werden über den vorhandenen Wiederherstellungsbefehl zurückgenommen; fremde Nachbearbeitungen bleiben als Konflikt erhalten.
+- Temporäre Sicherungen werden nach erfolgreichem Abschluss ebenfalls über Obsidians Löschpräferenz entfernt. Ein gelöschtes Projekt kann später aus einem vorhandenen Export wieder importiert werden.
+- Releaseprüfung dokumentiert einen neuen minimatch-Hinweis ausschließlich in Entwicklungswerkzeugen. Ein eng begrenzter Advisory-Gate lässt neue oder höher bewertete Befunde weiterhin scheitern; Details in `docs/development-audit.md`.
+
 ## 0.3.1 — 28.10.2026
 
 - Performance: unveränderte Ansichten lesen keine Notiz-/Begleitdateien erneut und rekonstruieren das Projekt nicht bei jedem Fokus-/Layout-Ereignis. Überlappende Aktualisierungen werden zusammengeführt.

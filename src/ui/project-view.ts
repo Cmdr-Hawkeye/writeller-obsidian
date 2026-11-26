@@ -1,14 +1,17 @@
 import { tr } from '../i18n/translate';
 import { language } from '../i18n/language';
-import { ItemView, Menu, type WorkspaceLeaf } from 'obsidian';
+import { ItemView, Menu, setIcon, type App, type ViewStateResult, type WorkspaceLeaf } from 'obsidian';
 import type { CommandContext } from './command-context';
 import type { WritingCommands } from './writing-commands';
 import type { TransferCommands } from './transfer-commands';
 import type { Snapshot } from '../projects/snapshot';
-import { writingKinds, namedChoices } from '../objects/kinds';
+import { namedChoices } from '../objects/kinds';
 import { manuscriptOrder } from '../domain/order';
 import { moveInManuscript } from '../objects/reorder';
-import { iconButton, renderManuscript, renderPlanning, writingWordCount, type ProjectActions } from './project-sections';
+import { addMenu, formatCount, iconButton, labelButton, writingWordCount, type ProjectActions } from './project-sections';
+import { renderWorkbench, type WorkbenchState } from './workbench';
+import { renderStoryboard } from './storyboard';
+import type { WorldFilter } from './world';
 import { discoverNotes } from '../projects/note-discovery';
 import { renderUnassigned } from './unassigned-notes';
 import { viewRevision } from '../projects/view-revision';
@@ -17,12 +20,17 @@ import { deleteProject } from './delete-project';
 
 export const projectViewType = 'writeller-writing-project';
 export interface ProjectViewTools { inspect(): Promise<void>; advanced(): Promise<void>; organize(projectId: string): Promise<void>; recover(): Promise<void> }
+/** Display-only layout of one open view, persisted by Obsidian's workspace, never in notes or exports. */
+export type ProjectLayout = 'workbench' | 'storyboard';
 /** Working overview: real Markdown files, chapter structure and direct writing actions. */
 export class WritingProjectView extends ItemView {
   private generation = 0;
   private closed = false;
   private renderedKey: string | null = null;
   private dataKey: string | null = null;
+  private layout: ProjectLayout = 'workbench';
+  private readonly workbench: WorkbenchState = { tab: 'manuscript' };
+  private readonly filter: WorldFilter = { query: '', kind: '' };
   private readonly queue = new RefreshQueue(() => this.update());
   private readonly onChanged = (): void => { void this.refresh().catch(error => this.ctx.report(error)); };
   /** Injects action services; the view owns no manuscript data or separate identity registry. */
@@ -40,6 +48,22 @@ export class WritingProjectView extends ItemView {
   override async onClose(): Promise<void> { this.closed = true; this.generation++; this.renderedKey = null; this.dataKey = null; this.ctx.changed.delete(this.onChanged); this.contentEl.empty(); }
   /** Selects projects by title; fresh source snapshots remain the sole source of ownership. */
   refresh(): Promise<void> { return this.queue.request(); }
+  /** Lets Obsidian remember the chosen layout and tab together with the workspace. */
+  override getState(): Record<string, unknown> { return { ...super.getState(), layout: this.layout, tab: this.workbench.tab }; }
+  /** Restores only known display values; anything else keeps the defaults. */
+  override async setState(state: unknown, result: ViewStateResult): Promise<void> {
+    if (state && typeof state === 'object') {
+      const { layout, tab } = state as Record<string, unknown>;
+      if (layout === 'workbench' || layout === 'storyboard') this.layout = layout;
+      if (tab === 'manuscript' || tab === 'world') this.workbench.tab = tab;
+    }
+    await super.setState(state, result); this.renderedKey = null; if (!this.closed) await this.refresh();
+  }
+  /** Switches between workbench and storyboard without touching project data. */
+  private setLayout(layout: ProjectLayout): void {
+    if (layout === this.layout) return;
+    this.layout = layout; this.renderedKey = null; (this.app as App | undefined)?.workspace.requestSaveLayout(); this.onChanged();
+  }
   /** Avoids snapshots for unchanged displays; full source verification remains in write operations. */
   private async update(): Promise<void> {
     if (this.closed) return;
@@ -60,7 +84,8 @@ export class WritingProjectView extends ItemView {
     try {
       await this.ctx.flushEditors(id); await this.ctx.service.index.refresh(); this.ctx.service.index.assertClean();
       const revision = await viewRevision(this.ctx.service.vault, this.ctx.service.index, id);
-      dataKey = revision === null ? null : `${language()}/${id}/${this.ctx.service.settings.showTechnicalInfo}/${revision}`;
+      // The layout belongs to the display key: switching it must render at once, without a data change.
+      dataKey = revision === null ? null : `${language()}/${id}/${this.ctx.service.settings.showTechnicalInfo}/${this.layout}/${revision}`;
       if (dataKey !== null && dataKey === this.dataKey) return;
       snapshot = await this.ctx.service.displaySnapshot(id);
     }
@@ -77,24 +102,35 @@ export class WritingProjectView extends ItemView {
     // Native focus/cache events often refresh without a content change. Keeping the same
     // DOM preserves the button between pointerdown and click, plus keyboard focus and folds.
     const candidates = discoverNotes(this.ctx.service.vault, this.ctx.service.index, id);
-    const key = `${language()}/${id}/${snapshot.fingerprint}/${this.ctx.service.settings.showTechnicalInfo}/${JSON.stringify(candidates)}`;
+    const key = `${language()}/${id}/${snapshot.fingerprint}/${this.ctx.service.settings.showTechnicalInfo}/${this.layout}/${JSON.stringify(candidates)}`;
     if (key === this.renderedKey) return;
-    this.contentEl.empty(); this.switcher(choices, id); this.renderedKey = key;
+    this.contentEl.empty(); this.renderedKey = key;
+    const actions = this.actions(snapshot);
+    this.switcher(choices, id, snapshot, actions);
     this.projectHeader(snapshot);
     renderUnassigned(this.contentEl, candidates, this.ctx, this.writing, this.run);
-    const workspace = this.contentEl.createDiv({ cls: 'writeller-writing-layout' }), actions = this.actions(snapshot);
-    renderManuscript(workspace.createDiv({ cls: 'writeller-manuscript' }), snapshot, actions);
-    renderPlanning(workspace.createEl('aside', { cls: 'writeller-planning', attr: { 'aria-label': tr('Figuren, Welt und Ideen') } }), snapshot, actions);
+    if (this.layout === 'storyboard') renderStoryboard(this.contentEl, snapshot, actions, this.filter);
+    else renderWorkbench(this.contentEl, snapshot, actions, this.workbench);
   }
-  /** Renders project selection only when the displayed source state actually changes. */
-  private switcher(choices: { label: string; value: { projectId: string } }[], id: string): void {
+  /** Top bar: project choice, layout switch and the project-wide actions. */
+  private switcher(choices: { label: string; value: { projectId: string } }[], id: string, snapshot?: Snapshot, actions?: ProjectActions): void {
     const top = this.contentEl.createDiv({ cls: 'writeller-project-switcher' });
-    top.createSpan({ text: tr('Schreibprojekte'), cls: 'writeller-eyebrow' });
-    const select = top.createEl('select', { attr: { 'aria-label': tr('Schreibprojekt auswählen') } });
+    const select = top.createEl('select', { cls: 'dropdown', attr: { 'aria-label': tr('Schreibprojekt auswählen') } });
     for (const choice of choices) select.createEl('option', { value: choice.value.projectId, text: choice.label });
     select.value = id;
     select.addEventListener('change', () => { this.ctx.selectedProjectId = select.value; this.onChanged(); });
     iconButton(top, 'plus', tr('Neues Schreibprojekt'), () => this.run(() => this.writing.createProject()));
+    if (!snapshot || !actions) return;
+    top.createDiv({ cls: 'writeller-spacer' });
+    const layouts = top.createDiv({ cls: 'writeller-segmented', attr: { role: 'group', 'aria-label': tr('Ansicht') } });
+    for (const [layout, icon, label] of [['workbench', 'layout-dashboard', tr('Werkbank')], ['storyboard', 'kanban', tr('Storyboard')]] as const) {
+      const button = layouts.createEl('button', { attr: { type: 'button', 'aria-pressed': String(this.layout === layout) } });
+      setIcon(button.createSpan({ cls: 'writeller-button-icon', attr: { 'aria-hidden': 'true' } }), icon); button.createSpan({ text: label });
+      button.addEventListener('click', () => this.setLayout(layout));
+    }
+    const add = labelButton(top, 'plus', tr('Hinzufügen…'), () => addMenu(add, actions));
+    labelButton(top, 'download', tr('Exportieren'), () => this.run(() => this.transfer.exportProject(snapshot.exchange.project.id)));
+    const more = iconButton(top, 'ellipsis', tr('Weitere Projektaktionen'), () => this.moreMenu(snapshot, more));
   }
   /** Offers one clear first action plus import for an existing project. */
   private empty(): void {
@@ -113,21 +149,16 @@ export class WritingProjectView extends ItemView {
       hint.createSpan({ text: tr('Deine bisherigen Dateinamen lassen sich jetzt lesbar vereinfachen.') });
       hint.createEl('button', { text: tr('Dateinamen vereinfachen') }).addEventListener('click', () => this.run(() => this.tools.organize(pkg.project.id)));
     }
-    const count = pkg.scenes.reduce((sum, scene) => sum + writingWordCount(scene.content.text), 0);
-    header.createEl('p', { cls: 'writeller-progress-label', text: tr`${count.toLocaleString(language())} Wörter${pkg.project.wordTarget ? tr` von ${pkg.project.wordTarget.toLocaleString(language())}` : ''} · ${pkg.chapters.length} Kapitel · ${pkg.scenes.length} Szenen` });
-    if (pkg.project.wordTarget) header.createEl('progress', { attr: { max: String(pkg.project.wordTarget), value: String(count), 'aria-label': tr('Fortschritt zum Schreibziel') } });
-    const toolbar = header.createDiv({ cls: 'writeller-project-toolbar' }), scene = manuscriptOrder(pkg).at(-1);
-    toolbar.createEl('button', { cls: 'mod-cta', text: scene ? tr('Weiterschreiben') : tr('Szene hinzufügen') }).addEventListener('click', () => this.run(async () => {
+    if (this.layout !== 'storyboard') return;
+    // The workbench shows progress in its cards; the storyboard keeps one compact line and the primary action.
+    const count = pkg.scenes.reduce((sum, scene) => sum + writingWordCount(scene.content.text), 0), line = header.createDiv({ cls: 'writeller-progress-line' });
+    line.createSpan({ cls: 'writeller-progress-label', text: tr`${formatCount(count)} Wörter${pkg.project.wordTarget ? tr` von ${formatCount(pkg.project.wordTarget)}` : ''} · ${pkg.chapters.length} Kapitel · ${pkg.scenes.length} Szenen` });
+    if (pkg.project.wordTarget) line.createEl('progress', { attr: { max: String(pkg.project.wordTarget), value: String(count), 'aria-label': tr('Fortschritt zum Schreibziel') } });
+    const scene = manuscriptOrder(pkg).at(-1);
+    labelButton(line, 'pen-line', scene ? tr('Weiterschreiben') : tr('Szene hinzufügen'), () => this.run(async () => {
       const path = scene ? snapshot.state.records.find(r => r.collection === 'scenes' && r.id === scene.id)?.notePath : null;
       if (path) await this.ctx.open(path); else await this.writing.add('scene', pkg.project.id);
-    }));
-    const add = toolbar.createEl('button', { text: tr('Hinzufügen…') });
-    add.addEventListener('click', () => {
-      const menu = new Menu(); for (const kind of writingKinds) menu.addItem(item => item.setTitle(tr`${kind.singular} hinzufügen`).setIcon(kind.icon).onClick(() => this.run(() => this.writing.add(kind.id, pkg.project.id))));
-      const rect = add.getBoundingClientRect(); menu.showAtPosition({ x: rect.left, y: rect.bottom });
-    });
-    toolbar.createEl('button', { text: tr('Exportieren') }).addEventListener('click', () => this.run(() => this.transfer.exportProject(pkg.project.id)));
-    const more = iconButton(toolbar, 'ellipsis', tr('Weitere Projektaktionen'), () => this.moreMenu(snapshot, more));
+    }), 'mod-cta');
   }
   /** Keeps maintenance and raw preservation editing behind explicit secondary actions. */
   private moreMenu(snapshot: Snapshot, button: HTMLElement): void {

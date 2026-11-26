@@ -1,5 +1,12 @@
 # Änderungen
 
+## Unveröffentlicht
+
+- Neu gestaltete Schreibübersicht mit zwei umschaltbaren Ansichten. **Werkbank**: Karten für Weiterschreiben, Schreibziel (Ring) und Struktur samt Statusverteilung, dazu eine Manuskripttabelle mit Stand, Perspektive, Spannung und Wörtern sowie ein eigener Reiter für Figuren, Welt und Ideen. **Storyboard**: Kapitel als Spalten, Szenen als Karteikarten und eine durchsuchbare, filterbare Weltliste.
+- Leere Bereiche zeigen direkte Anlegeaktionen statt Nullzeilen. Titel sind keine vollbreiten Schaltflächen mehr.
+- Reine Darstellung: Die Ansichtswahl liegt im Obsidian-Arbeitsbereich, nicht in Notizen, Begleitdaten oder Exporten. Unbekannte Stände bleiben wörtlich sichtbar und unverändert. Die Spannung 0–100 wird gestuft angezeigt, ohne den gespeicherten Wert zu runden. Reihenfolgeänderungen laufen weiterhin ausschließlich über das gespeicherte Zeilenmenü.
+- Styles verwenden nur Theme-Variablen von Obsidian und passen sich über Container-Abfragen an schmale Bereiche an.
+
 ## 0.3.2 — 01.11.2026
 
 - „Projekt löschen“ im Projektmenü und in der Befehlspalette, auf Deutsch und Englisch. Der Dialog nennt das Projekt und den Umfang; zur Bestätigung ist der genaue Projektname erforderlich.

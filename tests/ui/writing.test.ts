@@ -112,6 +112,22 @@ describe('Schreiboberfläche im DOM-/API-Fake', () => {
     button.click(); await vi.waitFor(() => expect(document.querySelector('.modal [aria-label="Name"]')).not.toBeNull());
     submit('Abbrechen'); await view.onClose();
   });
+  it('wechselt zwischen Werkbank und Storyboard als reine, wiederherstellbare Darstellung', async () => {
+    const { ctx, writing, vault } = await created();
+    const view = new WritingProjectView({} as WorkspaceLeaf, ctx, writing, new TransferCommands(ctx), action => { void action(); }, {
+      inspect: async () => {}, advanced: async () => {}, organize: async () => {}, recover: async () => {}
+    });
+    document.body.append(view.contentEl); await view.onOpen();
+    const before = new Map(vault.data), worldTab = view.contentEl.querySelector<HTMLButtonElement>('[role="tab"][data-tab="world"]')!;
+    expect(view.contentEl.querySelector('#writeller-panel-world')?.hasAttribute('hidden')).toBe(true);
+    worldTab.click(); expect(view.contentEl.querySelector('#writeller-panel-manuscript')?.hasAttribute('hidden')).toBe(true);
+    expect(view.getState()).toMatchObject({ layout: 'workbench', tab: 'world' });
+    await view.setState({ layout: 'storyboard', tab: 'unbekannt' }, {} as never);
+    expect(view.contentEl.querySelector('.writeller-storyboard')).not.toBeNull();
+    expect(view.contentEl.textContent).toContain('Erstes Kapitel hinzufügen');
+    expect(view.getState()).toMatchObject({ layout: 'storyboard', tab: 'world' });
+    expect(vault.data).toEqual(before); await view.onClose();
+  });
   it('aktualisiert bei wirklich geänderten Daten weiterhin die Projektübersicht', async () => {
     const { ctx, writing, service } = await created();
     const view = new WritingProjectView({} as WorkspaceLeaf, ctx, writing, new TransferCommands(ctx), action => { void action(); }, {

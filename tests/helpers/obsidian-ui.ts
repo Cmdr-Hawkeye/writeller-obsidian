@@ -131,6 +131,10 @@ export class ItemView {
   contentEl = document.createElement('div');
   /** Uses the supplied test leaf without inventing native behaviour. */
   constructor(readonly leaf: unknown) {}
+  /** Native views persist their own display state through the workspace layout. */
+  getState(): Record<string, unknown> { return {}; }
+  /** Accepts restored display state like the native base class. */
+  async setState(_state: unknown, _result: unknown): Promise<void> {}
 }
 /** Editor-class identity used by context checks; real native execution is a separate gate. */
 export class MarkdownView {

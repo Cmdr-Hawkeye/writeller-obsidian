@@ -19,7 +19,14 @@ Der Anzeigename ist **Novel Planner - by Writeller**; die interne ID `writeller`
 3. **Schreibprojekt erstellen** wählen, Titel und bei Bedarf Beschreibung und Wortziel eingeben. Das Formular legt das Projekt an und öffnet die Übersicht.
 4. **Kapitel hinzufügen**, **Szene hinzufügen**, **Figur hinzufügen** oder **Ort hinzufügen** wählen. Die Formulare fragen nach verständlichen Angaben; Szenen können direkt einem Kapitel zugeordnet werden. Anschließend öffnet sich die echte Markdown-Datei zum Schreiben.
 
-Gegenstände, Ereignisse, Handlungsbögen, Notizen, Recherche, Beziehungen und eigene Objektarten sind ebenfalls verfügbar. Die Befehlspalette verwendet dieselben Begriffe. In der Übersicht öffnen die Titel die Dateien; das Zeilenmenü bietet Details und bei Kapiteln/Szenen das Verschieben in der Reihenfolge. **Weiterschreiben** öffnet die letzte Szene der Manuskriptreihenfolge. Der Wortzähler ist eine Orientierung für den aktuellen Szenentext.
+Gegenstände, Ereignisse, Handlungsbögen, Notizen, Recherche, Beziehungen und eigene Objektarten sind ebenfalls verfügbar. Die Befehlspalette verwendet dieselben Begriffe. In der Übersicht öffnen die Titel die Dateien; das Zeilenmenü (⋯) bietet Details und bei Kapiteln/Szenen das Verschieben in der Reihenfolge. **Weiterschreiben** öffnet die letzte Szene der Manuskriptreihenfolge. Der Wortzähler ist eine Orientierung für den aktuellen Szenentext.
+
+Die Übersicht hat zwei Ansichten, umschaltbar oben rechts; Obsidian merkt sich die Wahl je Fenster:
+
+- **Werkbank:** Karten für Weiterschreiben, Schreibziel und Struktur. Darunter die Reiter **Manuskript**, eine Tabelle mit Stand, Perspektive, Spannung und Wörtern je Szene, und **Figuren, Welt und Ideen**.
+- **Storyboard:** Kapitel als Spalten, Szenen als Karten mit Stand, Kurzbeschreibung, Perspektive und Spannung. Rechts eine durchsuchbare Liste der Figuren, Orte und weiteren Objekte; „in N Szenen“ zählt Perspektive und `appearsIn`-Beziehungen.
+
+Beide Ansichten lesen nur vorhandene Felder und speichern nichts zusätzlich. Unbekannte Stände werden wörtlich angezeigt und unverändert erhalten; die Spannung (0–100) wird in fünf Stufen dargestellt, der gespeicherte Wert bleibt exakt.
 
 ## Lesbare Dateien
 

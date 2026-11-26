@@ -54,6 +54,7 @@ try {
     await page.locator('.modal').getByRole('button', { name: 'Übernehmen', exact: true }).click();
     await page.waitForSelector('html[data-native-note-exported="true"]');
     checks.push('Gewöhnliche Notiz bewusst als Figur übernommen und mit vollständigem Text über die Produktionsoberfläche exportiert');
+    await page.getByRole('tab', { name: /^Figuren, Welt und Ideen/ }).click(); 
     const figure = page.getByRole('button', { name: 'Figur hinzufügen', exact: true });
     await figure.hover(); await page.mouse.down();
     await page.evaluate(() => globalThis.document.dispatchEvent(new globalThis.Event('writeller-test-refresh')));
@@ -64,6 +65,7 @@ try {
     await page.locator('.modal').getByRole('button', { name: 'Figur hinzufügen', exact: true }).click();
     await page.waitForFunction(() => [...globalThis.document.querySelectorAll('.writeller-note-title')].some(e => e.textContent === 'Mara'));
     checks.push('Figur über das tatsächliche Produktionsformular angelegt und als lesbare Notiz angezeigt');
+    await page.getByRole('tab', { name: 'Manuskript', exact: true }).click(); 
     await page.getByRole('button', { name: 'Kapitel hinzufügen', exact: true }).click();
     await page.getByLabel('Titel', { exact: true }).fill('Der Aufbruch');
     await page.locator('.modal').getByRole('button', { name: 'Kapitel hinzufügen', exact: true }).click();
@@ -72,6 +74,7 @@ try {
     await page.setViewportSize({ width: 390, height: 844 }); await page.screenshot({ path: `${root}/mobile.png`, fullPage: true });
     if (await page.evaluate(() => globalThis.document.documentElement.scrollWidth > globalThis.innerWidth)) throw new Error('Horizontaler Überlauf auf schmalem Fenster');
     checks.push('390-Pixel-Ansicht ohne horizontalen Überlauf');
+    await page.getByRole('tab', { name: /^Figuren, Welt und Ideen/ }).click(); 
     await page.getByRole('button', { name: 'Figur hinzufügen', exact: true }).click();
     await page.getByLabel('Name', { exact: true }).fill('Neue Figur'); await page.screenshot({ path: `${root}/mobile-form.png`, fullPage: true });
     await page.locator('.modal').getByRole('button', { name: 'Abbrechen', exact: true }).click();
@@ -102,9 +105,11 @@ try {
     await page.waitForSelector('html[data-preview-language="en"]');
     await page.getByRole('button', { name: 'Add Character', exact: true }).waitFor();
     if (!await page.locator('.nav-folder-title[data-path="Writing Projects"]').isVisible() || await page.locator('.nav-folder-title[data-path="Schreibprojekte"]').count()) throw new Error('Projektwurzel folgt nicht der englischen Sprache');
+    await page.getByRole('tab', { name: 'Manuscript', exact: true }).click();
     await page.getByText('Nebel am Hafen', { exact: true }).first().waitFor();
     await page.screenshot({ path: `${root}/english.png`, fullPage: true });
     checks.push('Obsidian-Sprache Englisch übersetzt Oberfläche und Strukturordner bei unveränderten Notiznamen');
+    await page.getByRole('tab', { name: /^Characters, world and ideas/ }).click();
     await page.getByRole('button', { name: 'Add Character', exact: true }).click();
     await page.getByLabel('Role in the story', { exact: true }).waitFor();
     await page.locator('.modal').getByRole('button', { name: 'Cancel', exact: true }).click();
@@ -115,6 +120,16 @@ try {
     await page.getByRole('button', { name: 'Figur hinzufügen', exact: true }).waitFor();
     if (!await page.locator('.nav-folder-title[data-path="Schreibprojekte"]').isVisible()) throw new Error('Rückwechsel stellt deutsche Projektstruktur nicht wieder her');
     checks.push('Bestätigter Rückwechsel stellt deutsche Oberfläche und Ordner wieder her');
+    await page.getByRole('button', { name: 'Storyboard', exact: true }).click();
+    await page.locator('.writeller-storyboard .writeller-scene-card').first().waitFor();
+    await page.screenshot({ path: `${root}/storyboard.png`, fullPage: true });
+    await page.setViewportSize({ width: 390, height: 844 });
+    if (await page.evaluate(() => globalThis.document.documentElement.scrollWidth > globalThis.innerWidth)) throw new Error('Storyboard läuft auf schmalem Fenster horizontal über');
+    await page.screenshot({ path: `${root}/storyboard-narrow.png`, fullPage: true });
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.getByRole('button', { name: 'Werkbank', exact: true }).click();
+    await page.locator('.writeller-workbench').waitFor();
+    checks.push('Storyboard mit Szenenkarten erreichbar, schmal ohne Seitenüberlauf, zurück zur Werkbank');
   } finally {
     // Close browser keep-alive connections too, including when a UI assertion fails.
     await page.close(); server.closeAllConnections(); await new Promise(resolve => server.close(resolve));

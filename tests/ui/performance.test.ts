@@ -37,6 +37,15 @@ describe('responsive project view', () => {
     vault.data.set(manifest, utf8(text(vault.data.get(manifest)!).replace('Mein Buch', 'Neuer Titel')));
     await Promise.all(Array.from({ length: 10 }, () => view.refresh())); expect(snapshot).toHaveBeenCalledOnce(); expect(view.contentEl.textContent).toContain('Neuer Titel'); await view.onClose();
   });
+  it('switches workbench and storyboard immediately although the data revision is unchanged', async () => {
+    const { view, vault } = await setup(); document.body.append(view.contentEl); const before = new Map(vault.data);
+    expect(view.contentEl.querySelector('.writeller-workbench')).not.toBeNull();
+    [...view.contentEl.querySelectorAll<HTMLButtonElement>('.writeller-segmented button')].find(b => b.textContent?.endsWith('Storyboard'))!.click();
+    await vi.waitFor(() => expect(view.contentEl.querySelector('.writeller-storyboard')).not.toBeNull());
+    [...view.contentEl.querySelectorAll<HTMLButtonElement>('.writeller-segmented button')].find(b => b.textContent?.endsWith('Werkbank'))!.click();
+    await vi.waitFor(() => expect(view.contentEl.querySelector('.writeller-workbench')).not.toBeNull());
+    expect(vault.data).toEqual(before); await view.onClose();
+  });
   it('detects a newly created ordinary note when managed identities have not changed', async () => {
     const { view, vault, service, pkg } = await setup(), base = service.index.find(pkg.project.id, 'project', pkg.project.id)!.path.split('/').slice(0, -1).join('/');
     vault.data.set(`${base}/Figuren/Neue Figur.md`, utf8('Text')); await view.refresh(); expect(view.contentEl.textContent).toContain('Noch nicht im Schreibprojekt'); expect(view.contentEl.textContent).toContain('Neue Figur'); await view.onClose();

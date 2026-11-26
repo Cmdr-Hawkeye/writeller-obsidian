@@ -1,6 +1,6 @@
 # Änderungen
 
-## Unveröffentlicht
+## 0.3.3 — 26.11.2026
 
 - Neu gestaltete Schreibübersicht mit zwei umschaltbaren Ansichten. **Werkbank**: Karten für Weiterschreiben, Schreibziel (Ring) und Struktur samt Statusverteilung, dazu eine Manuskripttabelle mit Stand, Perspektive, Spannung und Wörtern sowie ein eigener Reiter für Figuren, Welt und Ideen. **Storyboard**: Kapitel als Spalten, Szenen als Karteikarten und eine durchsuchbare, filterbare Weltliste.
 - Leere Bereiche zeigen direkte Anlegeaktionen statt Nullzeilen. Titel sind keine vollbreiten Schaltflächen mehr.

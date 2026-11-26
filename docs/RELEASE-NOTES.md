@@ -1,34 +1,34 @@
-# Novel Planner - by Writeller 0.3.2
+# Novel Planner - by Writeller 0.3.3
 
 [Deutsch](#deutsch) · [English](#english) · [writeller.com](https://www.writeller.com)
 
 ## Deutsch
 
-**Schreibprojekte gezielt löschen.**
+**Neu gestaltete Schreibübersicht mit zwei Ansichten.**
 
-- In der Schreibübersicht **Weitere Projektaktionen (⋯) → Projekt löschen** wählen. Auch über die Befehlspalette erreichbar.
-- Der Dialog zeigt Projektname und Umfang. Zur Bestätigung den genauen Projektnamen eingeben.
-- Zugeordnete Markdown-Notizen, auch nach Verschieben, und die privaten Projektdaten werden nach Obsidians Einstellung für gelöschte Dateien entfernt. Andere Projekte, nicht zugeordnete Dateien und vorhandene Exporte bleiben erhalten. Nur leere Ordner werden aufgeräumt.
-- Vor dem ersten Entfernen werden die Originale gesichert und die Quellen erneut geprüft. Eine unterbrochene Löschung lässt sich über **Unterbrochenen Vorgang wiederherstellen** zurücknehmen; nachträglich fremd bearbeitete Dateien bleiben erhalten.
-- Temporäre Sicherungen werden nach Abschluss ebenfalls über Obsidians Löschpräferenz entfernt. Eine abgeschlossene Löschung hat keinen eigenen Rückgängig-Befehl; Papierkorb oder vorhandenen Export verwenden.
+- **Werkbank:** Karten für Weiterschreiben, Schreibziel und Struktur. Darunter eine Manuskripttabelle mit Stand, Perspektive, Spannung und Wörtern je Szene und ein eigener Reiter für Figuren, Welt und Ideen.
+- **Storyboard:** Kapitel als Spalten, Szenen als Karteikarten mit Stand, Kurzbeschreibung, Perspektive und Spannung. Rechts eine durchsuchbare, nach Art filterbare Liste der Figuren, Orte und weiteren Objekte.
+- Umschalten oben rechts; Obsidian merkt sich die Wahl je Fenster. Leere Bereiche zeigen direkte Anlegeaktionen statt Nullzeilen.
+- Reine Darstellung: Es werden keine zusätzlichen Daten gespeichert. Unbekannte Stände bleiben wörtlich sichtbar, die Spannung (0–100) wird gestuft angezeigt, ohne den gespeicherten Wert zu verändern. Umsortieren bleibt eine bewusste Menüaktion.
+- Styles verwenden nur Theme-Variablen von Obsidian und passen sich schmalen Bereichen wie der Seitenleiste an.
 
-**Update:** `writeller-0.3.2.zip` unter Assets herunterladen und die Plugin-Dateien in `<Vault>/.obsidian/plugins/writeller/` ersetzen. Einstellungen in `data.json` behalten und Obsidian neu laden. Mindestversion: Obsidian 1.14.5.
+**Update:** `writeller-0.3.3.zip` unter Assets herunterladen und die Plugin-Dateien in `<Vault>/.obsidian/plugins/writeller/` ersetzen. Einstellungen in `data.json` behalten und Obsidian neu laden. Mindestversion: Obsidian 1.14.5.
 
-Die neuen Lösch- und Wiederherstellungsfälle sind in isolierten Speicher-/DOM-Tests geprüft. Native Desktop-/Mobile-Abnahme bleibt offen.
+Die neuen Ansichten sind in DOM- und Browser-Tests geprüft und wurden in einem Test-Vault in Obsidian angesehen. Eine vollständige native Desktop-/Mobile-Abnahme bleibt offen.
 
 ## English
 
-**Delete writing projects explicitly.**
+**Redesigned writing overview with two views.**
 
-- Choose **More project actions (⋯) → Delete project** in the writing overview, or use the command palette.
-- The confirmation shows the project name and scope. Enter the exact project name to continue.
-- Assigned Markdown notes, including moved notes, and private project data are removed using your Obsidian deleted-file preference. Other projects, unassigned files and existing exports are kept. Only empty folders are cleaned up.
-- All originals are backed up and fresh source checks run before removal. Use **Recover interrupted operation** after an interruption; externally edited files are preserved.
-- Temporary backups are removed after completion using the same native deleted-file preference. Completed deletions have no plugin undo; use your trash or a saved export.
+- **Workbench:** cards for continue writing, word goal and structure. Below, a manuscript table with status, point of view, tension and words per scene, and a separate tab for characters, world and ideas.
+- **Storyboard:** chapters as columns, scenes as index cards with status, summary, point of view and tension. On the right, a searchable list of characters, places and other entries, filterable by type.
+- Switch views at the top right; Obsidian remembers the choice per window. Empty areas offer direct create actions instead of rows of zeros.
+- Display only: no additional data is stored. Unknown statuses stay visible verbatim; tension (0–100) is shown in steps without changing the stored value. Reordering remains an explicit menu action.
+- Styles use only Obsidian theme variables and adapt to narrow areas such as the sidebar.
 
-**Update:** Download `writeller-0.3.2.zip` from Assets, replace the plugin files in `<vault>/.obsidian/plugins/writeller/`, retain settings in `data.json` and reload Obsidian. Minimum: Obsidian 1.14.5.
+**Update:** Download `writeller-0.3.3.zip` from Assets, replace the plugin files in `<vault>/.obsidian/plugins/writeller/`, retain settings in `data.json` and reload Obsidian. Minimum: Obsidian 1.14.5.
 
-Deletion and recovery cases are covered by isolated storage/DOM tests. Native desktop/mobile acceptance remains pending.
+The new views are covered by DOM and browser tests and were reviewed in a test vault in Obsidian. Full native desktop/mobile acceptance remains pending.
 
 The public Writeller Exchange 1.0.0 contract is unchanged. / Der öffentliche Writeller Exchange 1.0.0-Vertrag bleibt unverändert.
 

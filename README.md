@@ -12,9 +12,11 @@ Dein Buch wächst in **normalen Markdown-Dateien**. Writeller bringt Kapitel, Sz
 
 **Kostenlos. Lokal. Ohne Konto.** Das Plugin benötigt keine Writeller-Lizenz und führt keine Netzwerk-, Tracking- oder KI-Aufrufe aus.
 
-![Schreibübersicht mit Manuskript links sowie Figuren, Orten und Gegenständen rechts](docs/assets/schreibuebersicht.png)
+![Werkbank mit Weiterschreiben, Schreibziel, Struktur und Manuskripttabelle](docs/assets/werkbank.png)
 
-*Vorschau der tatsächlichen Oberflächenmodule im Browser-Testhost mit synthetischen Beispieldaten. Die Aufnahme ist kein nativer Obsidian- oder Geräteabnahmetest. [Herkunft der Bilder](docs/assets/README.md).*
+![Storyboard mit Kapiteln als Spalten, Szenen als Karten und durchsuchbarer Weltliste](docs/assets/storyboard.png)
+
+*Aufnahmen aus Obsidian mit Plugin-Version 0.3.3 in einem separaten Test-Vault mit Testdaten; Oberfläche hier auf Englisch, Deutsch wird ebenso unterstützt. [Herkunft der Bilder](docs/assets/README.md).*
 
 ## Vom ersten Kapitel zur Geschichte
 
@@ -126,9 +128,11 @@ Quellcode: **[MIT](LICENSE), © 2026 Benni**. Drittanbieter-Lizenzen: [THIRD-PAR
 
 [Deutsch](#deutsch) · [English only](README.en.md) · [Download](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases) · [writeller.com](https://www.writeller.com)
 
-![Writing workspace with a manuscript and planning notes](docs/assets/schreibuebersicht-en.png)
+![Workbench view with continue-writing card, word goal, structure and the manuscript table](docs/assets/werkbank.png)
 
-*Screenshot of the production UI modules in a browser test host with synthetic project data and an explicit Obsidian API substitute. This is not a native Obsidian or mobile-device acceptance test. The interface supports English and German.*
+![Storyboard view with chapters as columns, scenes as cards and the searchable world list](docs/assets/storyboard.png)
+
+*Screenshots from Obsidian with plugin version 0.3.3 in a separate test vault with test data; English interface. The interface supports English and German. [Image provenance](docs/assets/README.md).*
 
 ## What you can do
 

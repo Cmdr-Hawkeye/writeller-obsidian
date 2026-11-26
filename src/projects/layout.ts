@@ -6,7 +6,9 @@ import { NameAllocator, readableName } from './names';
 import { appendLocations } from './note-layout';
 import { language, type Language, type LanguagePreference } from '../i18n/language';
 
-export interface Settings { projectFolder: string; dataFolder: string; exchangeFolder: string; language: LanguagePreference; folderLanguage?: Language; showTechnicalInfo: boolean }
+/** `showReleaseNotes` (absent = on) and `lastSeenVersion` only steer the post-update dialog; never project data. */
+export interface Settings { projectFolder: string; dataFolder: string; exchangeFolder: string; language: LanguagePreference; folderLanguage?: Language; showTechnicalInfo: boolean;
+  showReleaseNotes?: boolean; lastSeenVersion?: string }
 export const defaultSettings: Settings = { projectFolder: 'Schreibprojekte', dataFolder: 'Writeller-Daten', exchangeFolder: 'Exporte', language: 'auto', showTechnicalInfo: false };
 export interface Layout { root: string; statePath: string; state: ProjectState; language?: Language }
 /** Creates a human-readable project folder; internal preservation paths alone use identity hashes. */

@@ -65,6 +65,8 @@ Die Implementierung und Tests von Writeller Exchange 1.0.0 in der Writeller-Anwe
 
 ## Zusätzliche Releaseprüfungen
 
+Ab 0.3.4 prüft `tests/ui/whats-new.test.ts` den Neuigkeiten-Dialog: keine Anzeige bei Neuinstallation, einmalige Anzeige nach Update, Abschaltung über Dialog und Einstellungen, numerischer Versionsvergleich, Ko-fi-Link, ausschließlich Text ohne Bilder oder Skripte, Deutsch/Englisch und ein Pflichteintrag für die aktuelle Plugin-Version.
+
 Ab 0.3.3 prüfen `tests/ui/writing.test.ts` und `tests/ui/performance.test.ts` die Ansichten Werkbank und Storyboard: Reiter ohne Neuaufbau, wiederhergestellter Ansichtszustand, sofortiger Wechsel bei unveränderter Datenrevision und keinerlei Schreibzugriff. Der Browser-Smoketest öffnet zusätzlich das Storyboard und prüft es auf 390 Pixel ohne Seitenüberlauf.
 
 Ab 0.3.2 prüfen `tests/integration/deletion.test.ts` und `tests/ui/deletion.test.ts` Löschumfang, Projekttrennung, verschobene Notizen, erhaltene Exporte/unzugeordnete Dateien, erneut möglichen Import, genaue Namensbestätigung, Deutsch/Englisch, Abbruch ohne Schreibzugriff und die anschließenden Leer-/Projektauswahlzustände. Weitere Fälle: Quellenänderungen nach Vorschau oder während der Sicherung, neue technische Dateien, native Löschfehler, fehlgeschlagener Abschlussmarker, Neustart-Recovery ohne Manifest, fremde Nachbearbeitung und manipulierte Backups. Alle Tests verwenden isolierte Daten und den API-/DOM-Ersatz; kein persönlicher Vault wird gelöscht. Native Papierkorb-/Dateisynchronisationsabnahme bleibt separat offen.

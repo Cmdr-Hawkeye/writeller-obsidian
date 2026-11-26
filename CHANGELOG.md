@@ -1,5 +1,11 @@
 # Änderungen
 
+## 0.3.4 — 26.11.2026
+
+- Nach einem Update zeigt ein kurzer Dialog einmal, was neu ist, mit optionalem Link zur Unterstützung auf Ko-fi. Keine Anzeige bei Neuinstallation; abschaltbar in den Einstellungen oder direkt im Dialog. Jederzeit über den Befehl **Neuigkeiten anzeigen** erreichbar.
+- Der Dialog enthält nur lokalen Text und Links, die erst ein Klick öffnet; keine Bilder, Skripte oder Netzwerkzugriffe. Gespeichert werden nur die zuletzt gesehene Version und der Schalter in den Plugin-Einstellungen.
+- Einstellungen verlinken zusätzlich die Ko-fi-Seite.
+
 ## 0.3.3 — 26.11.2026
 
 - Neu gestaltete Schreibübersicht mit zwei umschaltbaren Ansichten. **Werkbank**: Karten für Weiterschreiben, Schreibziel (Ring) und Struktur samt Statusverteilung, dazu eine Manuskripttabelle mit Stand, Perspektive, Spannung und Wörtern sowie ein eigener Reiter für Figuren, Welt und Ideen. **Storyboard**: Kapitel als Spalten, Szenen als Karteikarten und eine durchsuchbare, filterbare Weltliste.

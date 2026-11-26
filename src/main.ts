@@ -20,6 +20,8 @@ import { pendingJournals } from './storage/recovery-index';
 import { upgradeExportFolder, cleanupLegacyExportFolders } from './projects/export-location';
 import { resolveLanguage, setLanguage, language } from './i18n/language';
 import { changeWritingLanguage } from './ui/language-change';
+import { WhatsNewModal, releaseNotesPlan } from './ui/whats-new';
+import { pluginVersion } from './domain/version';
 
 /** Composition root: small writing services, native view, registered events and explicit cleanup. */
 export default class WritellerPlugin extends Plugin {
@@ -34,6 +36,8 @@ export default class WritellerPlugin extends Plugin {
     if (isObject(loaded)) {
       for (const key of ['projectFolder', 'dataFolder', 'exchangeFolder'] as const) if (typeof loaded[key] === 'string') this.preferences[key] = loaded[key];
       if (typeof loaded['showTechnicalInfo'] === 'boolean') this.preferences.showTechnicalInfo = loaded['showTechnicalInfo'];
+      if (typeof loaded['showReleaseNotes'] === 'boolean') this.preferences.showReleaseNotes = loaded['showReleaseNotes'];
+      if (typeof loaded['lastSeenVersion'] === 'string' && /^\d+\.\d+\.\d+$/.test(loaded['lastSeenVersion'])) this.preferences.lastSeenVersion = loaded['lastSeenVersion'];
       if (loaded['folderLanguage'] === 'de' || loaded['folderLanguage'] === 'en') {
         this.preferences.folderLanguage = loaded['folderLanguage'];
         if (loaded['language'] === 'de' || loaded['language'] === 'en' || loaded['language'] === 'auto') this.preferences.language = loaded['language'];
@@ -64,7 +68,11 @@ export default class WritellerPlugin extends Plugin {
     this.registerView(projectViewType, leaf => new WritingProjectView(leaf, ctx, writing, transfer, run, {
       inspect: () => inspection.show(), advanced: () => advanced.properties(), organize: id => organizeProject(ctx, id), recover: () => transfer.recoverImport()
     }));
-    const actions = { writing, advanced, transfer, images, inspection, openView: () => openView(), organize: () => organizeProject(ctx), run, available: () => this.ready && !this.busy };
+    const whatsNew = (lastSeen?: string, automatic = false): void => new WhatsNewModal(this.app, pluginVersion, lastSeen, automatic ? async () => {
+      this.preferences.showReleaseNotes = false; await this.saveData(this.preferences); settingsTab.update();
+    } : undefined).open();
+    const actions = { writing, advanced, transfer, images, inspection, openView: () => openView(), organize: () => organizeProject(ctx), run, available: () => this.ready && !this.busy,
+      whatsNew: async () => { whatsNew(); } };
     let removeCommands = registerWritingCommands(this, ctx, actions);
     const ribbon = this.addRibbonIcon('book-open-text', tr('Schreibprojekte öffnen'), () => run(() => openView()));
     let labelsLanguage = language();
@@ -82,6 +90,10 @@ export default class WritellerPlugin extends Plugin {
         inspection.updateStatus(status); await this.presentation.refresh();
         ctx.pendingRecovery = (await pendingJournals(service.vault)).length > 0;
         if (ctx.pendingRecovery) new Notice(tr('Ein Vorgang wurde unterbrochen. Unter „Novel Planner: Unterbrochenen Vorgang wiederherstellen“ kannst du ihn prüfen.'), 12000);
+        const plan = releaseNotesPlan(isObject(loaded), this.preferences.lastSeenVersion, this.preferences.showReleaseNotes !== false, pluginVersion);
+        const previous = this.preferences.lastSeenVersion;
+        if (plan.record) { this.preferences.lastSeenVersion = pluginVersion; await this.saveData(this.preferences); }
+        if (plan.show) whatsNew(previous, true);
       }).catch(error => ctx.report(error));
     });
   }

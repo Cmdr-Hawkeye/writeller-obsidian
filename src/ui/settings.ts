@@ -4,6 +4,7 @@ import type { Settings } from '../projects/layout';
 import { safePath, isBelow, collisionKey } from '../storage/paths';
 import { fail } from '../domain/diagnostics';
 import type { LanguagePreference } from '../i18n/language';
+import { supportUrl } from './whats-new';
 
 type FolderKey = 'projectFolder' | 'dataFolder' | 'exchangeFolder';
 /** Validates distinct vault roots before settings can redirect any subsequent write. */
@@ -26,14 +27,20 @@ export class WritellerSettingsTab extends PluginSettingTab {
       this.folder('projectFolder', tr('Schreibprojekte ablegen unter'), tr('Deine Manuskripte, Figuren und Notizen bleiben normale Markdown-Dateien.')),
       this.folder('exchangeFolder', tr('Exporte ablegen unter'), tr('Wird erst beim Export angelegt. Importdateien kannst du aus jedem Ordner dieses Vaults auswählen.')),
       { name: tr('Technische Informationen anzeigen'), desc: tr('Zeigt interne Daten, reine Exportordner und technische Notizeigenschaften. Zum Schreiben nicht nötig.'),
-        control: { type: 'toggle', key: 'showTechnicalInfo', defaultValue: false } }
+        control: { type: 'toggle', key: 'showTechnicalInfo', defaultValue: false } },
+      { name: tr('Neuigkeiten nach Updates anzeigen'), desc: tr('Zeigt nach einem Update einmal kurz, was neu ist. Jederzeit über „Neuigkeiten anzeigen“ in der Befehlspalette.'),
+        control: { type: 'toggle', key: 'showReleaseNotes', defaultValue: true } }
     ] }, { type: 'group', heading: tr('Erweiterte Einstellungen'), items: [
       this.folder('dataFolder', tr('Austausch- und Sicherungsdaten'), tr('Erhalten vollständige Projektdaten und ermöglichen Wiederherstellung. Mit dem Vault sichern; nicht löschen.'))
     ] }, { name: 'Novel Planner - by Writeller', desc: tr('Kostenlos und lokal. Kein Konto und keine Lizenz erforderlich.'),
-      render: setting => { setting.controlEl.createEl('a', { text: 'writeller.com', href: 'https://www.writeller.com' }); } }];
+      render: setting => {
+        setting.controlEl.createEl('a', { text: tr('Auf Ko-fi unterstützen'), href: supportUrl, cls: 'writeller-kofi-link' });
+        setting.controlEl.createEl('a', { text: 'writeller.com', href: 'https://www.writeller.com' });
+      } }];
   }
   /** Reads only declared plugin preferences, without accessing host vault configuration. */
   override getControlValue(key: string): unknown {
+    if (key === 'showReleaseNotes') return this.settings.showReleaseNotes !== false;
     return key === 'language' || key === 'showTechnicalInfo' || key === 'projectFolder' || key === 'dataFolder' || key === 'exchangeFolder' ? this.settings[key] : undefined;
   }
   /** Revalidates native control values even when called outside the normal rendered UI. */
@@ -43,7 +50,7 @@ export class WritellerSettingsTab extends PluginSettingTab {
       await this.changeLanguage(value);
       this.update(); return;
     }
-    if (key === 'showTechnicalInfo' && typeof value === 'boolean') return this.persist(key, value);
+    if ((key === 'showTechnicalInfo' || key === 'showReleaseNotes') && typeof value === 'boolean') return this.persist(key, value);
     if ((key === 'projectFolder' || key === 'dataFolder' || key === 'exchangeFolder') && typeof value === 'string') return this.persist(key, value);
     fail('INVALID_FIELD', tr('Unbekannte oder ungültige Einstellung.'));
   }
@@ -55,7 +62,7 @@ export class WritellerSettingsTab extends PluginSettingTab {
     } } };
   }
   /** Restores the shared previous value if persistence fails, keeping services and UI consistent. */
-  private async persist<K extends FolderKey | 'showTechnicalInfo'>(key: K, value: Settings[K]): Promise<void> {
+  private async persist<K extends FolderKey | 'showTechnicalInfo' | 'showReleaseNotes'>(key: K, value: Settings[K]): Promise<void> {
     validateSettings({ ...this.settings, [key]: value });
     const previous = this.settings[key]; this.settings[key] = value;
     try { await this.save(); } catch (error) { this.settings[key] = previous; throw error; }

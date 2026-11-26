@@ -227,5 +227,21 @@
   "Kurzbeschreibung ergänzen": "Add a summary",
   "Ansicht": "View",
   "Werkbank": "Workbench",
-  "Storyboard": "Storyboard"
+  "Storyboard": "Storyboard",
+  "Neu gestaltete Schreibübersicht mit zwei Ansichten, umschaltbar oben rechts.": "Redesigned writing overview with two views, switchable at the top right.",
+  "Werkbank: Weiterschreiben, Schreibziel und Struktur auf einen Blick, dazu eine Manuskripttabelle mit Stand, Perspektive und Spannung.": "Workbench: continue writing, word goal and structure at a glance, plus a manuscript table with status, point of view and tension.",
+  "Storyboard: Kapitel als Spalten, Szenen als Karten und eine durchsuchbare Liste deiner Figuren, Orte und Ideen.": "Storyboard: chapters as columns, scenes as cards and a searchable list of your characters, places and ideas.",
+  "Neu in Novel Planner {0}": "New in Novel Planner {0}",
+  "Novel Planner ist kostenlos und bleibt es.": "Novel Planner is free and will stay free.",
+  "Wenn dir das Plugin beim Schreiben hilft, freue ich mich über einen Kaffee auf Ko-fi.": "If the plugin helps your writing, I'd be glad about a coffee on Ko-fi.",
+  "Auf Ko-fi unterstützen": "Support on Ko-fi",
+  "Version {0}": "Version {0}",
+  "Alle Änderungen": "All changes",
+  "Nach Updates nicht mehr zeigen": "Don't show after updates",
+  "Neuigkeiten anzeigen": "Show what's new",
+  "Neuigkeiten nach Updates anzeigen": "Show what's new after updates",
+  "Zeigt nach einem Update einmal kurz, was neu ist. Jederzeit über „Neuigkeiten anzeigen“ in der Befehlspalette.": "After an update, briefly shows what's new once. Available any time via “Show what's new” in the command palette.",
+  "Neu: Dieser kurze Überblick erscheint einmal nach jedem Update. Abschaltbar hier im Dialog oder in den Einstellungen.": "New: this short overview appears once after each update. Turn it off here in the dialog or in the settings.",
+  "Über „Neuigkeiten anzeigen“ in der Befehlspalette lässt er sich jederzeit wieder öffnen.": "Open it again any time via “Show what's new” in the command palette.",
+  "Wer Novel Planner unterstützen möchte, findet den Ko-fi-Link jetzt hier und in den Einstellungen.": "If you'd like to support Novel Planner, the Ko-fi link is now here and in the settings."
 }

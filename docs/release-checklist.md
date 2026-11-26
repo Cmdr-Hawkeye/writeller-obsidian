@@ -17,7 +17,7 @@ Die lokalen Skripte veröffentlichen nichts. `release-status.json` beschreibt di
 
 ## Herausgeberangaben
 
-Der Anzeigename **Benni**, die MIT-Nennung **© 2026 Benni** und der Autorenlink **https://www.writeller.com** sind in den Root-Dateien gesetzt. GitHub-Kontoname und sichtbarer Plugin-Autor dürfen unterschiedlich sein. Optionale Umgebungsvariablen `RELEASE_AUTHOR`, `RELEASE_AUTHOR_URL` und `RELEASE_COPYRIGHT_HOLDER` können Releasewerte überschreiben. Der Copyrightstandard wird aus `LICENSE` gelesen. `fundingUrl` ist nicht gesetzt.
+Der Anzeigename **Benni**, die MIT-Nennung **© 2026 Benni** und der Autorenlink **https://www.writeller.com** sind in den Root-Dateien gesetzt. GitHub-Kontoname und sichtbarer Plugin-Autor dürfen unterschiedlich sein. Optionale Umgebungsvariablen `RELEASE_AUTHOR`, `RELEASE_AUTHOR_URL` und `RELEASE_COPYRIGHT_HOLDER` können Releasewerte überschreiben. Der Copyrightstandard wird aus `LICENSE` gelesen. `fundingUrl` verweist auf die Ko-fi-Seite. Vor einer neuen Version in `src/ui/whats-new.ts` Hinweise für genau diese Version ergänzen; ein Test verlangt sie.
 
 Eine sprachabhängige Manifest-Beschreibung ist in der aktuellen offiziellen Obsidian-Schnittstelle nicht definiert; der Text ist deshalb kurz und zweisprachig. Die Oberfläche unterstützt Deutsch und Englisch; siehe [Sprachwahl](languages.md). [Manifest-Dokumentation](https://docs.obsidian.md/Reference/Manifest).
 

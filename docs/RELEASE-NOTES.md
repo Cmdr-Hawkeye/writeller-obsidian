@@ -1,34 +1,34 @@
-# Novel Planner - by Writeller 0.3.3
+# Novel Planner - by Writeller 0.3.4
 
 [Deutsch](#deutsch) · [English](#english) · [writeller.com](https://www.writeller.com)
 
 ## Deutsch
 
-**Neu gestaltete Schreibübersicht mit zwei Ansichten.**
+**Neuigkeiten nach Updates.**
 
-- **Werkbank:** Karten für Weiterschreiben, Schreibziel und Struktur. Darunter eine Manuskripttabelle mit Stand, Perspektive, Spannung und Wörtern je Szene und ein eigener Reiter für Figuren, Welt und Ideen.
-- **Storyboard:** Kapitel als Spalten, Szenen als Karteikarten mit Stand, Kurzbeschreibung, Perspektive und Spannung. Rechts eine durchsuchbare, nach Art filterbare Liste der Figuren, Orte und weiteren Objekte.
-- Umschalten oben rechts; Obsidian merkt sich die Wahl je Fenster. Leere Bereiche zeigen direkte Anlegeaktionen statt Nullzeilen.
-- Reine Darstellung: Es werden keine zusätzlichen Daten gespeichert. Unbekannte Stände bleiben wörtlich sichtbar, die Spannung (0–100) wird gestuft angezeigt, ohne den gespeicherten Wert zu verändern. Umsortieren bleibt eine bewusste Menüaktion.
-- Styles verwenden nur Theme-Variablen von Obsidian und passen sich schmalen Bereichen wie der Seitenleiste an.
+- Nach einem Update zeigt ein kurzer Dialog einmal, was neu ist. Bei einer Neuinstallation erscheint nichts.
+- Abschaltbar direkt im Dialog über **Nach Updates nicht mehr zeigen** oder unter **Einstellungen → Neuigkeiten nach Updates anzeigen**. Jederzeit erneut über **Neuigkeiten anzeigen** in der Befehlspalette.
+- Wer Novel Planner unterstützen möchte, findet einen Ko-fi-Link im Dialog und in den Einstellungen. Das Plugin bleibt kostenlos.
+- Der Dialog enthält nur lokalen Text; Links öffnen sich erst per Klick. Keine Bilder, Skripte oder Netzwerkzugriffe. Gespeichert werden nur die zuletzt gesehene Version und der Schalter in den Plugin-Einstellungen.
+- Enthält die neu gestaltete Schreibübersicht aus 0.3.3 mit den Ansichten **Werkbank** und **Storyboard**.
 
-**Update:** `writeller-0.3.3.zip` unter Assets herunterladen und die Plugin-Dateien in `<Vault>/.obsidian/plugins/writeller/` ersetzen. Einstellungen in `data.json` behalten und Obsidian neu laden. Mindestversion: Obsidian 1.14.5.
+**Update:** `writeller-0.3.4.zip` unter Assets herunterladen und die Plugin-Dateien in `<Vault>/.obsidian/plugins/writeller/` ersetzen. Einstellungen in `data.json` behalten und Obsidian neu laden. Mindestversion: Obsidian 1.14.5.
 
-Die neuen Ansichten sind in DOM- und Browser-Tests geprüft und wurden in einem Test-Vault in Obsidian angesehen. Eine vollständige native Desktop-/Mobile-Abnahme bleibt offen.
+Der Dialog ist in DOM- und Browser-Tests geprüft. Eine vollständige native Desktop-/Mobile-Abnahme bleibt offen.
 
 ## English
 
-**Redesigned writing overview with two views.**
+**What's new after updates.**
 
-- **Workbench:** cards for continue writing, word goal and structure. Below, a manuscript table with status, point of view, tension and words per scene, and a separate tab for characters, world and ideas.
-- **Storyboard:** chapters as columns, scenes as index cards with status, summary, point of view and tension. On the right, a searchable list of characters, places and other entries, filterable by type.
-- Switch views at the top right; Obsidian remembers the choice per window. Empty areas offer direct create actions instead of rows of zeros.
-- Display only: no additional data is stored. Unknown statuses stay visible verbatim; tension (0–100) is shown in steps without changing the stored value. Reordering remains an explicit menu action.
-- Styles use only Obsidian theme variables and adapt to narrow areas such as the sidebar.
+- After an update, a short dialog shows once what's new. Nothing appears on a fresh install.
+- Turn it off directly in the dialog with **Don't show after updates** or under **Settings → Show what's new after updates**. Open it any time via **Show what's new** in the command palette.
+- If you'd like to support Novel Planner, the dialog and the settings link to Ko-fi. The plugin stays free.
+- The dialog contains local text only; links open only when clicked. No images, scripts or network access. Only the last seen version and the toggle are stored in the plugin settings.
+- Includes the redesigned writing overview from 0.3.3 with the **Workbench** and **Storyboard** views.
 
-**Update:** Download `writeller-0.3.3.zip` from Assets, replace the plugin files in `<vault>/.obsidian/plugins/writeller/`, retain settings in `data.json` and reload Obsidian. Minimum: Obsidian 1.14.5.
+**Update:** Download `writeller-0.3.4.zip` from Assets, replace the plugin files in `<vault>/.obsidian/plugins/writeller/`, retain settings in `data.json` and reload Obsidian. Minimum: Obsidian 1.14.5.
 
-The new views are covered by DOM and browser tests and were reviewed in a test vault in Obsidian. Full native desktop/mobile acceptance remains pending.
+The dialog is covered by DOM and browser tests. Full native desktop/mobile acceptance remains pending.
 
 The public Writeller Exchange 1.0.0 contract is unchanged. / Der öffentliche Writeller Exchange 1.0.0-Vertrag bleibt unverändert.
 

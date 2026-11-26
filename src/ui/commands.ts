@@ -10,7 +10,7 @@ import type { Inspection } from './inspection';
 import { deleteProject } from './delete-project';
 
 export interface CommandActions { writing: WritingCommands; advanced: LocalCommands; transfer: TransferCommands; images: ImageCommands;
-  inspection: Inspection; openView(): Promise<void>; organize(): Promise<void>; run(action: () => Promise<void>): void; available(): boolean }
+  inspection: Inspection; openView(): Promise<void>; organize(): Promise<void>; run(action: () => Promise<void>): void; available(): boolean; whatsNew?(): Promise<void> }
 /** Registers familiar writing nouns; technical tools appear only when requested or needed. */
 export function registerWritingCommands(plugin: Plugin, ctx: CommandContext, actions: CommandActions): () => void {
   const ids: string[] = [];
@@ -41,6 +41,7 @@ export function registerWritingCommands(plugin: Plugin, ctx: CommandContext, act
   add('edit-exchange-data', tr('Technische Daten bearbeiten'), () => actions.advanced.properties(), () => advanced() && !!ctx.active());
   add('adopt-changed-images', tr('Extern bearbeitete Bilder übernehmen'), () => actions.images.changedImages(), () => advanced() && hasProject());
   add('repair-state', tr('Fehlende Austauschdaten wiederherstellen'), () => actions.transfer.repairState(), () => hasProject() && (advanced() || ctx.problemCodes.has('STATE_MISSING')));
+  if (actions.whatsNew) add('show-release-notes', tr('Neuigkeiten anzeigen'), () => actions.whatsNew?.() ?? Promise.resolve());
   add('recover-import', tr('Unterbrochenen Vorgang wiederherstellen'), () => actions.transfer.recoverImport(), () => advanced() || ctx.pendingRecovery);
   return () => { for (const id of ids) plugin.removeCommand(id); };
 }

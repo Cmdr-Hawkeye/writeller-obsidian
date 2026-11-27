@@ -9,6 +9,11 @@ export const changelogUrl = 'https://github.com/Cmdr-Hawkeye/writeller-obsidian/
 /** Highlights per released version; German source text, translated at render time. */
 interface ReleaseNote { version: string; items: () => string[] }
 const notes: ReleaseNote[] = [
+  { version: '0.3.6', items: () => [
+    tr('Behoben: Ein Sprachwechsel der Ordner scheitert nicht mehr, wenn Obsidian beim Umbenennen Links selbst aktualisiert.'),
+    tr('Neu: „Sprachwechsel reparieren“ löst einen hängengebliebenen Wechsel – als Button in der Übersicht und in der Befehlspalette.'),
+    tr('Die Reparatur benennt nur Strukturordner zurück und setzt Links zurück; Notizen mit eigenen Textänderungen bleiben unverändert.')
+  ] },
   { version: '0.3.5', items: () => [
     tr('Perspektive und Spannung lassen sich jetzt direkt setzen: in einer Szene über ⋯ → „Details bearbeiten“.'),
     tr('Perspektive: Auswahl aus den Figuren deines Projekts. Spannung: fünf Stufen von ruhig bis Höhepunkt.'),

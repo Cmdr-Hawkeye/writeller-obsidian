@@ -10,6 +10,7 @@ import type { Decision } from '../transfer/import-plan';
 import { CommandContext } from './command-context';
 import { choose, confirmPreview, input } from './dialogs';
 import { pendingJournals } from '../storage/recovery-index';
+import { LanguageJournalService } from '../storage/language-journal';
 import { namedChoices } from '../objects/kinds';
 import { reviewExportCoverage } from './unassigned-notes';
 
@@ -81,6 +82,26 @@ export class TransferCommands {
     const path = await this.importFile(); if (!path) return;
     const original = await this.ctx.service.readImport(path), preview = await previewRepair(this.ctx.service, original);
     await this.ctx.commit(preview, tr('Begleitdaten aus Original reparieren'), [tr('Nur passende Identitäten werden repariert. Aktuelle Notizen bleiben erhalten. Abweichungen zum Original prüfen.')]);
+  }
+  /** Repairs an unfinished folder language switch after one explicit confirmation; edits are kept and listed. */
+  async repairLanguage(): Promise<void> {
+    const journals = (await pendingJournals(this.ctx.service.vault)).filter(j => j.projectId === 'language');
+    if (!journals.length) { new Notice(tr('Es gibt keinen unterbrochenen Sprachwechsel.')); return; }
+    if (!await confirmPreview(this.ctx.app, tr('Sprachwechsel reparieren'), [
+      tr('Strukturordner wie „Characters“ oder „Manuscript“ bekommen wieder ihren vorherigen Namen, sofern dieser frei ist. Notizdateien werden nicht umbenannt.'),
+      tr('Vom Plugin oder von Obsidian geänderte Links werden auf den gesicherten Stand zurückgesetzt. Notizen mit eigenen Textänderungen bleiben unverändert.'),
+      tr('Alle Originale bleiben im Sicherungsordner des Sprachwechsels erhalten.')
+    ])) return;
+    const kept: string[] = [], conflicts: string[] = [];
+    for (const journal of journals) {
+      const result = await new LanguageJournalService(this.ctx.service.vault).repair(journal.path);
+      kept.push(...result.kept); conflicts.push(...result.conflicts);
+      if (result.settings) { Object.assign(this.ctx.service.settings, result.settings); await this.ctx.savePreferences?.(); }
+    }
+    this.ctx.service.index.invalidate(); await this.ctx.service.index.rebuild();
+    this.ctx.pendingRecovery = (await pendingJournals(this.ctx.service.vault)).length > 0;
+    if (conflicts.length) fail('LOCAL_CHANGED', tr`Reparatur unvollständig. Diese Ordner oder Projektdaten bitte prüfen: ${conflicts.join(', ')}`);
+    new Notice(kept.length ? tr`Sprachwechsel repariert. Diese Notizen enthalten eigene Änderungen und wurden nicht angefasst: ${kept.join(', ')}` : tr('Sprachwechsel repariert. Alle Ordner tragen wieder ihren vorherigen Namen.'), 12000);
   }
   /** Runs explicit journal recovery; foreign post-edits are reported rather than overwritten. */
   async recoverImport(): Promise<void> {

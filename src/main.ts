@@ -66,7 +66,8 @@ export default class WritellerPlugin extends Plugin {
     };
     ctx.openProjectView = openView;
     this.registerView(projectViewType, leaf => new WritingProjectView(leaf, ctx, writing, transfer, run, {
-      inspect: () => inspection.show(), advanced: () => advanced.properties(), organize: id => organizeProject(ctx, id), recover: () => transfer.recoverImport()
+      inspect: () => inspection.show(), advanced: () => advanced.properties(), organize: id => organizeProject(ctx, id), recover: () => transfer.recoverImport(),
+      repairLanguage: () => transfer.repairLanguage()
     }));
     const whatsNew = (lastSeen?: string, automatic = false): void => new WhatsNewModal(this.app, pluginVersion, lastSeen, automatic ? async () => {
       this.preferences.showReleaseNotes = false; await this.saveData(this.preferences); settingsTab.update();

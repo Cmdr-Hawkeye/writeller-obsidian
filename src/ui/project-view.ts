@@ -17,9 +17,10 @@ import { renderUnassigned } from './unassigned-notes';
 import { viewRevision } from '../projects/view-revision';
 import { RefreshQueue } from './refresh-queue';
 import { deleteProject } from './delete-project';
+import { pendingJournals } from '../storage/recovery-index';
 
 export const projectViewType = 'writeller-writing-project';
-export interface ProjectViewTools { inspect(): Promise<void>; advanced(): Promise<void>; organize(projectId: string): Promise<void>; recover(): Promise<void> }
+export interface ProjectViewTools { inspect(): Promise<void>; advanced(): Promise<void>; organize(projectId: string): Promise<void>; recover(): Promise<void>; repairLanguage?(): Promise<void> }
 /** Display-only layout of one open view, persisted by Obsidian's workspace, never in notes or exports. */
 export type ProjectLayout = 'workbench' | 'storyboard';
 /** Working overview: real Markdown files, chapter structure and direct writing actions. */
@@ -92,6 +93,14 @@ export class WritingProjectView extends ItemView {
     catch (error) {
       if (this.closed || generation !== this.generation) return;
       this.renderedKey = null; this.dataKey = null; this.contentEl.empty(); this.switcher(choices, id);
+      const language = await pendingJournals(this.ctx.service.vault).then(list => list.some(j => j.projectId === 'language'), () => false);
+      if (language) {
+        // An unfinished folder language switch blocks every project; offer the guided repair first.
+        const box = this.contentEl.createDiv({ cls: 'writeller-repair' });
+        box.createEl('p', { cls: 'writeller-strong', text: tr('Ein Sprachwechsel der Ordner wurde unterbrochen.') });
+        box.createEl('p', { cls: 'writeller-muted', text: tr('Die Reparatur gibt den Strukturordnern ihre vorherigen Namen zurück und setzt nur Links zurück, die beim Wechsel geändert wurden. Deine Texte bleiben erhalten.') });
+        box.createEl('button', { cls: 'mod-cta', text: tr('Sprachwechsel reparieren') }).addEventListener('click', () => this.run(() => this.tools.repairLanguage?.() ?? Promise.resolve()));
+      }
       this.contentEl.createEl('p', { text: tr('Dieses Projekt braucht eine Überprüfung, bevor es weiter gespeichert oder ausgetauscht werden kann.') });
       this.contentEl.createEl('button', { text: tr('Projekt prüfen') }).addEventListener('click', () => this.run(() => this.tools.inspect()));
       this.contentEl.createEl('button', { text: tr('Unterbrochenen Vorgang wiederherstellen') }).addEventListener('click', () => this.run(() => this.tools.recover()));

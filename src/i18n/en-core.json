@@ -259,5 +259,18 @@
   "Als Perspektive nur eine Figur dieses Projekts wählen.": "Choose a character of this project as point of view.",
   "Perspektive und Spannung lassen sich jetzt direkt setzen: in einer Szene über ⋯ → „Details bearbeiten“.": "Point of view and tension can now be set directly: in a scene via ⋯ → “Edit details”.",
   "Perspektive: Auswahl aus den Figuren deines Projekts. Spannung: fünf Stufen von ruhig bis Höhepunkt.": "Point of view: choose from your project's characters. Tension: five steps from calm to climax.",
-  "Werkbank und Storyboard zeigen beide Werte sofort an; Exporte enthalten sie wie gewohnt.": "Workbench and storyboard show both values immediately; exports include them as before."
+  "Werkbank und Storyboard zeigen beide Werte sofort an; Exporte enthalten sie wie gewohnt.": "Workbench and storyboard show both values immediately; exports include them as before.",
+  "Es gibt keinen unterbrochenen Sprachwechsel.": "There is no interrupted language switch.",
+  "Sprachwechsel reparieren": "Repair language switch",
+  "Strukturordner wie „Characters“ oder „Manuscript“ bekommen wieder ihren vorherigen Namen, sofern dieser frei ist. Notizdateien werden nicht umbenannt.": "Structure folders such as “Figuren” or “Manuskript” get their previous names back where those are free. Note files are not renamed.",
+  "Vom Plugin oder von Obsidian geänderte Links werden auf den gesicherten Stand zurückgesetzt. Notizen mit eigenen Textänderungen bleiben unverändert.": "Links changed by the plugin or by Obsidian are reset to the backed-up state. Notes with your own text changes stay unchanged.",
+  "Alle Originale bleiben im Sicherungsordner des Sprachwechsels erhalten.": "All originals remain in the language switch backup folder.",
+  "Reparatur unvollständig. Diese Ordner oder Projektdaten bitte prüfen: {0}": "Repair incomplete. Please check these folders or project data: {0}",
+  "Sprachwechsel repariert. Diese Notizen enthalten eigene Änderungen und wurden nicht angefasst: {0}": "Language switch repaired. These notes contain your own changes and were left untouched: {0}",
+  "Sprachwechsel repariert. Alle Ordner tragen wieder ihren vorherigen Namen.": "Language switch repaired. All folders have their previous names again.",
+  "Ein Sprachwechsel der Ordner wurde unterbrochen.": "A folder language switch was interrupted.",
+  "Die Reparatur gibt den Strukturordnern ihre vorherigen Namen zurück und setzt nur Links zurück, die beim Wechsel geändert wurden. Deine Texte bleiben erhalten.": "The repair gives the structure folders their previous names back and only resets links that were changed during the switch. Your texts are kept.",
+  "Behoben: Ein Sprachwechsel der Ordner scheitert nicht mehr, wenn Obsidian beim Umbenennen Links selbst aktualisiert.": "Fixed: a folder language switch no longer fails when Obsidian updates links itself while renaming.",
+  "Neu: „Sprachwechsel reparieren“ löst einen hängengebliebenen Wechsel – als Button in der Übersicht und in der Befehlspalette.": "New: “Repair language switch” resolves a stuck switch – as a button in the overview and in the command palette.",
+  "Die Reparatur benennt nur Strukturordner zurück und setzt Links zurück; Notizen mit eigenen Textänderungen bleiben unverändert.": "The repair only renames structure folders back and resets links; notes with your own text changes stay unchanged."
 }

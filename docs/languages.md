@@ -32,6 +32,8 @@ Der ausgeblendete technische Datenordner, standardmäßig `Writeller-Daten`, und
 
 Ein unterbrochener Sprachwechsel blockiert weitere Projektoperationen. **Unterbrochenen Vorgang wiederherstellen** prüft bekannte Vorher-/Nachherstände und stellt bei erfolgreicher Rücknahme auch die vorherigen Einstellungen wieder her. Nachträgliche fremde Änderungen werden nicht überschrieben; Konflikte müssen mit den erhaltenen Originalsicherungen geprüft werden.
 
+Bleibt ein Sprachwechsel trotzdem hängen, zeigt die Übersicht **Sprachwechsel reparieren** (auch in der Befehlspalette). Die Reparatur benennt jeden Strukturordner zurück, dessen vorheriger Name frei ist, setzt vom Plugin oder von Obsidian geänderte Links auf den gesicherten Stand und lässt Notizen mit eigenen Textänderungen unverändert. Obsidian darf Links beim Umbenennen selbst aktualisieren; reine Änderungen von Linkzielen gelten nicht als fremde Bearbeitung.
+
 ## English
 
 Since 0.3.0, the plugin is called **Novel Planner - by Writeller**. Its internal ID remains `writeller`, retaining existing installations, settings, command IDs and project identities.
@@ -44,7 +46,7 @@ Local link targets and internal path mappings follow the new folders. Domain has
 
 Hidden preservation data, including the existing `Writeller-Daten` root and its internal folders, keeps stable paths so previous recovery journals remain valid. Language changes keep their own original-byte backups under `language-changes`. Back up the entire vault, including these folders.
 
-An interrupted change blocks further project operations until **Recover interrupted operation** resolves it. Recovery restores known states and previous preferences; foreign post-edits are retained as conflicts instead of overwritten.
+An interrupted change blocks further project operations until **Recover interrupted operation** resolves it. Recovery restores known states and previous preferences; foreign post-edits are retained as conflicts instead of overwritten. If a switch still remains stuck, the overview offers **Repair language switch** (also in the command palette): it renames structure folders back where the previous name is free, resets links changed by the plugin or by Obsidian, and keeps notes with your own text changes unchanged.
 
 ## Vertrags- und Nachweisgrenze
 

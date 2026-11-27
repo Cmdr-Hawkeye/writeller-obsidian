@@ -42,6 +42,7 @@ export function registerWritingCommands(plugin: Plugin, ctx: CommandContext, act
   add('adopt-changed-images', tr('Extern bearbeitete Bilder übernehmen'), () => actions.images.changedImages(), () => advanced() && hasProject());
   add('repair-state', tr('Fehlende Austauschdaten wiederherstellen'), () => actions.transfer.repairState(), () => hasProject() && (advanced() || ctx.problemCodes.has('STATE_MISSING')));
   if (actions.whatsNew) add('show-release-notes', tr('Neuigkeiten anzeigen'), () => actions.whatsNew?.() ?? Promise.resolve());
+  add('repair-language', tr('Sprachwechsel reparieren'), () => actions.transfer.repairLanguage(), () => ctx.pendingRecovery);
   add('recover-import', tr('Unterbrochenen Vorgang wiederherstellen'), () => actions.transfer.recoverImport(), () => advanced() || ctx.pendingRecovery);
   return () => { for (const id of ids) plugin.removeCommand(id); };
 }

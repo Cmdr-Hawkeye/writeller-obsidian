@@ -1,5 +1,10 @@
 # Änderungen
 
+## 0.3.6 — 27.11.2026
+
+- Behoben: Ein Sprachwechsel der Ordner scheiterte, wenn Obsidian beim Umbenennen Links in Notizen selbst aktualisiert („Interne Links automatisch aktualisieren“). Die Rücknahme blieb dann halb stehen und blockierte alle Projekte. Reine Änderungen von Linkzielen gelten jetzt nicht mehr als fremde Bearbeitung; Rücknahmen benennen zuerst die Ordner zurück und stellen danach die gesicherten Notizen wieder her.
+- Neu: **Sprachwechsel reparieren** als Button in der Übersicht und als Befehl. Die Reparatur gibt allen Strukturordnern ihren vorherigen Namen zurück, sofern dieser frei ist, setzt nur Linkänderungen zurück und lässt Notizen mit eigenen Textänderungen unverändert; sie werden gemeldet. Originale bleiben gesichert.
+
 ## 0.3.5 — 27.11.2026
 
 - **Details bearbeiten** bietet für Szenen jetzt **Perspektive** (Auswahl aus den Figuren des Projekts) und **Spannung** (fünf Stufen von ruhig bis Höhepunkt, gespeichert als 20–100). Werkbank und Storyboard zeigen die Werte sofort.

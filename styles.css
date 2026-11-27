@@ -188,3 +188,7 @@ a.writeller-kofi:hover { background: var(--interactive-accent-hover); color: var
 .writeller-whats-new-footer .writeller-spacer { flex: 1; }
 .writeller-whats-new-footer button.writeller-text-button { width: auto; height: auto; padding: 6px 8px; background: transparent; box-shadow: none; border: 0; color: var(--text-muted); }
 .writeller-kofi-link { margin-inline-end: 12px; }
+/* Guided repair of an unfinished folder language switch. */
+.writeller-repair { max-width: 70ch; margin-bottom: 20px; padding: 14px 16px; border-radius: var(--radius-m); border: 1px solid var(--background-modifier-border); background: var(--background-secondary); }
+.writeller-repair p { margin: 0 0 8px; }
+.writeller-repair button { margin-top: 4px; }

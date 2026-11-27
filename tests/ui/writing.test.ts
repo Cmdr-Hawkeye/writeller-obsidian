@@ -138,6 +138,34 @@ describe('Schreiboberfläche im DOM-/API-Fake', () => {
     snapshot.exchange.project.title = 'Der neue Titel'; await service.commit(await service.previewSave(snapshot.exchange, snapshot));
     await view.refresh(); expect(view.contentEl.querySelector('h2')?.textContent).toBe('Der neue Titel'); await view.onClose();
   });
+  it('setzt Perspektive und Spannung über die Szenendetails und speichert sie dauerhaft', async () => {
+    const { service, ctx } = await created(), snapshot = await service.snapshot(ctx.selectedProjectId!), pkg = snapshot.exchange;
+    const lina = createRecord('catalogItems', snapshot.state.projectId, snapshot.state.localInstanceId, 'Lina');
+    const harbor = createRecord('catalogItems', snapshot.state.projectId, snapshot.state.localInstanceId, 'Alter Hafen');
+    const scene = createRecord('scenes', snapshot.state.projectId, snapshot.state.localInstanceId, 'Ankunft');
+    if (harbor.collection !== 'catalogItems' || scene.collection !== 'scenes') throw new Error('Testinvariante');
+    harbor.record.type = 'location'; for (const entry of [lina, harbor, scene]) setEntry(pkg, entry);
+    const fields = detailFields(scene, pkg), pov = fields.find(f => f.key === 'povCharacterId')!, tension = fields.find(f => f.key === 'tensionLevel')!;
+    expect(pov.options?.map(o => o.label)).toEqual(['Keine Perspektive', 'Lina']);
+    expect(tension.options?.map(o => o.value)).toEqual(['', '20', '40', '60', '80', '100']);
+    expect(() => applyDetails(scene, { title: 'Ankunft', povCharacterId: harbor.record.id }, pkg)).toThrow('Figur');
+    applyDetails(scene, { title: 'Ankunft', povCharacterId: lina.record.id, tensionLevel: '80' }, pkg);
+    expect(scene.record).toMatchObject({ povCharacterId: lina.record.id, tensionLevel: 80 });
+    expect(() => applyDetails(scene, { title: 'Ankunft', tensionLevel: '120' }, pkg)).toThrow();
+    expect(() => applyDetails(scene, { title: 'Ankunft', tensionLevel: '4.5' }, pkg)).toThrow();
+    setEntry(pkg, scene); await service.commit(await service.previewSave(pkg, snapshot));
+    const saved = (await service.snapshot(ctx.selectedProjectId!)).exchange.scenes.find(s => s.id === scene.record.id)!;
+    expect(saved).toMatchObject({ povCharacterId: lina.record.id, tensionLevel: 80 });
+  });
+  it('behält eine übernommene Spannung außerhalb der fünf Stufen, solange sie nicht geändert wird', () => {
+    const scene = createRecord('scenes', 'projekt', 'instanz', 'Import');
+    if (scene.collection !== 'scenes') throw new Error('Testinvariante');
+    scene.record.tensionLevel = 35;
+    const field = detailFields(scene, { catalogItems: [], chapters: [] } as never).find(f => f.key === 'tensionLevel')!;
+    expect(field.value).toBe('35'); expect(field.options?.at(-1)).toEqual({ label: '35 von 100 (übernommen)', value: '35' });
+    applyDetails(scene, { title: 'Import', tensionLevel: field.value! }); expect(scene.record.tensionLevel).toBe(35);
+    applyDetails(scene, { title: 'Import', tensionLevel: '' }); expect(scene.record.tensionLevel).toBeNull();
+  });
   it('bewahrt komplexe Charakterfelder beim Bearbeiten verständlicher Details', async () => {
     const { service, ctx } = await created(), snapshot = await service.snapshot(ctx.selectedProjectId!);
     const entry = createRecord('catalogItems', snapshot.state.projectId, snapshot.state.localInstanceId, 'Lina');

@@ -1,34 +1,34 @@
-# Novel Planner - by Writeller 0.3.4
+# Novel Planner - by Writeller 0.3.5
 
 [Deutsch](#deutsch) · [English](#english) · [writeller.com](https://www.writeller.com)
 
 ## Deutsch
 
-**Neuigkeiten nach Updates.**
+**Perspektive und Spannung direkt setzen.**
 
-- Nach einem Update zeigt ein kurzer Dialog einmal, was neu ist. Bei einer Neuinstallation erscheint nichts.
-- Abschaltbar direkt im Dialog über **Nach Updates nicht mehr zeigen** oder unter **Einstellungen → Neuigkeiten nach Updates anzeigen**. Jederzeit erneut über **Neuigkeiten anzeigen** in der Befehlspalette.
-- Wer Novel Planner unterstützen möchte, findet einen Ko-fi-Link im Dialog und in den Einstellungen. Das Plugin bleibt kostenlos.
-- Der Dialog enthält nur lokalen Text; Links öffnen sich erst per Klick. Keine Bilder, Skripte oder Netzwerkzugriffe. Gespeichert werden nur die zuletzt gesehene Version und der Schalter in den Plugin-Einstellungen.
-- Enthält die neu gestaltete Schreibübersicht aus 0.3.3 mit den Ansichten **Werkbank** und **Storyboard**.
+- In einer Szene über **⋯ → Details bearbeiten** gibt es zwei neue Felder.
+- **Perspektive:** Auswahl aus den Figuren deines Projekts oder „Keine Perspektive“. Andere Objektarten sind nach dem Writeller-Exchange-Vertrag nicht zulässig.
+- **Spannung:** fünf Stufen (ruhig, leicht, spürbar, hoch, Höhepunkt), gespeichert als 20–100. Ein importierter Zwischenwert wie 35 wird angezeigt und bleibt unverändert, bis du ihn bewusst änderst.
+- Werkbank und Storyboard zeigen beide Werte sofort; Exporte enthalten sie wie gewohnt.
+- Der Neuigkeiten-Dialog nach dem Update fasst die Änderungen ebenfalls zusammen.
 
-**Update:** `writeller-0.3.4.zip` unter Assets herunterladen und die Plugin-Dateien in `<Vault>/.obsidian/plugins/writeller/` ersetzen. Einstellungen in `data.json` behalten und Obsidian neu laden. Mindestversion: Obsidian 1.14.5.
+**Update:** `writeller-0.3.5.zip` unter Assets herunterladen und die Plugin-Dateien in `<Vault>/.obsidian/plugins/writeller/` ersetzen. Einstellungen in `data.json` behalten und Obsidian neu laden. Mindestversion: Obsidian 1.14.5.
 
-Der Dialog ist in DOM- und Browser-Tests geprüft. Eine vollständige native Desktop-/Mobile-Abnahme bleibt offen.
+Die neuen Felder sind in DOM-Tests einschließlich Speichern und erneutem Einlesen geprüft. Eine vollständige native Desktop-/Mobile-Abnahme bleibt offen.
 
 ## English
 
-**What's new after updates.**
+**Set point of view and tension directly.**
 
-- After an update, a short dialog shows once what's new. Nothing appears on a fresh install.
-- Turn it off directly in the dialog with **Don't show after updates** or under **Settings → Show what's new after updates**. Open it any time via **Show what's new** in the command palette.
-- If you'd like to support Novel Planner, the dialog and the settings link to Ko-fi. The plugin stays free.
-- The dialog contains local text only; links open only when clicked. No images, scripts or network access. Only the last seen version and the toggle are stored in the plugin settings.
-- Includes the redesigned writing overview from 0.3.3 with the **Workbench** and **Storyboard** views.
+- In a scene, **⋯ → Edit details** now has two new fields.
+- **Point of view:** choose one of your project's characters or “No point of view”. Other entry types are not allowed by the Writeller Exchange contract.
+- **Tension:** five steps (calm, slight, noticeable, high, climax), stored as 20–100. An imported in-between value such as 35 is shown and kept unchanged until you deliberately change it.
+- Workbench and storyboard show both values immediately; exports include them as before.
+- The what's-new dialog after the update summarises the changes as well.
 
-**Update:** Download `writeller-0.3.4.zip` from Assets, replace the plugin files in `<vault>/.obsidian/plugins/writeller/`, retain settings in `data.json` and reload Obsidian. Minimum: Obsidian 1.14.5.
+**Update:** Download `writeller-0.3.5.zip` from Assets, replace the plugin files in `<vault>/.obsidian/plugins/writeller/`, retain settings in `data.json` and reload Obsidian. Minimum: Obsidian 1.14.5.
 
-The dialog is covered by DOM and browser tests. Full native desktop/mobile acceptance remains pending.
+The new fields are covered by DOM tests including saving and reloading. Full native desktop/mobile acceptance remains pending.
 
 The public Writeller Exchange 1.0.0 contract is unchanged. / Der öffentliche Writeller Exchange 1.0.0-Vertrag bleibt unverändert.
 

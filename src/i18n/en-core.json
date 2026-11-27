@@ -243,5 +243,21 @@
   "Zeigt nach einem Update einmal kurz, was neu ist. Jederzeit über „Neuigkeiten anzeigen“ in der Befehlspalette.": "After an update, briefly shows what's new once. Available any time via “Show what's new” in the command palette.",
   "Neu: Dieser kurze Überblick erscheint einmal nach jedem Update. Abschaltbar hier im Dialog oder in den Einstellungen.": "New: this short overview appears once after each update. Turn it off here in the dialog or in the settings.",
   "Über „Neuigkeiten anzeigen“ in der Befehlspalette lässt er sich jederzeit wieder öffnen.": "Open it again any time via “Show what's new” in the command palette.",
-  "Wer Novel Planner unterstützen möchte, findet den Ko-fi-Link jetzt hier und in den Einstellungen.": "If you'd like to support Novel Planner, the Ko-fi link is now here and in the settings."
+  "Wer Novel Planner unterstützen möchte, findet den Ko-fi-Link jetzt hier und in den Einstellungen.": "If you'd like to support Novel Planner, the Ko-fi link is now here and in the settings.",
+  "Unbekannte Figur (unverändert)": "Unknown character (unchanged)",
+  "Keine Perspektive": "No point of view",
+  "Aus wessen Sicht wird die Szene erzählt?": "From whose point of view is the scene told?",
+  "Lege zuerst eine Figur an, um eine Perspektive zu wählen.": "Add a character first to choose a point of view.",
+  "ruhig": "calm",
+  "leicht": "slight",
+  "spürbar": "noticeable",
+  "hoch": "high",
+  "Höhepunkt": "climax",
+  "Nicht festgelegt": "Not set",
+  "{0} von 100 (übernommen)": "{0} of 100 (kept)",
+  "Die Spannung muss eine ganze Zahl von 0 bis 100 sein.": "Tension must be a whole number from 0 to 100.",
+  "Als Perspektive nur eine Figur dieses Projekts wählen.": "Choose a character of this project as point of view.",
+  "Perspektive und Spannung lassen sich jetzt direkt setzen: in einer Szene über ⋯ → „Details bearbeiten“.": "Point of view and tension can now be set directly: in a scene via ⋯ → “Edit details”.",
+  "Perspektive: Auswahl aus den Figuren deines Projekts. Spannung: fünf Stufen von ruhig bis Höhepunkt.": "Point of view: choose from your project's characters. Tension: five steps from calm to climax.",
+  "Werkbank und Storyboard zeigen beide Werte sofort an; Exporte enthalten sie wie gewohnt.": "Workbench and storyboard show both values immediately; exports include them as before."
 }

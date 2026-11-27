@@ -1,5 +1,10 @@
 # Änderungen
 
+## 0.3.5 — 27.11.2026
+
+- **Details bearbeiten** bietet für Szenen jetzt **Perspektive** (Auswahl aus den Figuren des Projekts) und **Spannung** (fünf Stufen von ruhig bis Höhepunkt, gespeichert als 20–100). Werkbank und Storyboard zeigen die Werte sofort.
+- Exchange-konform: Als Perspektive sind nur Figuren erlaubt; eine importierte Spannung außerhalb der fünf Stufen wird angezeigt und bleibt unverändert, solange sie nicht bewusst geändert wird.
+
 ## 0.3.4 — 26.11.2026
 
 - Nach einem Update zeigt ein kurzer Dialog einmal, was neu ist, mit optionalem Link zur Unterstützung auf Ko-fi. Keine Anzeige bei Neuinstallation; abschaltbar in den Einstellungen oder direkt im Dialog. Jederzeit über den Befehl **Neuigkeiten anzeigen** erreichbar.

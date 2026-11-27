@@ -24,6 +24,7 @@ export function detailFields(entry: Entry, pkg: Exchange): FormField[] {
   if (entry.collection === 'scenes') {
     fields.push(chapterField(pkg, entry.record.chapterId));
     fields.push({ key: 'goal', label: tr('Was soll in dieser Szene geschehen?'), kind: 'area', value: entry.record.goal ?? '' });
+    fields.push(povField(pkg, entry.record.povCharacterId), tensionField(entry.record.tensionLevel));
   }
   if (entry.collection === 'catalogItems' && entry.record.type === 'character') for (const [key, label] of [['roleFunction', tr('Rolle in der Geschichte')], ['motivation', tr('Was treibt die Figur an?')]] as const) {
     const value = entry.record.fields[key];
@@ -46,6 +47,29 @@ export function chapterField(pkg: Exchange, selected: string | null): FormField 
   return { key: 'chapterId', label: tr('Kapitel'), kind: 'select', value: selected ?? '', options: [{ label: tr('Noch keinem Kapitel zuordnen'), value: '' },
     ...namedChoices([...pkg.chapters].sort((a, b) => a.orderIndex - b.orderIndex), c => c.title).map(c => ({ label: c.label, value: c.value.id }))] };
 }
+/** Point of view: only characters of this project (Exchange §6); an unresolved existing ID stays selectable unchanged. */
+export function povField(pkg: Exchange, selected: string | null): FormField {
+  const characters = namedChoices(pkg.catalogItems.filter(c => c.type === 'character'), c => c.name).map(c => ({ label: c.label, value: c.value.id }));
+  const missing = selected && !characters.some(c => c.value === selected) ? [{ label: tr('Unbekannte Figur (unverändert)'), value: selected }] : [];
+  return { key: 'povCharacterId', label: tr('Perspektive'), kind: 'select', value: selected ?? '', options: [{ label: tr('Keine Perspektive'), value: '' }, ...characters, ...missing],
+    description: characters.length ? tr('Aus wessen Sicht wird die Szene erzählt?') : tr('Lege zuerst eine Figur an, um eine Perspektive zu wählen.') };
+}
+const tensionSteps = [20, 40, 60, 80, 100] as const;
+/** Labels resolved on access so the dialog follows the interface language. */
+const tensionLabels = (): string[] => [tr('ruhig'), tr('leicht'), tr('spürbar'), tr('hoch'), tr('Höhepunkt')];
+/** Tension 0–100 in five readable steps; any other stored value is offered verbatim and kept unless changed. */
+export function tensionField(level: number | null): FormField {
+  const options = [{ label: tr('Nicht festgelegt'), value: '' }, ...tensionSteps.map((value, i) => ({ label: `${i + 1} – ${tensionLabels()[i]}`, value: String(value) }))];
+  if (level !== null && !tensionSteps.some(value => value === level)) options.push({ label: tr`${level} von 100 (übernommen)`, value: String(level) });
+  return { key: 'tensionLevel', label: tr('Spannung'), kind: 'select', value: level === null ? '' : String(level), options };
+}
+/** Parses the tension choice strictly: empty is no value, otherwise an integer 0–100 without coercion of other text. */
+export function tensionValue(value: string): number | null {
+  if (!value) return null;
+  const result = Number(value);
+  if (!/^\d+$/.test(value) || !Number.isSafeInteger(result) || result > 100) fail('INVALID_FIELD', tr('Die Spannung muss eine ganze Zahl von 0 bis 100 sein.'));
+  return result;
+}
 /** Applies only displayed editable fields; immutable identities and complex foreign values stay intact. */
 export function applyDetails(entry: Entry, values: FormValues, pkg?: Exchange): void {
   const r = entry.record;
@@ -59,6 +83,12 @@ export function applyDetails(entry: Entry, values: FormValues, pkg?: Exchange): 
     const chapterId = values['chapterId'] || null;
     if (chapterId !== entry.record.chapterId && entry.record.parentSceneId) fail('INVALID_FIELD', tr('Eine Unterszene bleibt im Kapitel ihrer übergeordneten Szene.'));
     entry.record.chapterId = chapterId; entry.record.goal = values['goal'] || null;
+    const pov = values['povCharacterId'];
+    if (pov !== undefined && pov !== (entry.record.povCharacterId ?? '')) {
+      if (pov && pkg && pkg.catalogItems.find(c => c.id === pov)?.type !== 'character') fail('INVALID_FIELD', tr('Als Perspektive nur eine Figur dieses Projekts wählen.'));
+      entry.record.povCharacterId = pov || null;
+    }
+    if (values['tensionLevel'] !== undefined) entry.record.tensionLevel = tensionValue(values['tensionLevel']);
   }
   if (entry.collection === 'catalogItems') for (const key of ['roleFunction', 'motivation']) {
     if (values[key] !== undefined) entry.record.fields[key] = values[key];

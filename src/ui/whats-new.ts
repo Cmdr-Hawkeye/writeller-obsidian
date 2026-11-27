@@ -9,6 +9,11 @@ export const changelogUrl = 'https://github.com/Cmdr-Hawkeye/writeller-obsidian/
 /** Highlights per released version; German source text, translated at render time. */
 interface ReleaseNote { version: string; items: () => string[] }
 const notes: ReleaseNote[] = [
+  { version: '0.3.7', items: () => [
+    tr('Neu: Figuren, Orte, Szenen und andere Objekte lassen sich über ⋯ → „Löschen…“ regulär löschen.'),
+    tr('Beim Löschen räumt Novel Planner alle Verweise auf, etwa die Perspektive einer Szene, und legt die Notiz in den Papierkorb.'),
+    tr('Wurde eine Notiz direkt gelöscht, hilft die Übersicht: Objekt wiederherstellen oder Verweise entfernen.')
+  ] },
   { version: '0.3.6', items: () => [
     tr('Behoben: Ein Sprachwechsel der Ordner scheitert nicht mehr, wenn Obsidian beim Umbenennen Links selbst aktualisiert.'),
     tr('Neu: „Sprachwechsel reparieren“ löst einen hängengebliebenen Wechsel – als Button in der Übersicht und in der Befehlspalette.'),

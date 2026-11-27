@@ -12,6 +12,7 @@ import { WritingCommands } from './ui/writing-commands';
 import { TransferCommands } from './ui/transfer-commands';
 import { Inspection } from './ui/inspection';
 import { ImageCommands } from './ui/image-commands';
+import { ObjectCommands } from './ui/object-commands';
 import { WritingProjectView, projectViewType } from './ui/project-view';
 import { registerWritingCommands } from './ui/commands';
 import { organizeProject } from './ui/organize-command';
@@ -48,7 +49,7 @@ export default class WritellerPlugin extends Plugin {
     if (upgradeExportFolder(this.preferences)) await this.saveData(this.preferences);
     const service = new TransferCoordinator(new ObsidianVault(this.app), this.preferences);
     const ctx = this.context = new CommandContext(this.app, service), writing = new WritingCommands(ctx), advanced = new LocalCommands(ctx);
-    const transfer = new TransferCommands(ctx), inspection = new Inspection(ctx), images = new ImageCommands(ctx);
+    const transfer = new TransferCommands(ctx), inspection = new Inspection(ctx), images = new ImageCommands(ctx), objects = new ObjectCommands(ctx);
     this.presentation = new WritingPresentation(ctx); this.register(() => this.presentation.dispose());
     const present = (): void => { void this.presentation.refresh().catch(error => ctx.report(error)); };
     ctx.changed.add(present); this.register(() => ctx.changed.delete(present));
@@ -67,13 +68,13 @@ export default class WritellerPlugin extends Plugin {
     ctx.openProjectView = openView;
     this.registerView(projectViewType, leaf => new WritingProjectView(leaf, ctx, writing, transfer, run, {
       inspect: () => inspection.show(), advanced: () => advanced.properties(), organize: id => organizeProject(ctx, id), recover: () => transfer.recoverImport(),
-      repairLanguage: () => transfer.repairLanguage()
+      repairLanguage: () => transfer.repairLanguage(), removeObject: (id, key) => objects.delete(id, key), repairReferences: (id, mode) => objects.repair(id, mode)
     }));
     const whatsNew = (lastSeen?: string, automatic = false): void => new WhatsNewModal(this.app, pluginVersion, lastSeen, automatic ? async () => {
       this.preferences.showReleaseNotes = false; await this.saveData(this.preferences); settingsTab.update();
     } : undefined).open();
     const actions = { writing, advanced, transfer, images, inspection, openView: () => openView(), organize: () => organizeProject(ctx), run, available: () => this.ready && !this.busy,
-      whatsNew: async () => { whatsNew(); } };
+      whatsNew: async () => { whatsNew(); }, objects };
     let removeCommands = registerWritingCommands(this, ctx, actions);
     const ribbon = this.addRibbonIcon('book-open-text', tr('Schreibprojekte öffnen'), () => run(() => openView()));
     let labelsLanguage = language();
@@ -81,7 +82,7 @@ export default class WritellerPlugin extends Plugin {
     ctx.changed.add(relabel); this.register(() => ctx.changed.delete(relabel));
     ctx.savePreferences = async () => { setLanguage(this.preferences.folderLanguage ?? resolveLanguage(this.preferences.language, getLanguage())); await this.saveData(this.preferences); relabel(); };
     const status = this.addStatusBarItem(); this.registerDomEvent(status, 'click', () => run(() => openView()));
-    registerWritingEvents(this, ctx, writing, advanced, inspection, this.presentation, status, run, () => this.ready && !this.busy);
+    registerWritingEvents(this, ctx, writing, advanced, inspection, this.presentation, status, run, () => this.ready && !this.busy, objects);
     this.app.workspace.onLayoutReady(() => {
       void service.index.rebuild().then(async () => {
         await cleanupLegacyExportFolders(service.vault, this.preferences);

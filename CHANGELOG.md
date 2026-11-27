@@ -1,5 +1,10 @@
 # Änderungen
 
+## 0.3.7 — 27.11.2026
+
+- Neu: Figuren, Orte, Szenen, Kapitel und andere Objekte lassen sich regulär löschen: **Löschen…** im Aktionsmenü (⋯), im Dateimenü einer Notiz und in der Befehlspalette. Alle Verweise werden im selben geprüften Speichervorgang aufgeräumt: Perspektive einer Szene, Kapitel- und Elternzuordnung, Beziehungen zum Objekt, Notizziele und logische Links im Text (werden zu normalem Text). Die Notiz kommt danach nach Obsidians Löscheinstellung in den Papierkorb; die Begleitdaten bleiben gesichert.
+- Neu: **Fehlende Verweise reparieren**. Wurde eine Projektnotiz direkt gelöscht, während andere Objekte noch auf sie verweisen, erklärt die Übersicht den Fehler und bietet **Objekt wiederherstellen** (aus den Begleitdaten, bei belegtem Dateinamen unter neuem Namen) oder **Verweise entfernen** an. Eine Perspektive, die auf keine Figur zeigt, wird dabei ebenfalls geleert.
+
 ## 0.3.6 — 27.11.2026
 
 - Behoben: Ein Sprachwechsel der Ordner scheiterte, wenn Obsidian beim Umbenennen Links in Notizen selbst aktualisiert („Interne Links automatisch aktualisieren“). Die Rücknahme blieb dann halb stehen und blockierte alle Projekte. Reine Änderungen von Linkzielen gelten jetzt nicht mehr als fremde Bearbeitung; Rücknahmen benennen zuerst die Ordner zurück und stellen danach die gesicherten Notizen wieder her.

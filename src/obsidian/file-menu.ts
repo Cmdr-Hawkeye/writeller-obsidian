@@ -3,12 +3,13 @@ import { TFile, TFolder, type Menu, type TAbstractFile } from 'obsidian';
 import type { CommandContext } from '../ui/command-context';
 import type { WritingCommands } from '../ui/writing-commands';
 import type { LocalCommands } from '../ui/local-commands';
+import type { ObjectCommands } from '../ui/object-commands';
 import { suggestNote } from '../projects/note-discovery';
 import { writingKinds } from '../objects/kinds';
 import { adoptNote } from '../ui/unassigned-notes';
 
 /** Adds familiar typed creation to native folder menus and adoption to ordinary note menus. */
-export function writingFileMenu(menu: Menu, file: TAbstractFile, ctx: CommandContext, writing: WritingCommands, advanced: LocalCommands, run: (action: () => Promise<void>) => void): void {
+export function writingFileMenu(menu: Menu, file: TAbstractFile, ctx: CommandContext, writing: WritingCommands, advanced: LocalCommands, run: (action: () => Promise<void>) => void, objects?: ObjectCommands): void {
   const suggestion = suggestNote(ctx.service.index, file.path);
   if (file instanceof TFolder) {
     if (!suggestion) return;
@@ -29,5 +30,6 @@ export function writingFileMenu(menu: Menu, file: TAbstractFile, ctx: CommandCon
     menu.addItem(item => item.setTitle(tr('Novel Planner: Schreibprojekt öffnen')).setIcon('book-open-text').onClick(() => run(async () => { await ctx.openProjectView?.(note.projectId); })));
     menu.addItem(item => item.setTitle(tr('Novel Planner: Details bearbeiten')).setIcon('pencil').onClick(() => run(() => writing.details(note.projectId, `${note.collection}/${note.id}`))));
     if (note.collection === 'catalogItems') menu.addItem(item => item.setTitle(tr('Novel Planner: Notizart ändern')).onClick(() => run(() => advanced.changeType(file.path))));
+    if (objects && note.collection !== 'project') menu.addItem(item => item.setTitle(tr('Novel Planner: Löschen und Verweise aufräumen')).setIcon('trash-2').onClick(() => run(() => objects.delete(note.projectId, `${note.collection}/${note.id}`))));
   }
 }

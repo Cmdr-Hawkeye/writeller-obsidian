@@ -25,8 +25,8 @@ The plugin is free to use and requires no account or Writeller license. It makes
 
 The following steps describe manual installation from the GitHub release. Minimum version: **Obsidian 1.14.5**. Actual mobile-device acceptance tests are still pending.
 
-1. Back up your vault and open [release 0.3.6](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.3.6).
-2. Download `writeller-0.3.6.zip` from **Assets** and extract it.
+1. Back up your vault and open [release 0.3.7](https://github.com/Cmdr-Hawkeye/writeller-obsidian/releases/tag/0.3.7).
+2. Download `writeller-0.3.7.zip` from **Assets** and extract it.
 3. Copy its `writeller` directory to `<vault>/.obsidian/plugins/`. `main.js`, `manifest.json` and `styles.css` must be directly inside that directory.
 4. Enable Novel Planner - by Writeller in Obsidian's Community plugins settings. For updates, replace the plugin files and reload the plugin.
 
@@ -55,6 +55,8 @@ Before exporting, the plugin points out unassigned files so you can review them 
 ## Where are exports and technical files?
 
 To delete a project, open **More project actions (⋯) → Delete project** in the writing overview, or run **Delete project** from the command palette. Enter the exact project name to confirm. Assigned notes and private project data are removed using your Obsidian deleted-file preference. Unassigned files, existing exports and other projects are kept; folders containing them remain. If interrupted, use **Recover interrupted operation** to restore the originals. Temporary recovery copies are removed after completion. There is no plugin undo for a completed deletion; restore from your trash or an export if needed.
+
+To delete a single character, scene or other object, choose **Delete…** in its action menu (⋯), or **Novel Planner: Delete and clean up references** in the note's file menu. References to it are cleaned up in the same checked save: scenes lose the point of view, relationships to it are removed, linked notes lose their target and links in text become plain text. The note then goes to the trash; its preserved data is kept. If a project note was deleted directly while others still refer to it, the overview shows "A linked object is missing." with **Restore object** and **Remove references**; the same flow is available as **Repair missing references**.
 
 Exports go to `Exports/<title>.writeller-exchange.json`. A twelve-second message shows the exact vault-relative path after a successful save. Existing files are never replaced. Import files can be placed in any ordinary vault folder.
 

@@ -1,8 +1,9 @@
 import core from './en-core.json';
 import ui from './en-ui.json';
+import objects from './en-objects.json';
 import { language } from './language';
 
-const english: Readonly<Record<string, string>> = { ...core, ...ui };
+const english: Readonly<Record<string, string>> = { ...core, ...ui, ...objects };
 /** Resolves a static source label; tagged interpolation keeps user text out of translation lookup. */
 export function tr(source: string | TemplateStringsArray, ...values: unknown[]): string {
   const key = typeof source === 'string' ? source : source.reduce((text, part, i) => text + (i ? `{${i - 1}}` : '') + part, '');

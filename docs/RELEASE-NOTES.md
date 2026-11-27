@@ -1,30 +1,28 @@
-# Novel Planner - by Writeller 0.3.6
+# Novel Planner - by Writeller 0.3.7
 
 [Deutsch](#deutsch) · [English](#english) · [writeller.com](https://www.writeller.com)
 
 ## Deutsch
 
-**Sprachwechsel der Ordner: Fehler behoben und Reparatur.**
+**Objekte regulär löschen und fehlende Verweise reparieren.**
 
-- **Behoben:** Ein Sprachwechsel der Strukturordner scheiterte, wenn Obsidian beim Umbenennen Links in Notizen selbst aktualisierte (Einstellung „Interne Links automatisch aktualisieren“). Die automatische Rücknahme blieb dann halb stehen und blockierte alle Projekte. Reine Änderungen von Linkzielen gelten jetzt nicht mehr als fremde Bearbeitung.
-- **Neu: Sprachwechsel reparieren.** Hängt ein Wechsel fest, zeigt die Übersicht einen Button mit Erklärung; derselbe Befehl steht in der Befehlspalette. Die Reparatur benennt jeden Strukturordner zurück, dessen vorheriger Name frei ist, setzt vom Plugin oder von Obsidian geänderte Links auf den gesicherten Stand und lässt Notizen mit eigenen Textänderungen unverändert; diese werden gemeldet. Alle Originale bleiben gesichert.
-- **Betroffen?** Wenn die Übersicht „Dieses Projekt braucht eine Überprüfung“ und wiederholt „Der Sprachwechsel ist noch nicht abgeschlossen“ meldet: nach dem Update **Sprachwechsel reparieren** wählen.
+- **Neu: Löschen…** Figuren, Orte, Szenen, Kapitel und andere Objekte lassen sich über das Aktionsmenü (⋯), das Dateimenü einer Notiz oder die Befehlspalette löschen. Der Dialog nennt vorher, was sich mitändert. Alle Verweise werden im selben geprüften Speichervorgang aufgeräumt: Szenen verlieren die Perspektive, Szenen eines gelöschten Kapitels sind danach keinem Kapitel mehr zugeordnet, Beziehungen zum Objekt werden mit entfernt, verknüpfte Notizen verlieren ihr Ziel, Links im Text werden zu normalem Text. Die Notiz kommt nach Obsidians Löscheinstellung in den Papierkorb; die Begleitdaten bleiben gesichert.
+- **Neu: Fehlende Verweise reparieren.** Wurde eine Projektnotiz direkt im Dateiexplorer gelöscht, meldete das Projekt bisher „Verweisziel fehlt im Projekt“ und „POV muss eine Figur sein“, und eine neu angelegte gleichnamige Datei half nicht. Jetzt erklärt die Übersicht den Fehler und bietet zwei Wege: **Objekt wiederherstellen** legt die Notiz aus den gesicherten Daten neu an (bei belegtem Namen unter neuem Namen), **Verweise entfernen** räumt auf wie beim regulären Löschen. Auch als Befehl verfügbar.
 
-**Update:** `writeller-0.3.6.zip` unter Assets herunterladen und die Plugin-Dateien in `<Vault>/.obsidian/plugins/writeller/` ersetzen. Einstellungen in `data.json` behalten und Obsidian neu laden. Mindestversion: Obsidian 1.14.5.
+**Update:** `writeller-0.3.7.zip` unter Assets herunterladen und die Plugin-Dateien in `<Vault>/.obsidian/plugins/writeller/` ersetzen. Einstellungen in `data.json` behalten und Obsidian neu laden. Mindestversion: Obsidian 1.14.5.
 
-Die Korrektur ist in Integrationstests mit simulierter Obsidian-Linkaktualisierung geprüft: erfolgreicher Wechsel, vollständige Rücknahme und Reparatur eines halb zurückgenommenen Wechsels. Eine vollständige native Desktop-/Mobile-Abnahme bleibt offen.
+Geprüft in Integrations- und Oberflächentests: Löschen mit Bereinigung aller Verweisarten, Wiederherstellen nach direktem Löschen (auch neben einer gleichnamigen Datei) und Entfernen der Verweise. Eine vollständige native Desktop-/Mobile-Abnahme bleibt offen.
 
 ## English
 
-**Folder language switch: bug fix and repair.**
+**Delete objects properly and repair missing references.**
 
-- **Fixed:** A language switch of the structure folders failed when Obsidian updated links in notes by itself while renaming (setting “Automatically update internal links”). The automatic rollback then stopped halfway and blocked all projects. Pure link-target changes no longer count as foreign edits.
-- **New: Repair language switch.** If a switch is stuck, the overview shows a button with an explanation; the same command is in the command palette. The repair renames every structure folder back whose previous name is free, resets links changed by the plugin or by Obsidian to the backed-up state, and leaves notes with your own text changes untouched; those are reported. All originals stay backed up.
-- **Affected?** If the overview says “This project needs a check” and repeatedly reports that the language switch is not finished: after updating, choose **Repair language switch**.
+- **New: Delete…** Characters, places, scenes, chapters and other objects can be deleted from the action menu (⋯), a note's file menu or the command palette. The dialog lists what changes along with it. All references are cleaned up in the same checked save: scenes lose the point of view, scenes of a deleted chapter are no longer assigned to a chapter, relationships to the object are removed, linked notes lose their target, links in text become plain text. The note then goes to the trash according to your Obsidian setting; its preserved data is kept.
+- **New: Repair missing references.** If a project note was deleted directly in the file explorer, the project previously reported “Reference target is missing from the project” and “Point of view must reference a character”, and a newly created file with the same name did not help. Now the overview explains the problem and offers two ways: **Restore object** recreates the note from the preserved data (under a new name if the old one is taken), **Remove references** cleans up as a regular deletion would. Also available as a command.
 
-**Update:** Download `writeller-0.3.6.zip` from Assets, replace the plugin files in `<vault>/.obsidian/plugins/writeller/`, retain settings in `data.json` and reload Obsidian. Minimum: Obsidian 1.14.5.
+**Update:** Download `writeller-0.3.7.zip` from Assets, replace the plugin files in `<vault>/.obsidian/plugins/writeller/`, retain settings in `data.json` and reload Obsidian. Minimum: Obsidian 1.14.5.
 
-The fix is covered by integration tests with simulated Obsidian link updates: successful switch, complete rollback and repair of a half rolled-back switch. Full native desktop/mobile acceptance remains pending.
+Covered by integration and UI tests: deletion with cleanup of every reference kind, restore after a direct deletion (also next to a file with the same name) and removing the references. Full native desktop/mobile acceptance remains pending.
 
 The public Writeller Exchange 1.0.0 contract is unchanged. / Der öffentliche Writeller Exchange 1.0.0-Vertrag bleibt unverändert.
 

@@ -11,7 +11,7 @@ async function sources(folder) {
   return result;
 }
 const dictionary = {};
-for (const name of ['core', 'ui']) {
+for (const name of ['core', 'ui', 'objects']) {
   const source = await readFile(`src/i18n/en-${name}.json`, 'utf8'), entries = JSON.parse(source);
   if (source.split('\n').length > 300 || Object.keys(entries).length > 300) throw new Error(`en-${name}: Übersetzungskatalog aufteilen`);
   for (const [key, value] of Object.entries(entries)) {

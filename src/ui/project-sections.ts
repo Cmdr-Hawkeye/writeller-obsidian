@@ -7,7 +7,7 @@ import { entries, recordKey, title } from '../domain/records';
 import { statusLabels, writingKinds, type WritingKind } from '../objects/kinds';
 
 export interface ProjectActions { add(kind: string, chapterId?: string): void; open(path: string): void;
-  details(key: string): void; move(entry: Entry, direction: -1 | 1): void }
+  details(key: string): void; move(entry: Entry, direction: -1 | 1): void; remove?(key: string): void }
 /** Approximate display-only word count; never exported or used as a record change. */
 export function writingWordCount(value: string): number { return value.trim() ? value.trim().split(/\s+/u).length : 0; }
 /** Formats a display count in the active interface language. */
@@ -34,6 +34,7 @@ export function entryMenu(entry: Entry, actions: ProjectActions, anchor: HTMLEle
     menu.addItem(item => item.setTitle(tr('Nach oben')).setIcon('arrow-up').onClick(() => actions.move(entry, -1)));
     menu.addItem(item => item.setTitle(tr('Nach unten')).setIcon('arrow-down').onClick(() => actions.move(entry, 1)));
   }
+  if (actions.remove && entry.collection !== 'project') { menu.addSeparator(); menu.addItem(item => item.setTitle(tr('Löschen…')).setIcon('trash-2').onClick(() => actions.remove?.(recordKey(entry.collection, entry.record.id)))); }
   const bounds = anchor.getBoundingClientRect(); menu.showAtPosition({ x: bounds.right, y: bounds.bottom });
 }
 /** Opens the actual Markdown file; details/reorder remain secondary and keyboard reachable. */

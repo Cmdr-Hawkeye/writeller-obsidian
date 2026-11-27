@@ -67,6 +67,8 @@ Die Implementierung und Tests von Writeller Exchange 1.0.0 in der Writeller-Anwe
 
 Ab 0.3.6 prüft `tests/integration/language-repair.test.ts` den Sprachwechsel mit simulierter Obsidian-Linkaktualisierung beim Umbenennen: erfolgreicher Wechsel, vollständige Rücknahme nach Fehler und die Reparatur eines halb zurückgenommenen Wechsels, bei der eine echte Textänderung erhalten bleibt.
 
+Ab 0.3.7 prüfen `tests/integration/object-removal.test.ts` und `tests/ui/object-removal.test.ts` das reguläre Löschen einzelner Objekte (Perspektive, Beziehungen, Notizziele, Textverweise, Kapitel- und Elternzuordnung werden aufgeräumt) sowie die Reparatur nach direkt gelöschter Notiz: Wiederherstellen aus den Begleitdaten, auch neben einer gleichnamigen fremden Datei, oder Entfernen der Verweise.
+
 Ab 0.3.5 prüft `tests/ui/writing.test.ts` die Szenenfelder Perspektive und Spannung: nur Figuren als Perspektive, fünf Spannungsstufen, strikte Ablehnung von Werten außerhalb 0–100 oder Bruchzahlen, unveränderte Übernahme importierter Zwischenwerte und dauerhaftes Speichern über den regulären Commit.
 
 Ab 0.3.4 prüft `tests/ui/whats-new.test.ts` den Neuigkeiten-Dialog: keine Anzeige bei Neuinstallation, einmalige Anzeige nach Update, Abschaltung über Dialog und Einstellungen, numerischer Versionsvergleich, Ko-fi-Link, ausschließlich Text ohne Bilder oder Skripte, Deutsch/Englisch und ein Pflichteintrag für die aktuelle Plugin-Version.

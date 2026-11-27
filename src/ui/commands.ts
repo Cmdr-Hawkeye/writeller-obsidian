@@ -8,9 +8,10 @@ import type { TransferCommands } from './transfer-commands';
 import type { ImageCommands } from './image-commands';
 import type { Inspection } from './inspection';
 import { deleteProject } from './delete-project';
+import type { ObjectCommands } from './object-commands';
 
 export interface CommandActions { writing: WritingCommands; advanced: LocalCommands; transfer: TransferCommands; images: ImageCommands;
-  inspection: Inspection; openView(): Promise<void>; organize(): Promise<void>; run(action: () => Promise<void>): void; available(): boolean; whatsNew?(): Promise<void> }
+  inspection: Inspection; openView(): Promise<void>; organize(): Promise<void>; run(action: () => Promise<void>): void; available(): boolean; whatsNew?(): Promise<void>; objects?: ObjectCommands }
 /** Registers familiar writing nouns; technical tools appear only when requested or needed. */
 export function registerWritingCommands(plugin: Plugin, ctx: CommandContext, actions: CommandActions): () => void {
   const ids: string[] = [];
@@ -30,6 +31,11 @@ export function registerWritingCommands(plugin: Plugin, ctx: CommandContext, act
     () => ctx.app.workspace.getActiveFile()?.extension === 'md' && !ctx.active() && hasProject());
   add('edit-properties', tr('Details bearbeiten'), () => actions.writing.details(), () => !!ctx.active());
   add('change-object-type', tr('Notizart ändern'), () => actions.advanced.changeType(), () => ctx.active()?.collection === 'catalogItems');
+  const objects = actions.objects;
+  if (objects) {
+    add('delete-object', tr('Diese Notiz löschen und Verweise aufräumen'), () => objects.delete(), () => !!ctx.active() && ctx.active()?.collection !== 'project');
+    add('repair-references', tr('Fehlende Verweise reparieren'), () => objects.repair(), hasProject);
+  }
   add('import-project', tr('Projektdatei importieren'), () => actions.transfer.importProject());
   add('export-project', tr('Projekt exportieren'), () => actions.transfer.exportProject(), hasProject);
   add('organize-project', tr('Projektdateien lesbar ordnen'), () => actions.organize(), hasProject);

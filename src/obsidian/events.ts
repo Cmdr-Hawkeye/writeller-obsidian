@@ -3,13 +3,14 @@ import type { CommandContext } from '../ui/command-context';
 import type { WritingCommands } from '../ui/writing-commands';
 import type { LocalCommands } from '../ui/local-commands';
 import type { Inspection } from '../ui/inspection';
+import type { ObjectCommands } from '../ui/object-commands';
 import type { WritingPresentation } from './presentation';
 import { WritingProjectView } from '../ui/project-view';
 import { writingFileMenu } from './file-menu';
 
 /** Registers reversible UI hints; full source verification remains in the exchange service. */
 export function registerWritingEvents(plugin: Plugin, ctx: CommandContext, writing: WritingCommands, advanced: LocalCommands,
-  inspection: Inspection, presentation: WritingPresentation, status: HTMLElement, run: (action: () => Promise<void>) => void, canRefresh: () => boolean): void {
+  inspection: Inspection, presentation: WritingPresentation, status: HTMLElement, run: (action: () => Promise<void>) => void, canRefresh: () => boolean, objects?: ObjectCommands): void {
   let timer: number | null = null;
   const update = (): void => {
     if (!canRefresh()) return;
@@ -30,5 +31,5 @@ export function registerWritingEvents(plugin: Plugin, ctx: CommandContext, writi
   plugin.registerEvent(plugin.app.metadataCache.on('changed', file => invalidate(file)));
   plugin.registerEvent(plugin.app.workspace.on('active-leaf-change', update));
   plugin.registerEvent(plugin.app.workspace.on('layout-change', () => { void presentation.refresh().catch(e => ctx.report(e)); }));
-  plugin.registerEvent(plugin.app.workspace.on('file-menu', (menu, file) => writingFileMenu(menu, file, ctx, writing, advanced, run)));
+  plugin.registerEvent(plugin.app.workspace.on('file-menu', (menu, file) => writingFileMenu(menu, file, ctx, writing, advanced, run, objects)));
 }

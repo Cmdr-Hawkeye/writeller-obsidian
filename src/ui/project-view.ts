@@ -18,9 +18,15 @@ import { viewRevision } from '../projects/view-revision';
 import { RefreshQueue } from './refresh-queue';
 import { deleteProject } from './delete-project';
 import { pendingJournals } from '../storage/recovery-index';
+import { ExchangeError } from '../domain/diagnostics';
 
 export const projectViewType = 'writeller-writing-project';
-export interface ProjectViewTools { inspect(): Promise<void>; advanced(): Promise<void>; organize(projectId: string): Promise<void>; recover(): Promise<void>; repairLanguage?(): Promise<void> }
+export interface ProjectViewTools { inspect(): Promise<void>; advanced(): Promise<void>; organize(projectId: string): Promise<void>; recover(): Promise<void>; repairLanguage?(): Promise<void>;
+  removeObject?(projectId: string, key: string): Promise<void>; repairReferences?(projectId: string, mode: 'restore' | 'detach'): Promise<void> }
+/** True for errors a reference repair can fix: missing targets or a point of view on a non-character. */
+function missingReference(error: unknown): boolean {
+  return error instanceof ExchangeError && error.diagnostics.some(d => d.code === 'MISSING_REFERENCE' || d.pointer.endsWith('/povCharacterId'));
+}
 /** Display-only layout of one open view, persisted by Obsidian's workspace, never in notes or exports. */
 export type ProjectLayout = 'workbench' | 'storyboard';
 /** Working overview: real Markdown files, chapter structure and direct writing actions. */
@@ -101,6 +107,7 @@ export class WritingProjectView extends ItemView {
         box.createEl('p', { cls: 'writeller-muted', text: tr('Die Reparatur gibt den Strukturordnern ihre vorherigen Namen zurück und setzt nur Links zurück, die beim Wechsel geändert wurden. Deine Texte bleiben erhalten.') });
         box.createEl('button', { cls: 'mod-cta', text: tr('Sprachwechsel reparieren') }).addEventListener('click', () => this.run(() => this.tools.repairLanguage?.() ?? Promise.resolve()));
       }
+      if (missingReference(error)) this.referenceHelp(id);
       this.contentEl.createEl('p', { text: tr('Dieses Projekt braucht eine Überprüfung, bevor es weiter gespeichert oder ausgetauscht werden kann.') });
       this.contentEl.createEl('button', { text: tr('Projekt prüfen') }).addEventListener('click', () => this.run(() => this.tools.inspect()));
       this.contentEl.createEl('button', { text: tr('Unterbrochenen Vorgang wiederherstellen') }).addEventListener('click', () => this.run(() => this.tools.recover()));
@@ -140,6 +147,15 @@ export class WritingProjectView extends ItemView {
     const add = labelButton(top, 'plus', tr('Hinzufügen…'), () => addMenu(add, actions));
     labelButton(top, 'download', tr('Exportieren'), () => this.run(() => this.transfer.exportProject(snapshot.exchange.project.id)));
     const more = iconButton(top, 'ellipsis', tr('Weitere Projektaktionen'), () => this.moreMenu(snapshot, more));
+  }
+  /** Explains a dangling reference (usually a note deleted by hand) and offers both repairs. */
+  private referenceHelp(id: string): void {
+    const box = this.contentEl.createDiv({ cls: 'writeller-repair' });
+    box.createEl('p', { cls: 'writeller-strong', text: tr('Ein verknüpftes Objekt fehlt.') });
+    box.createEl('p', { cls: 'writeller-muted', text: tr('Wahrscheinlich wurde eine Notiz direkt gelöscht, etwa eine Figur, die noch als Perspektive einer Szene eingetragen ist. Du kannst das Objekt aus den gesicherten Daten wiederherstellen oder die Verweise darauf entfernen.') });
+    const buttons = box.createDiv({ cls: 'writeller-repair-actions' });
+    buttons.createEl('button', { cls: 'mod-cta', text: tr('Objekt wiederherstellen') }).addEventListener('click', () => this.run(() => this.tools.repairReferences?.(id, 'restore') ?? Promise.resolve()));
+    buttons.createEl('button', { text: tr('Verweise entfernen') }).addEventListener('click', () => this.run(() => this.tools.repairReferences?.(id, 'detach') ?? Promise.resolve()));
   }
   /** Offers one clear first action plus import for an existing project. */
   private empty(): void {
@@ -185,7 +201,7 @@ export class WritingProjectView extends ItemView {
   private actions(snapshot: Snapshot): ProjectActions {
     const id = snapshot.exchange.project.id;
     return { add: (kind, chapter) => this.run(() => this.writing.add(kind, id, chapter)), open: path => this.run(() => this.ctx.open(path)),
-      details: key => this.run(() => this.writing.details(id, key)), move: (entry, direction) => this.run(async () => {
+      details: key => this.run(() => this.writing.details(id, key)), remove: key => this.run(() => this.tools.removeObject?.(id, key) ?? Promise.resolve()), move: (entry, direction) => this.run(async () => {
         if (moveInManuscript(snapshot.exchange, entry, direction)) await this.ctx.save(await this.ctx.service.previewSave(snapshot.exchange, snapshot));
       }) };
   }
